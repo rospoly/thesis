@@ -1,0 +1,196 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{bornholt2014uncertain}
+Bornholt J., Mytkowicz T., McKinley K.S.: {Uncertain\textless T\textgreater:
+  a first-order type for uncertain data}. In: ASPLOS (2014)
+
+\bibitem{atomic}
+Zou D., Zeng M., Xiong Y., Fu Z., Zhang L. and Su Z.: {Detecting Floating-Point Errors via Atomic Conditions}. In: POPL (2020)
+
+\bibitem{blame}
+Rubio-Gonz\'{a}lez C., Nguyen C., Mehne B., Sen K., Demmel J., Kahan W., Iancu C., Lavrijsen W., Bailey D. and Hough D.: 
+{Floating-Point Precision Tuning Using Blame Analysis}. In: ICSE (2016)
+
+\bibitem{herbie}
+Pavel P., Alex S., James R. W., and Zachary T.:{Automatically Improving Accuracy for Floating Point Expressions}. In: PLDI (2015)
+
+\bibitem{mpfr}
+Fousse L., Hanrot G., Lef\`{e}vre V., and P\'{e}lissier P. and Zimmermann P.: 
+{MPFR: A Multiple-Precision Binary Floating-Point Library with Correct Rounding}. In: TOMS (2007)
+
+\bibitem{guardstable}
+Laura Titolo, Mariano M. Moscato, Marco A. Feli{\'{u}} and C{\'{e}}sar A. Mu{\~{n}}oz: 
+{Automatic Generation of Guard-Stable Floating-Point Code}. In: IFM (2020)
+
+\bibitem{cpralg}
+Aaron Dutle, Mariano M. Moscato, Laura Titolo, C{\'{e}}sar A. Mu{\~{n}}oz, Gregory Anderson and Fran{\c{c}}ois Bobot: 
+{Formal analysis of the compact position reporting algorithm}. In: FAC (2021)
+
+\bibitem{unstable}
+Laura Titolo, C{\'{e}}sar A. Mu{\~{n}}oz, Marco A. Feli{\'{u}}, Mariano M. Moscato: 
+{Eliminating Unstable Tests in Floating-Point Programs}. In: LOPSTR (2018)
+
+\bibitem{fptuner}
+Chiang, W.F., Baranowski, M., Briggs, I., Solovyev, A., Gopalakrishnan, G.,
+  Rakamari\'c, Z.: Rigorous floating-point mixed-precision tuning. In: POPL
+  (2017)
+
+\bibitem{cpr}
+Aaron Dutle, Mariano M. Moscato, Laura Titolo, C{\'{e}}sar A. Mu{\~{n}}oz, 
+Gregory Anderson and Fran{\c{c}}ois Bobot: Formal analysis of the compact position reporting algorithm.
+In FAC (2021)
+
+
+\bibitem{constantinides2021rigorous}
+Constantinides, G., Dahlqvist, F., Rakamari\'c, Z., Salvia, R.: Rigorous
+  roundoff error analysis of probabilistic floating-point computations (2021),
+  arXiv:2105.13217
+
+\bibitem{dahlqvist2019semantics}
+Dahlqvist, F., Kozen, D.: Semantics of higher-order probabilistic programs with
+  conditioning. In: POPL  (2019)
+
+\bibitem{dahlqvist2019probabilistic}
+Dahlqvist, F., Salvia, R., Constantinides, G.A.: A probabilistic approach to
+  floating-point arithmetic. In: ASILOMAR (2019), non-peer-reviewed extended
+  abstract
+
+\bibitem{daisy-web}
+Daisy, \url{https://github.com/malyzajko/daisy}
+
+\bibitem{fpbench}
+Damouche, N., Martel, M., Panchekha, P., Qiu, C., Sanchez-Stern, A., Tatlock,
+  Z.: Toward a standard benchmark format and suite for floating-point analysis.
+  In: NSV (2016)
+
+\bibitem{darulova2018daisy}
+Darulova, E., Izycheva, A., Nasir, F., Ritter, F., Becker, H., Bastian, R.:
+  Daisy --- framework for analysis and optimization of numerical programs. In:
+  TACAS (2018)
+
+\bibitem{smartfloat}
+Darulova, E., Kuncak, V.: Trustworthy numerical computation in {Scala}. In:
+  OOPSLA (2011)
+
+\bibitem{rosa}
+Darulova, E., Kuncak, V.: Sound compilation of reals. In: POPL (2014)
+
+\bibitem{satire}
+Das, A., Briggs, I., Gopalakrishnan, G., Krishnamoorthy, S., Panchekha, P.:
+  Scalable yet rigorous floating-point error analysis. In: SC (2020)
+
+\bibitem{gappa}
+Daumas, M., Melquiond, G.: Certification of bounds on expressions involving
+  rounded operators. ACM Transactions on Mathematical Software  (2010)
+
+\bibitem{Z3}
+De~Moura, L., Bj\o{}rner, N.: {Z3}: An efficient {SMT} solver. In: TACAS (2008)
+
+\bibitem{fluctuat}
+Delmas, D., Goubault, E., Putot, S., Souyris, J., Tekkal, K., V{\'e}drine, F.:
+  Towards an industrial use of {FLUCTUAT} on safety-critical avionics software.
+  In: FMICS (2009)
+
+\bibitem{lutnet}
+Erwei Wang, James J. Davis, Peter Y. K. Cheung and George A. Constantinides: 
+  LUTNet: Learning FPGA Configurations for Highly Efficient Neural Network Inference,
+  {IEEE} Trans. Computers (2020)
+
+\bibitem{zhendong2015}
+Fu, Z., Bai, Z., Su, Z.: Automated backward error analysis for numerical code.
+  In: OOPSLA (2015)
+
+\bibitem{dReal}
+Gao, S., Kong, S., Clarke, E.M.: {DReal}: An {SMT} solver for nonlinear
+  theories over the reals. In: CADE (2013)
+
+\bibitem{patriot}
+The Patriot Missile Failure,
+  \url{https://www.users.cse.umn.edu/\string~Earnold/disasters/patriot.html}
+
+\bibitem{glasserman2013monte}
+Glasserman, P.: Monte Carlo Methods in Financial Engineering. Springer (2013)
+
+\bibitem{higham2002accuracy}
+Higham, N.J.: Accuracy and Stability of Numerical Algorithms. SIAM (2002)
+
+\bibitem{higham2019new}
+Higham, N.J., Mary, T.: A new approach to probabilistic rounding error
+  analysis. SISC  (2019)
+
+\bibitem{ipsen2019probabilistic}
+Ipsen, I.C.F., Zhou, H.: Probabilistic error analysis for inner products. SIMAX
+   (2019)
+
+\bibitem{kahan1996improbability}
+Kahan, W.: The improbability of probabilistic error analyses for numerical
+  computations (1996)
+
+\bibitem{kajiya1986rendering}
+Kajiya, J.T.: The rendering equation. In: SIGGRAPH (1986)
+
+\bibitem{K81c}
+Kozen, D.: Semantics of probabilistic programs. JCSS  (1981)
+
+\bibitem{landau2014guide}
+Landau, D.P., Binder, K.: A Guide to Monte Carlo Simulations in Statistical
+  Physics. Cambridge University Press (2014)
+
+\bibitem{pldi16-bit-level-fp-verification}
+Lee, W., Sharma, R., Aiken, A.: Verifying bit-manipulations of floating-point.
+  In: PLDI (2016)
+
+\bibitem{gappapp}
+Linderman, M.D., Ho, M., Dill, D.L., Meng, T.H., Nolan, G.P.: Towards program
+  optimization through automated analysis of numerical precision. In: CGO
+  (2010)
+
+\bibitem{probdaisy}
+Lohar, D., Prokop, M., Darulova, E.: Sound probabilistic numerical error
+  analysis. In: IFM (2019)
+
+\bibitem{magron2017certified}
+Magron, V., Constantinides, G., Donaldson, A.: Certified roundoff error bounds
+  using semidefinite programming. TOMS  (2017)
+
+\bibitem{rangelab}
+Martel, M.: {RangeLab}: A static-analyzer to bound the accuracy of
+  finite-precision computations. In: SYNASC (2011)
+
+\bibitem{ieee754}
+{Microprocessor Standards Committee of the IEEE Computer Society}: {IEEE
+  Standard for Floating-Point Arithmetic.} (2019)
+
+\bibitem{parker2000monte}
+Parker, D.S., Pierce, B., Eggert, P.R.: Monte {C}arlo arithmetic: how to gamble
+  with floating point and win. Computing in Science \& Engineering  (2000)
+
+
+\bibitem{sankaranarayanan2020reasoning}
+Sankaranarayanan, S., Chou, Y., Goubault, E., Putot, S.: Reasoning about
+  uncertainties in discrete-time dynamical systems using polynomial forms. In:
+  NeurIPS  (2020)
+
+\bibitem{solovyev2018rigorous}
+Solovyev, A., Baranowski, M.S., Briggs, I., Jacobsen, C., Rakamari\'c, Z.,
+  Gopalakrishnan, G.: Rigorous estimation of floating-point round-off errors
+  with {Symbolic Taylor Expansions}. TOPLAS  (2018)
+
+\bibitem{2015_fm_sjrg}
+Solovyev, A., Jacobsen, C., Rakamari\'c, Z., Gopalakrishnan, G.: Rigorous
+  estimation of floating-point round-off errors with {Symbolic Taylor
+  Expansions}. In: FM (2015)
+
+\bibitem{springer1979algebra}
+Springer, M.D.: The Algebra of Random Variables. Wiley (1979)
+
+
+\bibitem{precisa}
+Titolo, L., Feli{\'u}, M.A., Moscato, M., Mu{\~{n}}oz, C.A.: An abstract
+  interpretation framework for the round-off error analysis of floating-point
+  programs. In: VMCAI (2018)
+
+\end{thebibliography}

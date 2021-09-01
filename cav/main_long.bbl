@@ -1,0 +1,260 @@
+\begin{thebibliography}{10}
+
+\bibitem{bornholt2013abstractions}
+James Bornholt.
+\newblock {\em Abstractions and Techniques for Programming with Uncertain
+  Data}.
+\newblock Undergraduate honours thesis, Australian National University., 2013.
+
+\bibitem{bornholt2014uncertain}
+James Bornholt, Todd Mytkowicz, and Kathryn~S McKinley.
+\newblock {Uncertain\textless T\textgreater: a first-order type for uncertain
+  data}.
+\newblock In {\em ASPLOS}, 2014.
+
+\bibitem{bouissou2012generalization}
+Olivier Bouissou, Eric Goubault, Jean Goubault-Larrecq, and Sylvie Putot.
+\newblock A generalization of p-boxes to affine arithmetic.
+\newblock {\em In: Computing}, 2012.
+
+\bibitem{fptuner}
+Wei-Fan Chiang, Mark Baranowski, Ian Briggs, Alexey Solovyev, Ganesh
+  Gopalakrishnan, and Zvonimir Rakamari\'{c}.
+\newblock Rigorous floating-point mixed-precision tuning.
+\newblock In {\em POPL}, 2017.
+
+\bibitem{affineoriginal}
+Joao Luiz~Dihl Comba and Jorge Stolfi.
+\newblock Affine arithmetic and its applications to computer graphics, 1993.
+
+\bibitem{dahlqvist2019probabilistic}
+Fredrik Dahlqvist, Rocco Salvia, and George~A Constantinides.
+\newblock A probabilistic approach to floating-point arithmetic
+  (non-peer-reviewed extended abstract).
+\newblock In {\em ASILOMAR}, 2019.
+
+\bibitem{fpbench}
+Nasrine Damouche, Matthieu Martel, Pavel Panchekha, Chen Qiu, Alexander
+  Sanchez-Stern, and Zachary Tatlock.
+\newblock Toward a standard benchmark format and suite for floating-point
+  analysis.
+\newblock In {\em NSV}, 2016.
+
+\bibitem{darulova2018daisy}
+Eva Darulova, Anastasiia Izycheva, Fariha Nasir, Fabian Ritter, Heiko Becker,
+  and Robert Bastian.
+\newblock Daisy-framework for analysis and optimization of numerical programs
+  (tool paper).
+\newblock In {\em TACAS}, 2018.
+
+\bibitem{smartfloat}
+Eva Darulova and Viktor Kuncak.
+\newblock Trustworthy numerical computation in scala.
+\newblock In {\em \\OOPSLA}, 2011.
+
+\bibitem{rosa}
+Eva Darulova and Viktor Kuncak.
+\newblock Sound compilation of reals.
+\newblock In {\em POPL}, 2014.
+
+\bibitem{satire}
+Arnab Das, Ian Briggs, Ganesh Gopalakrishnan, Sriram Krishnamoorthy, and Pavel
+  Panchekha.
+\newblock Scalable yet rigorous floating-point error analysis.
+\newblock In {\em SC}, 2020.
+
+\bibitem{gappa}
+Marc Daumas and Guillaume Melquiond.
+\newblock Certification of bounds on expressions involving rounded operators.
+\newblock {\em In: ACM Transactions on Mathematical Software}, 2010.
+
+\bibitem{Z3}
+Leonardo De~Moura and Nikolaj Bj\o{}rner.
+\newblock Z3: An efficient smt solver.
+\newblock In {\em TACAS}, 2008.
+
+\bibitem{fluctuat}
+David Delmas, Eric Goubault, Sylvie Putot, Jean Souyris, Karim Tekkal, and
+  Franck V{\'e}drine.
+\newblock {Towards an Industrial Use of {FLUCTUAT} on Safety-Critical Avionics
+  Software}.
+\newblock In {\em FMICS}. 2009.
+
+\bibitem{dudley2002real}
+Richard~M. Dudley.
+\newblock {\em Real Analysis and Probability}.
+\newblock Cambridge Studies in Advanced Mathematics. Cambridge University
+  Press, 2002.
+
+\bibitem{ferson2015constructing}
+Scott Ferson, Vladik Kreinovich, Lev Grinzburg, Davis Myers, and Kari Sentz.
+\newblock {Constructing probability boxes and Dempster-Shafer structures}.
+\newblock Technical report, Sandia National Lab, 2015.
+
+\bibitem{fpbench-web}
+{FPBench:} standards and benchmarks for floating-point research.
+\newblock \url{https://fpbench.org}.
+
+\bibitem{zhendong2015}
+Zhoulai Fu, Zhaojun Bai, and Zhendong Su.
+\newblock Automated backward error analysis for numerical code.
+\newblock In {\em OOPSLA}, 2015.
+
+\bibitem{dReal}
+Sicun Gao, Soonho Kong, and Edmund~M. Clarke.
+\newblock Dreal: An smt solver for nonlinear theories over the reals.
+\newblock In {\em CADE}, 2013.
+
+\bibitem{gelpia}
+Gelpia.
+
+\bibitem{glasserman2013monte}
+Paul Glasserman.
+\newblock {\em Monte Carlo methods in financial engineering}.
+\newblock Springer, 2013.
+
+\bibitem{higham2002accuracy}
+Nicholas~J Higham.
+\newblock {\em Accuracy and stability of numerical algorithms}.
+\newblock SIAM, 2002.
+
+\bibitem{higham2019new}
+Nicholas~J Higham and Theo Mary.
+\newblock A new approach to probabilistic rounding error analysis.
+\newblock {\em In: SISC}, 2019.
+
+\bibitem{ipsen2019probabilistic}
+Ilse C.~F. Ipsen and Hua Zhou.
+\newblock Probabilistic error analysis for inner products.
+\newblock {\em In: SIMAX}, 2019.
+
+\bibitem{kahan1996improbability}
+William Kahan.
+\newblock The improbability of probabilistic error analyses for numerical
+  computations, 1996.
+
+\bibitem{kajiya1986rendering}
+James~T Kajiya.
+\newblock The rendering equation.
+\newblock In {\em SIGGRAPH}, 1986.
+
+\bibitem{K81c}
+Dexter Kozen.
+\newblock Semantics of probabilistic programs.
+\newblock {\em In: JCSS}, 1981.
+
+\bibitem{landau2014guide}
+David~P Landau and Kurt Binder.
+\newblock {\em A guide to Monte Carlo simulations in statistical physics}.
+\newblock Cambridge University Press, 2014.
+
+\bibitem{pldi16-bit-level-fp-verification}
+Wonyeol Lee, Rahul Sharma, and Alex Aiken.
+\newblock Verifying bit-manipulations of floating-point.
+\newblock In {\em PLDI}, 2016.
+
+\bibitem{lepage1980vegas}
+G~Peter Lepage.
+\newblock Vegas-an adaptive multi-dimensional integration program.
+\newblock Technical report, 1980.
+
+\bibitem{gappapp}
+Michael~D. Linderman, Matthew Ho, David~L. Dill, Teresa~H. Meng, and Garry~P.
+  Nolan.
+\newblock Towards program optimization through automated analysis of numerical
+  precision.
+\newblock In {\em CGO}, 2010.
+
+\bibitem{probdaisy}
+Debasmita Lohar, Milos Prokop, and Eva Darulova.
+\newblock Sound probabilistic numerical error analysis.
+\newblock In {\em IFM}, 2019.
+
+\bibitem{magron2017certified}
+Victor Magron, George Constantinides, and Alastair Donaldson.
+\newblock Certified roundoff error bounds using semidefinite programming.
+\newblock {\em In: TOMS}, 2017.
+
+\bibitem{rangelab}
+Matthieu Martel.
+\newblock Rangelab: A static-analyzer to bound the accuracy of finite-precision
+  computations.
+\newblock In {\em SYNASC}, 2011.
+
+\bibitem{rigorousaffine}
+Fr{\'e}d{\'e}ric Messine.
+\newblock Extentions of affine arithmetic: Application to unconstrained global
+  optimization.
+\newblock {\em J. UCS}, 8(11):992--1015, 2002.
+
+\bibitem{ieee754}
+{Microprocessor Standards Committee of the IEEE Computer Society}.
+\newblock {IEEE Standard for Floating-Point Arithmetic.}, 2019.
+
+\bibitem{intervalarithmetic}
+R.~E. Moore.
+\newblock {\em Interval Analysis}.
+\newblock Prentice-Hall, 1966.
+
+\bibitem{parker2000monte}
+D~Stott Parker, Brad Pierce, and Paul~R Eggert.
+\newblock Monte {C}arlo arithmetic: how to gamble with floating point and win.
+\newblock {\em In: Computing in Science \& Engineering}, 2000.
+
+\bibitem{press1990recursive}
+William~H Press and Glennys~R Farrar.
+\newblock Recursive stratified sampling for multidimensional monte carlo
+  integration.
+\newblock {\em In: Computers in Physics}, 1990.
+
+\bibitem{press1988numerical}
+William~H Press, Saul~A Teukolsky, William~T Vetterling, and Brian~P Flannery.
+\newblock {\em Numerical recipes in C}.
+\newblock Cambridge University Press, 1988.
+
+\bibitem{rothschild1970increasing}
+Michael Rothschild and Joseph~E Stiglitz.
+\newblock Increasing risk: I. a definition.
+\newblock {\em In: Journal of Economic theory}, 1970.
+
+\bibitem{solovyev2018rigorous}
+Alexey Solovyev, Marek~S Baranowski, Ian Briggs, Charles Jacobsen, Zvonimir
+  Rakamari{\'c}, and Ganesh Gopalakrishnan.
+\newblock Rigorous estimation of floating-point round-off errors with symbolic
+  taylor expansions.
+\newblock {\em In: TOPLAS}, 2018.
+
+\bibitem{2015_fm_sjrg}
+Alexey Solovyev, Charles Jacobsen, Zvonimir Rakamari\'c, and Ganesh
+  Gopalakrishnan.
+\newblock Rigorous estimation of floating-point round-off errors with symbolic
+  taylor expansions.
+\newblock In {\em FM}, 2015.
+
+\bibitem{springer1979algebra}
+Melvin~D. Springer.
+\newblock {\em The algebra of random variables}.
+\newblock Wiley, 1979.
+
+\bibitem{affinebook}
+Jorge Stolfi and Luiz Henrique~De Figueiredo.
+\newblock Self-validated numerical methods and applications, 1997.
+
+\bibitem{precisa}
+Laura Titolo, Marco~A. Feli{\'u}, Mariano Moscato, and C{\'e}sar~A.
+  Mu{\~{n}}oz.
+\newblock An abstract interpretation framework for the round-off error analysis
+  of floating-point programs.
+\newblock In {\em VMCAI}, 2018.
+
+\bibitem{valiant1984theory}
+Leslie~G Valiant.
+\newblock A theory of the learnable.
+\newblock {\em Communications of the ACM}, 27(11):1134--1142, 1984.
+
+\bibitem{von1947numerical}
+John Von~Neumann and Herman~H Goldstine.
+\newblock Numerical inverting of matrices of high order.
+\newblock {\em In: Bulletin of the American Mathematical Society}, 1947.
+
+\end{thebibliography}

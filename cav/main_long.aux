@@ -1,0 +1,278 @@
+\relax 
+\citation{bornholt2014uncertain}
+\citation{press1990recursive,lepage1980vegas}
+\citation{press1988numerical}
+\citation{glasserman2013monte}
+\citation{landau2014guide}
+\citation{kajiya1986rendering}
+\citation{springer1979algebra}
+\citation{bouissou2012generalization}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {title}{Rigorous Roundoff Error Analysis of Probabilistic Floating-Point Computations\unskip {}}{1}}
+\@writefile{toc}{\authcount {4}}
+\@writefile{toc}{\contentsline {author}{George Constantinides \and Fredrik Dahlqvist \and Zvonimir Rakamaric\and Rocco Salvia}{1}}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}}
+\newlabel{sec:introduction}{{1}{1}}
+\newlabel{sec:introduction@cref}{{[section][1][]1}{1}}
+\citation{valiant1984theory}
+\citation{bouissou2012generalization}
+\citation{fpbench}
+\citation{2015_fm_sjrg,solovyev2018rigorous}
+\citation{probdaisy}
+\citation{bornholt2013abstractions}
+\citation{bornholt2013abstractions}
+\citation{bornholt2014uncertain}
+\citation{bornholt2014uncertain}
+\citation{bornholt2014uncertain}
+\citation{bornholt2014uncertain}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Overview Through an Application}{3}}
+\newlabel{sec:overview}{{2}{3}}
+\newlabel{sec:overview@cref}{{[section][2][]2}{3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Probabilistic correction of GPS coordinates from \cite  {bornholt2014uncertain}: $\mathtt  {radius}$ is Rayleigh distributed, $\mathtt  {angle}$ is uniformly distributed.\relax }}{3}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:latitude}{{1}{3}}
+\newlabel{fig:latitude@cref}{{[figure][1][]1}{3}}
+\citation{2015_fm_sjrg}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces {Roundoff error analysis for the probabilistic latitude correction of \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces 1\hbox {}\unskip \@@italiccorr )}}.}\relax }}{4}}
+\newlabel{tab:erroranalysisGPS}{{1}{4}}
+\newlabel{tab:erroranalysisGPS@cref}{{[table][1][]1}{4}}
+\newlabel{latitude}{{1}{4}}
+\newlabel{latitude@cref}{{[equation][1][]1}{4}}
+\citation{fptuner,darulova2018daisy}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Preliminaries}{5}}
+\newlabel{sec:preliminaries}{{3}{5}}
+\newlabel{sec:preliminaries@cref}{{[section][3][]3}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Floating-Point Arithmetic}{5}}
+\newlabel{subsec:fparith}{{3.1}{5}}
+\newlabel{subsec:fparith@cref}{{[subsection][1][3]3.1}{5}}
+\citation{higham2002accuracy}
+\citation{ieee754}
+\citation{higham2002accuracy}
+\citation{darulova2018daisy}
+\citation{2015_fm_sjrg,solovyev2018rigorous}
+\citation{parker2000monte}
+\newlabel{eq:traditional}{{2}{6}}
+\newlabel{eq:traditional@cref}{{[equation][2][]2}{6}}
+\newlabel{eq:probabilistic}{{3}{6}}
+\newlabel{eq:probabilistic@cref}{{[equation][3][]3}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Probability Theory}{6}}
+\newlabel{subsec:prob}{{3.2}{6}}
+\newlabel{subsec:prob@cref}{{[subsection][2][3]3.2}{6}}
+\citation{springer1979algebra}
+\citation{rothschild1970increasing}
+\citation{ferson2015constructing}
+\citation{bouissou2012generalization,probdaisy}
+\newlabel{eq:pdfarithm}{{4}{7}}
+\newlabel{eq:pdfarithm@cref}{{[equation][4][]4}{7}}
+\citation{ferson2015constructing}
+\citation{bouissou2012generalization}
+\citation{dahlqvist2019probabilistic}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Distribution of Floating-Point Roundoff Errors}{8}}
+\newlabel{sec:errordist}{{4}{8}}
+\newlabel{sec:errordist@cref}{{[section][4][]4}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Derivation of the Distribution of Rounding Errors}{8}}
+\newlabel{subsec:LPerror_dist}{{4.1}{8}}
+\newlabel{subsec:LPerror_dist@cref}{{[subsection][1][4]4.1}{8}}
+\citation{dahlqvist2019probabilistic}
+\newlabel{eq:densitydecomp}{{5}{9}}
+\newlabel{eq:densitydecomp@cref}{{[equation][5][]5}{9}}
+\newlabel{thm:LP_errorDensity}{{1}{9}}
+\newlabel{thm:LP_errorDensity@cref}{{[theorem][1][1]1}{9}}
+\newlabel{eq:LPerrorDensity}{{6}{9}}
+\newlabel{eq:LPerrorDensity@cref}{{[equation][6][]6}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Error distribution versus the corresponding empirical error distributions, clockwise from top-left: (i) \cref  {eq:LPerrorDensity} for $\mathsf  {Unif}(2,4)$ 3 bit exponent, 4 bit significand, (ii) \cref  {eq:LPerrorDensity} for $\mathsf  {Unif}(2,4)$ in half-precision, (iii) \cref  {eq:HPerrorDensity} for $\mathsf  {Unif}(7,8)$ in single-precision, (iv) \cref  {eq:HPerrorDensity} for $\mathsf  {Unif}(4,5)$ in single-precision, (v) \cref  {eq:HPerrorDensity} for $\mathsf  {Unif}(4,32)$ in single-precision, (vi) \cref  {eq:HPerrorDensity} for $\mathsf  {Norm}(0,1)$ in single-precision.\relax }}{10}}
+\newlabel{fig:error_dist}{{2}{10}}
+\newlabel{fig:error_dist@cref}{{[figure][2][]2}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}High-Precision Case}{10}}
+\newlabel{subsec:HPerror_dist}{{4.2}{10}}
+\newlabel{subsec:HPerror_dist@cref}{{[subsection][2][4]4.2}{10}}
+\newlabel{thm:HP_errorDensity}{{2}{10}}
+\newlabel{thm:HP_errorDensity@cref}{{[theorem][2][1]2}{10}}
+\newlabel{eq:HPerrorDensity}{{7}{10}}
+\newlabel{eq:HPerrorDensity@cref}{{[equation][7][]7}{10}}
+\citation{dahlqvist2019probabilistic}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Typical Distribution}{11}}
+\newlabel{subsec:typical}{{4.3}{11}}
+\newlabel{subsec:typical@cref}{{[subsection][3][4]4.3}{11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Typical distribution.\relax }}{11}}
+\newlabel{fig:typical}{{3}{11}}
+\newlabel{fig:typical@cref}{{[figure][3][]3}{11}}
+\newlabel{thm:typical_dist}{{3}{11}}
+\newlabel{thm:typical_dist@cref}{{[theorem][3][1]3}{11}}
+\newlabel{eq:typicalpdf}{{8}{11}}
+\newlabel{eq:typicalpdf@cref}{{[equation][8][]8}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Covariance Structure}{11}}
+\newlabel{subsec:covar}{{4.4}{11}}
+\newlabel{subsec:covar@cref}{{[subsection][4][4]4.4}{11}}
+\newlabel{eq:covdef}{{9}{11}}
+\newlabel{eq:covdef@cref}{{[equation][9][]9}{11}}
+\citation{affineoriginal}
+\citation{intervalarithmetic}
+\newlabel{eq:expdef}{{10}{12}}
+\newlabel{eq:expdef@cref}{{[equation][10][]10}{12}}
+\newlabel{thm:covar}{{4}{12}}
+\newlabel{thm:covar@cref}{{[theorem][4][1]4}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Error Terms and P-Boxes}{12}}
+\newlabel{subsec:errorpbox}{{4.5}{12}}
+\newlabel{subsec:errorpbox@cref}{{[subsection][5][4]4.5}{12}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Symbolic Affine Arithmetic}{12}}
+\newlabel{sec:symbolicaffine}{{5}{12}}
+\newlabel{sec:symbolicaffine@cref}{{[section][5][]5}{12}}
+\citation{affinebook}
+\citation{solovyev2018rigorous}
+\citation{K81c}
+\newlabel{eq:affineform}{{11}{13}}
+\newlabel{eq:affineform@cref}{{[equation][11][]11}{13}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Algorithm and Implementation}{13}}
+\newlabel{sec:model}{{6}{13}}
+\newlabel{sec:model@cref}{{[section][6][]6}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Probabilistic model}{13}}
+\newlabel{subsec:model}{{6.1}{13}}
+\newlabel{subsec:model@cref}{{[subsection][1][6]6.1}{13}}
+\citation{bouissou2012generalization}
+\citation{Z3}
+\citation{dReal}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Toolflow of \textsc  {PAF}\xspace  .\relax }}{14}}
+\newlabel{fig:toolflow}{{4}{14}}
+\newlabel{fig:toolflow@cref}{{[figure][4][]4}{14}}
+\newlabel{eq:model}{{12}{14}}
+\newlabel{eq:model@cref}{{[equation][12][]12}{14}}
+\citation{bouissou2012generalization}
+\citation{gelpia}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Dependent Operation $Z=X\nobreakspace  {}\mathrm  {op}\nobreakspace  {}Y$\relax }}{15}}
+\newlabel{dependentalg}{{1}{15}}
+\newlabel{dependentalg@cref}{{[algorithm][1][]1}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Computing Probabilistic Ranges for Dependent Operands}{15}}
+\newlabel{subsec:dependentOperation}{{6.2}{15}}
+\newlabel{subsec:dependentOperation@cref}{{[subsection][2][6]6.2}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Computing Conditional Roundoff Error}{15}}
+\newlabel{subsec:conderror}{{6.3}{15}}
+\newlabel{subsec:conderror@cref}{{[subsection][3][6]6.3}{15}}
+\citation{fpbench,fpbench-web}
+\citation{probdaisy}
+\citation{probdaisy}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Conditional Roundoff Error Computation\relax }}{16}}
+\newlabel{conderror}{{2}{16}}
+\newlabel{conderror@cref}{{[algorithm][2][]2}{16}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Experimental Evaluation}{16}}
+\newlabel{sec:evaluation}{{7}{16}}
+\newlabel{sec:evaluation@cref}{{[section][7][]7}{16}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Roundoff error bounds reported by \textsc  {PAF}\xspace  , PrAn, and FPTaylor given uniform (uni), normal (norm), and Laplace (exp) input distributions. We set the confidence interval to 99\% for \textsc  {PAF}\xspace  and PrAn, and mark the smallest reported roundoff errors for each benchmark in bold. Asterisk (*) highlights a difference of more than one order of magnitude between \textsc  {PAF}\xspace  and FPTaylor.\relax }}{17}}
+\newlabel{erroranalysis}{{2}{17}}
+\newlabel{erroranalysis@cref}{{[table][2][]2}{17}}
+\citation{bouissou2012generalization}
+\citation{probdaisy}
+\citation{bouissou2012generalization}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Related Work}{18}}
+\newlabel{sec:related-work}{{8}{18}}
+\newlabel{sec:related-work@cref}{{[section][8][]8}{18}}
+\citation{von1947numerical}
+\citation{parker2000monte}
+\citation{kahan1996improbability}
+\citation{higham2019new}
+\citation{ipsen2019probabilistic}
+\citation{gappa,gappapp,smartfloat,fluctuat,rangelab,precisa,darulova2018daisy,2015_fm_sjrg,solovyev2018rigorous,rosa,magron2017certified,pldi16-bit-level-fp-verification,zhendong2015,satire}
+\citation{affineoriginal}
+\citation{intervalarithmetic}
+\citation{affinebook}
+\citation{rigorousaffine}
+\citation{rosa}
+\citation{2015_fm_sjrg,solovyev2018rigorous}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusions and Future Work}{19}}
+\newlabel{sec:conclusions}{{9}{19}}
+\newlabel{sec:conclusions@cref}{{[section][9][]9}{19}}
+\citation{fptuner}
+\bibstyle{plain}
+\bibdata{refs}
+\bibcite{bornholt2013abstractions}{1}
+\bibcite{bornholt2014uncertain}{2}
+\bibcite{bouissou2012generalization}{3}
+\bibcite{fptuner}{4}
+\bibcite{affineoriginal}{5}
+\bibcite{dahlqvist2019probabilistic}{6}
+\bibcite{fpbench}{7}
+\bibcite{darulova2018daisy}{8}
+\bibcite{smartfloat}{9}
+\bibcite{rosa}{10}
+\bibcite{satire}{11}
+\bibcite{gappa}{12}
+\bibcite{Z3}{13}
+\bibcite{fluctuat}{14}
+\bibcite{dudley2002real}{15}
+\bibcite{ferson2015constructing}{16}
+\bibcite{fpbench-web}{17}
+\bibcite{zhendong2015}{18}
+\bibcite{dReal}{19}
+\bibcite{gelpia}{20}
+\bibcite{glasserman2013monte}{21}
+\bibcite{higham2002accuracy}{22}
+\bibcite{higham2019new}{23}
+\bibcite{ipsen2019probabilistic}{24}
+\bibcite{kahan1996improbability}{25}
+\bibcite{kajiya1986rendering}{26}
+\bibcite{K81c}{27}
+\bibcite{landau2014guide}{28}
+\bibcite{pldi16-bit-level-fp-verification}{29}
+\bibcite{lepage1980vegas}{30}
+\bibcite{gappapp}{31}
+\bibcite{probdaisy}{32}
+\bibcite{magron2017certified}{33}
+\bibcite{rangelab}{34}
+\bibcite{rigorousaffine}{35}
+\bibcite{ieee754}{36}
+\bibcite{intervalarithmetic}{37}
+\bibcite{parker2000monte}{38}
+\bibcite{press1990recursive}{39}
+\bibcite{press1988numerical}{40}
+\bibcite{rothschild1970increasing}{41}
+\bibcite{solovyev2018rigorous}{42}
+\bibcite{2015_fm_sjrg}{43}
+\bibcite{springer1979algebra}{44}
+\bibcite{affinebook}{45}
+\bibcite{precisa}{46}
+\bibcite{valiant1984theory}{47}
+\bibcite{von1947numerical}{48}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Proofs}{23}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Proofs for \cref  {subsec:LPerror_dist}.}{23}}
+\newlabel{lem:floorceil}{{1}{23}}
+\newlabel{lem:floorceil@cref}{{[lemma][1][2147483647,1]1}{23}}
+\newlabel{lem:Ccoeff}{{2}{24}}
+\newlabel{lem:Ccoeff@cref}{{[lemma][2][2147483647,1]2}{24}}
+\newlabel{lem:trange}{{3}{24}}
+\newlabel{lem:trange@cref}{{[lemma][3][2147483647,1]3}{24}}
+\newlabel{eq:case_one_half}{{13}{25}}
+\newlabel{eq:case_one_half@cref}{{[equation][13][2147483647]13}{25}}
+\newlabel{eq:Taylor}{{14}{25}}
+\newlabel{eq:Taylor@cref}{{[equation][14][2147483647]14}{25}}
+\newlabel{eq:error_term}{{15}{26}}
+\newlabel{eq:error_term@cref}{{[equation][15][2147483647]15}{26}}
+\newlabel{eq:pdfleq1/2}{{16}{27}}
+\newlabel{eq:pdfleq1/2@cref}{{[equation][16][2147483647]16}{27}}
+\newlabel{eq:pdfgeq1/2}{{17}{27}}
+\newlabel{eq:pdfgeq1/2@cref}{{[equation][17][2147483647]17}{27}}
+\newlabel{prop:ExpError}{{1}{28}}
+\newlabel{prop:ExpError@cref}{{[proposition][1][2147483647,1]1}{28}}
+\newlabel{prop:expXerelX}{{2}{29}}
+\newlabel{prop:expXerelX@cref}{{[proposition][2][2147483647,1]2}{29}}
+\citation{dudley2002real}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Implementation}{32}}
+\newlabel{sec:appdx-implementation}{{B}{32}}
+\newlabel{sec:appdx-implementation@cref}{{[subappendix][2][2147483647]B}{32}}
+\newlabel{sec:appdx-independent}{{B}{32}}
+\newlabel{sec:appdx-independent@cref}{{[subappendix][2][2147483647]B}{32}}
+\@writefile{toc}{\contentsline {subsubsection}{Independent Operation.}{32}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Independent Operation $Z=X\nobreakspace  {}\mathrm  {op}\nobreakspace  {}Y$\relax }}{32}}
+\newlabel{independentalg}{{3}{32}}
+\newlabel{independentalg@cref}{{[algorithm][3][2147483647]3}{32}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Linear Programming Routine}{32}}
+\newlabel{sec:appdx-lp}{{B.1}{32}}
+\newlabel{sec:appdx-lp@cref}{{[subsubappendix][1][2147483647,2]B.1}{32}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Comparison between \textsc  {PAF}\xspace  , given uniform (uni), normal (norm) and exponential (exp) input distributions, and FPTaylor. The PAF columns report 99\% of the support of the output range distribution. The FPTaylor columns report the worst-case output ranges. The asterisk (*) highlights a difference of more than one order of magnitude between \textsc  {PAF}\xspace  and FPTaylor.\relax }}{33}}
+\newlabel{rangeanalysis}{{3}{33}}
+\newlabel{rangeanalysis@cref}{{[table][3][2147483647]3}{33}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Experimental Evaluation}{33}}
+\newlabel{sec:appdx-evaluation}{{C}{33}}
+\newlabel{sec:appdx-evaluation@cref}{{[subappendix][3][2147483647]C}{33}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces CDFs of the range (left) and error (right) distributions for the benchmark \emph  {train3} for uniform (top), normal (center), and exp (bottom).\relax }}{34}}
+\newlabel{fig:range_error_traincar}{{5}{34}}
+\newlabel{fig:range_error_traincar@cref}{{[figure][5][]5}{34}}

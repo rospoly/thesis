@@ -1,0 +1,65 @@
+\section{Conclusions and Future Work}
+\label{sec:conclusions}
+
+In this paper, we presented our approach to computing rigorous (i.e., sound)
+probabilistic roundoff error bounds for arithmetic floating-point computations
+involving random variables. 
+%
+First, we showed how to explicitly compute the error distribution of
+floating-point arithmetic operations directly from the distributions of the
+input random variables.
+%
+Then, we demonstrated how the random variable and the corresponding error
+distribution are close to being uncorrelated.
+%
+We leverage this to be able to rigorously compute operations between random
+floating-point variables, and thus perform rigorous probabilistic range
+analysis.
+%
+We showed how to do this even in the complex case of dependent operands using
+our novel combination of p-boxes and SMT solving.
+%
+We use our probabilistic range analysis to compute conditional roundoff errors
+where, as opposed to the worst-case approach, the (symbolic) error expression
+gets maximized constrained to the output landing in a given confidence interval
+of interest (e.g., 99\%). 
+%
+We implemented our approach in a prototype tool named \Tool, and we compared
+\Tool on a popular benchmark suite with state-of-the-art tools for
+probabilistic as well as worst-case error analysis.
+%
+Our results show that \Tool almost always outperforms the state-of-the-art
+probabilistic analysis tool PrAn in terms of generating tighter, but still
+rigorous, error bounds.
+%
+Moreover, we observe that worst-case roundoff errors can be very pessimistic in
+some cases, and that \Tool can reduce such error bounds by several orders of
+magnitude.
+
+
+
+As future work, we plan to explore the potential use of our probabilistic range
+analysis to perform probabilistic overflow detection.
+%
+Together with a warning about a potential overflow, a user would also
+get from \Tool a rigorous bound on the probability of the overflow happening.
+%
+This would allow users to perform a more detailed risk analysis in order to decide
+whether a mitigation effort is needed.
+%
+We envision a similar use case for the probabilistic division-by-zero
+detection.
+%
+Finally, in our motivating example (see \cref{sec:overview}), we performed
+manual probabilistic precision tuning to further drive the point that
+probabilistic error analysis is needed in many settings.
+%
+In fact, \Tool can be used as a back-end roundoff error analyzer as a part of
+an existing precision tuner (such as FPTuner~\cite{fptuner}).
+%
+In such a setup, the confidence interval becomes a new key parameter in the
+precision tuning process, thereby allowing for programmers to explore a richer
+space of trade-offs.
+%
+We plan to explore this line of work in the future.
+

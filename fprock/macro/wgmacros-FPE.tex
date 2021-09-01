@@ -1,0 +1,512 @@
+\makeatletter
+\@ifpackageloaded{MnSymbol}{}{\PackageWarning{WGmacros}%
+{Please load `MnSymbol' package explicitely in preamble}
+\RequirePackage{MnSymbol}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                               %
+%   overrides of general defs   %
+%                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand*{\wrt}{with respect to}
+
+\renewcommand*{\MGCsym}{\mathbb{M}} %% most general call set
+
+\renewcommand*{\genrule}[2]{#1 = #2}
+
+% \renewcommand*{\C}[1][]{\mathbb{M}_{#1}}
+% \renewcommand*{\Ctop}[1][]{\mathbf{M}_{#1}}
+% \renewcommand*{\Cbot}{\emptyset}
+
+% \renewcommand*{\eval}[4][\alpha]{\syntaxoper{\mathit{A}^{#1}}{#3}{{#4}}} %% semantic evaluation
+\renewcommand*{\Q}[2]{\ifempty{#2}{#1}{#2 \mathbin{.} #1}} % D.A -> \Q{A}{D}
+\renewcommand*{\TpSym}{\mathC{D}}
+\renewcommand*{\TrSym}{\mathC{P}} %% semantics tree in P
+\renewcommand*{\evalSym}{\mathC{A}}
+
+%\renewcommand*{\Fsyms}{\CSys,\Psyms}
+%\renewcommand*{\Csyms}{\Fbox{fix}\CSys} %% constructor symbols
+%\renewcommand*{\Dsyms}{\Psyms} %% defined symbols
+
+% \renewcommand*{\ProgSym}{D} %% generic program=set of decls
+% Insieme degli insiemi di dichiarazioni: si usa \Progs
+% \renewcommand*{\ProgsSym}{\mathbb{D}} %\mathit{Progs}
+% \renewcommand*{\Progs}{\ProgsSym^{\Psyms}} % \mathit{Progs}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                             %
+%   Subject Specific macros   %
+%                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\newcommand*{\N}{\ensuremath{\mathbb{N}}}
+\newcommand*{\R}{\ensuremath{\mathbb{R}}}
+\newcommand*{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand*{\Fp}{\ensuremath{\mathbb{F}}}
+
+\newcommand*{\Interv}[1]{\mathit{Int} \ifempty{#1}{}{_{#1}}}
+
+\newcommand*{\D}{\prog} %% generic program Alias
+
+% \newcommand*{\Conds}[1][\CSys]{\Lambda_{#1}}%\mathit{Agents}
+% \newcommand*{\ValConds}[1][\CSys]{\Delta_{#1}}%\mathit{Agents}
+
+
+\newcommand*{\round}{\parensmathoper{\rho}}
+\newcommand*{\real}{\parensmathoper{\mathit{\chi_{r}}}}
+\newcommand*{\err}{\parensmathoper{\mathit{\chi_{e}}}}
+% \newcommand*{\fp}{\parensmathoper{\mathit{\chi_{\mathit{fp}}}}}
+
+\newcommand*{\evalC}[3][\alpha]{\syntaxoper{\bar{\evalSym}^{#1}}{#2}{{#3}}} %compact eval
+\newcommand*{\TpC}[3][\alpha]{\syntaxoper{\bar{\TpSym}^{#1}}{#2}{{#3}}}%compact Tp
+\newcommand*{\FC}[2][\alpha]{\syntaxoper{\bar{\FSym}^{#1}}{#2}{}}%compact fixpoint
+
+\newcommand*{\Conf}{\mathit{Conf}}% insieme di configurazioni
+
+\newcommand*{\clauseif}{\ensuremath{\mathrel{\mathord{:}\mathord{-}}}}
+
+\newcommand*{\ra}{\rightarrow}
+\newcommand*{\nra}{\not\rightarrow}
+
+%% Syntax %%
+
+\newcommand*{\ADSB}{ADS-B} 
+\newcommand*{\CPR}{CPR} 
+
+\newcommand*{\FPtoR}{\parensmathoper{{R}}}
+% \newcommand*{\RtoS}{\parensmathoper{\mathit{RtoS}}}
+% \newcommand*{\RtoD}{\parensmathoper{\mathit{RtoD}}}
+\newcommand*{\RtoF}[2][]{\mathit{F}_{#1}\ifempty{#2}{}{(#2)}}
+\newcommand*{\FtoR}{\parensmathoper{\mathit{R}}}
+%  {}
+% \newcommand*{\FtoRA}{\parensmathoper{\mathbf{F}_{A}}}
+\newcommand*{\FtoRB}{\parensmathoper{\mathit{R}_{\FBExprDom}}}
+\newcommand*{\FtoRA}{\parensmathoper{\mathit{R}_{\FAExprDom}}}
+
+
+
+\newcommand*{\ErrExpr}{\mathit{E}}
+\newcommand*{\IntExpr}{\mathit{I}}
+
+
+
+
+\newcommand*{\AExpr} {\mathit{A}}
+\newcommand*{\BExpr} {\mathit{B}}
+\newcommand*{\FAExpr}{\widetilde{\mathit{A}}}
+\newcommand*{\FBExpr}{\widetilde{\mathit{B}}}
+% \newcommand*{\FAEdom}{\mathit{AExpr}}
+% \newcommand*{\FAEdom}{\mathit{BExpr}}
+% \newcommand*{\FAEdom}{\widetilde{\mathit{AExpr}}}
+% \newcommand*{\FAEdom}{\widetilde{\mathit{BExpr}}}
+\newcommand*{\AExprDom} {\mathbb{A}}
+\newcommand*{\BExprDom} {\mathbb{B}}
+\newcommand*{\FAExprDom}{\widetilde{\mathbb{A}}}
+\newcommand*{\FBExprDom}{\widetilde{\mathbb{B}}}
+
+
+\newcommand*{\leqB}{\mathrel{\Rightarrow}}
+\newcommand*{\nleqB}{\mathrel{\not\Rightarrow}}
+\newcommand*{\equivB}{\mathrel{\Leftrightarrow}}
+
+\newcommand*{\EExpr} {\mathit{E}}
+\newcommand*{\EExprDom}{\mathbb{E}}
+\newcommand*{\Einf}{+\infty}
+
+
+\newcommand*{\StmDom}{\mathbb{S}}
+\newcommand*{\Stm}{\mathit{S}}
+\newcommand*{\FStmDom}{\mathbb{S}} %{\widetilde{\mathbb{E}}}
+\newcommand*{\FStm}{\mathit{S}} % {\widetilde{\mathit{E}}}
+\newcommand*{\Decl}{\mathit{Decl}}
+\newcommand*{\Prog}{\mathbb{P}}
+\newcommand*{\FProg}{\widetilde{\mathbb{P}}}
+
+\newcommand*{\leqCEB}{\mathrel{\leq}}
+% \newcommand*{\leCEB}{<}
+\newcommand*{\leqE}{\mathrel{\leq}}
+\newcommand*{\Vars}{\parensmathoper{\mathit{vars}}}
+
+\newcommand*{\supC}{\mathbf{C}}
+\monobioperator{\lubC}{\sqcup}{\bigsqcup}
+\monobioperator{\glbC}{\sqcap}{\bigsqcap}
+\newcommand*{\leqC}{\mathrel{\sqsubseteq}}
+\newcommand*{\topC}{\supC}
+\newcommand*{\botC}{\emptyset}
+% \newcommand*{\botC}{\{\cerr{\true}{\true}{\emptyset}{0}{\emptyPath}{\stt}, \cerr{\true}{\true}{\emptyset}{0}{\emptyPath}{\unstt} \}}
+\newcommand*{\latticeC}{\lattice{\C}{\leqC{}{}}{\lubC{}{}}{\glbC{}{}}{\topC}{\botC}}
+
+\renewcommand*{\A}[1][\paths]{\dot{\mathbb{C}}_{#1}}
+\newcommand*{\supA}[1][\paths]{\dot{\mathbf{C}}}
+\monobioperator{\lubA}{\mathrel{\dot\sqcup}}{\dot\bigsqcup}
+\monobioperator{\glbA}{\mathrel{\dot\sqcap}}{\dot\bigsqcap}
+\newcommand*{\leqA}{\mathrel{\dot\sqsubseteq}}
+\newcommand*{\topA}{\top_{\A}}
+\newcommand*{\botA}{\emptyset}
+\newcommand*{\latticeA}{\lattice{\A}{\leqA{}{}}{\lubA{}{}}{\glbA{}{}}{\topA}{\botA}}
+\newcommand*{\elemA}{\dot{C}}
+\newcommand*{\elema}{\dot{c}}
+
+% meta-variables
+\newcommand*{\fpcnst}{\mathit{\tilde{d}}}
+\newcommand*{\rcnst}{\mathit{d}}
+\newcommand*{\rval}{\mathit{v}}
+\newcommand*{\fpval}{\tilde{\mathit{v}}}
+\newcommand*{\rx}{\mathit{x}}
+\newcommand*{\fpx}{\tilde{\mathit{x}}}
+
+% \newcommand*{\mvFA}{\widetilde{\mathit{A}}}
+% \newcommand*{\mvFB}{\widetilde{\mathit{B}}}
+% \newcommand*{\mvFE}{\mathit{E}}
+% \newcommand*{\mvA}{\mathit{A}}
+% \newcommand*{\mvB}{\mathit{B}}
+% \newcommand*{\mvE}{\mathit{E}}
+
+\newcommand*{\FExpr}{\FStm}
+\newcommand*{\FExprDom}{\FStmDom}
+
+\newcommand{\bexpr}{\phi}
+\newcommand{\vraexpr}{\mathit{expr}}
+\newcommand{\vfpaexpr}{\widetilde{\vraexpr}}
+
+
+\newcommand*{\fprog}{P}
+
+\newcommand*{\fpfun}{\tilde{f}}
+\newcommand*{\rfun}{f}
+\newcommand*{\fpaexpr}{\tilde{A}}
+\newcommand*{\stm}{S}
+
+
+\newcommand*{\rop}{\odot}
+\newcommand*{\fop}{\mathrel{\widetilde{\odot}}}
+
+\newcommand*{\unbs}{\mathit{single}}
+\newcommand*{\unbd}{\mathit{double}}
+
+\newcommand*{\pvsrule}[3]{\genrule{\mathit{#1}\ifempty{#2}{}{\mathit{(#2)}}}{#3}}
+\newcommand*{\type}{\mathit{type}}
+
+\newcommand*{\taglet}{\mathrel{\mathit{let}}}
+\newcommand*{\tagin}{\mathrel{\mathit{in}}}
+\newcommand*{\tagif}{\mathrel{\mathit{if}}}
+\newcommand*{\tagthen}{\mathrel{\mathit{then}}}
+\newcommand*{\tagelse}{\mathrel{\mathit{else}}}
+\newcommand*{\tagelsif}{\mathrel{\mathit{elsif}}}
+\newcommand*{\tagendif}{\mathrel{\mathit{fi}}}
+\newcommand*{\letStm}[3]{\taglet #1=#2 \tagin #3}
+\newcommand*{\ite}[3]{\tagif #1 \tagthen #2 \ifempty{#3}{}{\tagelse #3}}
+\newcommand*{\forit}[4]{\mathit{for}(#1,#2,#3,#4)}
+\newcommand*{\apcall}[2]{\mathit{#1}\ifempty{#2}{}{(\mathit{#2})}}
+\newcommand*{\stabWarning}{\mathit{warning}}
+
+\newcommand*{\grel}{\mathrel{\diamond}}
+\newcommand*{\gbin}{\mathrel{\odot}}
+\newcommand*{\gmono}{\parensmathoper{\mathit{f}}}
+
+% \newcommand*{\modA}[2]{\mathit{mod} \ifempty{#1}{}{(#1,#2)}}
+% \newcommand*{\powA}[2]{\mathit{pow}(#1,#2)}
+\newcommand*{\floorA}[1]{\lfloor #1 \rfloor}
+\newcommand*{\absA}[1]{\left| #1 \right|}
+\newcommand*{\sqrtA}{\sqrt}
+\newcommand*{\sinA}{\parensmathoper{\mathit{sin}}}
+\newcommand*{\cosA}{\parensmathoper{\mathit{cos}}}
+
+\newcommand*{\Radd}[2]{\ifempty{#1}{\mathop{+}}{#1 \mathop{\tilde{+}} #2}}
+\newcommand*{\Rsub}[2]{\ifempty{#1}{\mathop{-}}{#1 \mathop{\tilde{-}} #2}}
+\newcommand*{\Rmul}[2]{\ifempty{#1}{\mathop{*}}{#1 \mathop{\tilde{*}} #2}}
+\newcommand*{\Rdiv}[2]{\ifempty{#1}{\mathop{/}}{#1 \mathop{\tilde{/}} #2}}
+\newcommand*{\Rmod}[2]{\mathit{mod}\ifempty{#1}{}{(#1, #2)}}
+\newcommand*{\Rfloor}[1]{\mathit{floor} \ifempty{#1}{}{(#1)}}
+\newcommand*{\Rsqrt}[1]{\mathit{sqrt}\ifempty{#1}{}{(#1)}}
+\newcommand*{\Rabs}[1]{\mathit{abs}\ifempty{#1}{}{(#1)}}
+\newcommand*{\Rneg}[1]{- \ifempty{#1}{}{#1}}
+\newcommand*{\Rsin}[1]{\mathit{sin}\ifempty{#1}{}{(#1)}}
+\newcommand*{\Rcos}[1]{\mathit{cos}\ifempty{#1}{}{(#1)}}
+\newcommand*{\Rarctan}{\parensmathoper{\mathit{atan}}}
+\newcommand*{\Rln}{\parensmathoper{\mathit{ln}}}
+
+\newcommand*{\Fadd}[2]{\ifempty{#1}{\mathop{\tilde{+}}}{#1 \mathop{\tilde{+}} #2}}
+\newcommand*{\Fsub}[2]{\ifempty{#1}{\mathop{\tilde{-}}}{#1 \mathop{\tilde{-}} #2}}
+\newcommand*{\Fmul}[2]{\ifempty{#1}{\mathop{\tilde{*}}}{#1 \mathop{\tilde{*}} #2}}
+\newcommand*{\Fdiv}[2]{\ifempty{#1}{\mathop{\tilde{/}}}{#1 \mathop{\tilde{/}} #2}}
+\newcommand*{\Fmod}[2]{\ifempty{#1}{\widetilde{\mathit{mod}}}{\widetilde{\mathit{mod}}(#1, #2)}}
+\newcommand*{\Ffloor}[1]{\ifempty{#1}{\widetilde{\mathit{floor}}}{\widetilde{\mathit{floor}}(#1)}}
+\newcommand*{\Fsqrt}[1]{\ifempty{#1}{\widetilde{\mathit{sqrt}}}{\widetilde{\mathit{sqrt}}(#1)}}
+\newcommand*{\Fabs}[1]{\ifempty{#1}{\widetilde{\mathit{abs}}}{\widetilde{\mathit{abs}}(#1)}}
+\newcommand*{\Fneg}[1]{\ifempty{#1}{\tilde{-}}{\tilde{-} #1}}
+\newcommand*{\Fsin}[1]{\ifempty{#1}{\widetilde{\mathit{sin}}}{\widetilde{\mathit{sin}}(#1)}}
+\newcommand*{\Fcos}[1]{\ifempty{#1}{\widetilde{\mathit{cos}}}{\widetilde{\mathit{cos}}(#1)}}
+\newcommand*{\Farctan}{\parensmathoper{\widetilde{\mathit{atan}}}}
+\newcommand*{\Fln}{\parensmathoper{\widetilde{\mathit{ln}}}}
+
+\newcommand*{\minp}{\parensmathoper{\mathit{min}}}
+
+
+\renewcommand*{\I}{I} % {\rho}
+\newcommand*{\Var}{\mathbb{V}}%variabili
+\newcommand*{\FVar}{\widetilde{\mathbb{V}}}%variabili
+\newcommand*{\Env}{\mathit{Env}} % \mathbb{E}}\mathit{Env}
+\newcommand*{\EnvA}[1][\paths]{\dot{\mathit{Env}}_{#1}} % \mathbb{E}}\mathit{Env}
+\newcommand*{\Interp}{\mathbb{I}} % \mathbb{I}
+
+\newcommand*{\env}{\nu}
+
+\newcommand{\fvar}[1][x]{\tilde{#1}}
+
+\newcommand*{\botEnv}{\bot_{\Env}}
+\newcommand*{\botEnvA}{\bot_{\EnvA[]}}
+\newcommand*{\botI}{\bot_{\mathit{\Interp}}}
+
+\newcommand*{\botUnstt}{\bot_{\unstt}}
+
+\newcommand*{\Bfalse}{\mathit{false}} 
+\newcommand*{\Btrue}{\mathit{true}} 
+
+\newcommand*{\Pt}{\mathit{\Pi}}
+\newcommand*{\pt}{\mathit{\pi}}
+
+\newcommand*{\ruleVar}[1]{\mathit{\pi_{\mathit{var}}}\ifempty{#1}{}{(#1)}}
+\newcommand*{\ruleNum}[1]{\mathit{\pi_{\mathit{cnst}}}\ifempty{#1}{}{(#1)}}
+\newcommand*{\rulef}[2]{\pi_{#1}\ifempty{#2}{}{(#2)}}
+\newcommand*{\ruleUnIte}[3]{\pi_{\mathit{un}}\ifempty{#1}{}{(#1,#2,#3)}}
+
+\newcommand*{\botIA}{{\bot}_{\mathit{\InterpA}}}
+
+%% Semantics %%
+
+\newcommand*{\ceb}{conditional error bound} 
+\newcommand*{\cebs}{conditional error bounds} 
+
+\newcommand*{\propGuard}[3]{\ifempty{#1}{\Downarrow}{\ifempty{#2}{\Downarrow_{\cond{#1}{#2}}} {{#3}\Downarrow_{\cond{#1}{#2}}}}}
+
+\newcommand*{\ApropGuard}[2]{\ifempty{#1}{\dot{\Downarrow}}{\ifempty{#2}{\dot{\Downarrow}_{#1}} {{#2}\dot{\Downarrow}_{#1}}}}
+
+\newcommand*{\Ii}{\Cinterps}%dominio interpretazione di un prog.
+
+\newcommand*{\ce}[3]{(#1,#2,#3)}
+\newcommand*{\cec}[5]{(#1, #2, #3, #4, #5)}
+\newcommand*{\cerr}[6]{\langle #1, #2 \rangle_{#6} \twoheadrightarrow (#3, #4)^{#5}}
+\newcommand*{\cond}[2]{(#1, #2)}
+\newcommand*{\ct}[5]{\langle #1, #2 \rangle_{#5} \twoheadrightarrow (#3, #4)}
+
+\newcommand*{\rcond}{\eta}
+\newcommand*{\fpcond}{\tilde{\eta}}
+\newcommand*{\rres}{r}
+\newcommand*{\fpres}{\tilde{r}}
+
+\newcommand*{\cerrA}[5]{\langle #1 \rangle_{#5} \twoheadrightarrow (#2, #3)^{#4}}
+
+\newcommand*{\stt}{\mathbf{s}}
+\newcommand*{\unstt}{\mathbf{u}}
+
+
+\newcommand*{\Cond}{\mathit{Cond}}
+
+\newcommand*{\Aa}{\eval[]{}} % [2]{#1}{#2}sem agente
+
+\newcommand*{\Asem}[2]{\mathoper{\mathcal{A}}\ifempty{#1}{}{\llbracket#1\rrbracket_{#2}}}
+\newcommand*{\Bsem}[2]{\mathoper{\mathcal{B}}\ifempty{#1}{}{\llbracket#1\rrbracket_{#2}}}
+\newcommand*{\Ssem}[3]{\mathoper{\mathcal{E}}\ifempty{#1}{}{\llbracket#1\rrbracket_{#2}}}
+\newcommand*{\Dsem}[2]{\mathoper{\mathcal{P}}\ifempty{#1}{}{\llbracket#1\rrbracket_{#2}}}
+\newcommand*{\Fsem}[1]{\mathoper{\mathcal{F}}\ifempty{#1}{}{\llbracket#1\rrbracket}}
+\newcommand*{\Qq}[2]{\Q{#2}{#1}}
+
+
+
+%% FP formalization %%
+
+\newcommand*{\emin}{e_{\mathit{min}}}
+\newcommand*{\ulp}{\parensmathoper{\mathit{ulp}}}
+% real variables
+\newcommand*{\rv}[1]{\mathit{r}\ifempty{#1}{}{_{#1}}}
+% error values
+\newcommand*{\ev}[1]{\mathit{e}\ifempty{#1}{}{_{#1}}}
+% floating point variables
+\newcommand*{\fpv}[1]{\tilde{\mathit{v}}\ifempty{#1}{}{_{#1}}}
+\newcommand*{\Rfpv}[1]{\FPtoR{\tilde{\mathit{v}}\ifempty{#1}{}{_{#1}}}}
+% exponent 
+\newcommand*{\fpexp}[1]{\ensuremath{\mathit{e}_{#1}}}
+\newcommand*{\fpbase}{\beta}
+\newcommand*{\rbool}{\phi}
+\newcommand*{\fpbool}{\tilde{\phi}}
+% floating-point addition
+\newcommand*{\infixbinmathoper}[3]{\ensuremath{\ifempty{#2}{\mathoper{#1}}{#2\mathoper{#1}#3}}}
+\newcommand*{\fpadd}{\infixbinmathoper{\tilde{+}}}
+\newcommand*{\fpdiv}{\infixbinmathoper{\tilde{/}}}
+% error bound
+\newcommand*{\ebound}[2]{\ensuremath{\epsilon_{#1}\ifempty{#2}{}{(#2)}}}
+% \newcommand*{\eubound}[3]{\ensuremath{\varepsilon_{\unstt}\ifempty{#1}{}{(#1,#2,#3)}}}
+\newcommand*{\eboundA}[2]{\ensuremath{\dot{\epsilon}_{#1}\ifempty{#2}{}{(#2)}}}
+
+%% Tools %%
+
+\newcommand*{\ACSL}{ACSL}
+\newcommand*{\tool}{\precisa}
+\newcommand*{\Tool}{\precisa}
+\newcommand*{\smttool}{FPRoCK}
+\newcommand*{\precisa}{PRECiSA}
+\newcommand*{\RangeLab}{RangeLab}
+\newcommand*{\Fluctuat}{Fluctuat}
+\newcommand*{\Clang}{C}
+\newcommand*{\ADA}{ADA}
+\newcommand*{\Coq}{Coq}
+\newcommand*{\HOLlight}{HOL Light}
+\newcommand*{\VCFloat}{VCFloat}
+\newcommand*{\FPTaylor}{FPTaylor}
+\newcommand*{\Zt}{Z3}
+\newcommand*{\CVCf}{CVC4}
+\newcommand*{\Mathsat}{Mathsat}
+\newcommand*{\Scala}{Scala}
+\newcommand*{\SMT}{SMT}
+\newcommand*{\Gappa}{Gappa}
+\newcommand*{\Caduceus}{Caduceus}
+\newcommand*{\FramaC}{FramaC}
+\newcommand*{\PVS}{PVS}
+\newcommand*{\NASAPVS}{NASA PVS Library}
+\newcommand*{\RealToFloat}{Real2Float}
+\newcommand*{\FPTuner}{FPTuner}
+\newcommand*{\Realizer}{Realizer}
+\newcommand*{\Molly}{Molly}
+\newcommand*{\Colibri}{Colibri}
+
+
+%% Galois Connections %%
+
+\monobioperator{\lubES}{\cup_{\EExprDom}}{\bigcup_{\EExprDom}}
+\monobioperator{\glbES}{\cap_{\EExprDom}}{\bigcap_{\EExprDom}}
+\newcommand*{\leqES}{\mathrel{\subseteq_{\EExprDom}}}
+\newcommand*{\topES}{\{+\infty\}}
+\newcommand*{\botES}{\{0\}}
+\newcommand*{\latticeES}{\lattice{\EExprDom}{\leqES{}{}}{\lubES{{}}{{}}}{\glbES{{}}{{}}}{\topES}{\botES}}
+
+\newcommand*{\AExprDomA}{\dot{\AExprDom}}
+\newcommand*{\leqAA}{\mathrel{\dot{\preceq}}}
+\newcommand*{\topAA}{\top_{\AExprDomA}}
+
+\newcommand*{\EExprDomA}{\dot{\EExprDom}}
+\newcommand*{\leqEA}{\mathrel{\dot{\leq}}}
+\newcommand*{\leEA}{\mathrel{\dot{<}}}
+\newcommand*{\geqEA}{\mathrel{\dot{\geq}}}
+\monobioperator{\lubEA}{\mathrel{\dot{\oplus}}}{\dot{\bigoplus}}
+\monobioperator{\glbEA}{\mathrel{\dot{\otimes}}}{\dot{\bigotimes}}
+\newcommand*{\topEA}{\top_{\EExprDomA}}
+\newcommand*{\botEA}{\bot_{\EExprDomA}}
+
+\newcommand*{\BExprDomA}{\dot{\BExprDom}}
+\newcommand*{\leqBA}{\mathrel{\dot{\Rightarrow}}}
+\newcommand*{\nleqBA}{\mathrel{\dot{\not\Rightarrow}}}
+\monobioperator{\lubBA}{\mathrel{\dot{\vee}}}{\dot{\bigvee}}
+\monobioperator{\glbBA}{\mathrel{\dot{\wedge}}}{\dot{\bigwedge}}
+\newcommand*{\topBA}{\top_{\BExprDomA}}
+\newcommand*{\botBA}{\bot_{\BExprDomA}}
+
+\newcommand*{\leqBS}{\mathrel{\hat{\Rightarrow}}}
+\newcommand*{\equivBS}{\mathrel{\hat{\Leftrightarrow}}}
+\monobioperator{\lubBS}{\mathrel{\hat{\vee}}}{\hat{\bigvee}}
+\monobioperator{\glbBS}{\mathrel{\hat{\wedge}}}{\hat{\bigwedge}}
+\newcommand*{\topBS}{\{\cond{\true}{\true}\}}
+\newcommand*{\botBS}{\{\cond{\false}{\false}\}}
+
+\newcommand*{\latticeEA}{\lattice{\EExprDomA}{\leqEA{}{}}{\lubEA{{}}{{}}}{\glbEA{{}}{{}}}{\topEA}{\botEA}}
+\newcommand*{\latticeBA}{\lattice{\BExprDomA}{\leqBA{}{}}{\lubBA{{}}{{}}}{\glbBA{{}}{{}}}{\topBA}{\botBA}}
+
+\newcommand*{\alphaA}[1]{\alpha_{\AExprDom}\ifempty{#1}{}{(#1)}}
+\newcommand*{\gammaA}[1]{\gamma_{\AExprDom}\ifempty{#1}{}{(#1)}}
+\newcommand*{\alphaE}[1]{\alpha_{\EExprDom}\ifempty{#1}{}{(#1)}}
+\newcommand*{\gammaE}[1]{\gamma_{\EExprDom}\ifempty{#1}{}{(#1)}}
+\newcommand*{\alphaB}[1]{\alpha_{\BExprDom}\ifempty{#1}{}{(#1)}}
+\newcommand*{\gammaB}[1]{\gamma_{\BExprDom}\ifempty{#1}{}{(#1)}}
+
+\newcommand*{\alphak}[2]{\alpha_{#1}\ifempty{#2}{}{(#2)}}
+\newcommand*{\gammak}[2]{\gamma_{#1} \ifempty{#2}{}{(#2)}}
+\newcommand*{\alphakInt}[2]{\bar{\alpha}_{#1}\ifempty{#2}{}{(#2)}}
+\newcommand*{\gammakInt}[2]{\bar{\gamma}_{#1} \ifempty{#2}{}{(#2)}}
+\newcommand*{\alphaU}[1]{\alpha^{\unstt}\ifempty{#1}{}{(#1)}}
+\newcommand*{\gammaU}[1]{\gamma^{\unstt}\ifempty{#1}{}{(#1)}}
+\newcommand*{\alphaUk}[2]{\alpha^{\unstt}_{#1}\ifempty{#2}{}{(#2)}}
+
+\newcommand*{\mergeA}[2]{\ifempty{#2}{\bigodot \ifempty{#1}{}{#1}}{#1 \odot #2}}
+
+\newcommand*{\InterpC}{\mathbb{I}}
+\newcommand*{\InterpA}[1][\pathsInterp]{\dot{\mathbb{I}}_{#1}}
+
+%% Abstract Semantics %%
+
+\newcommand*{\AAsem}[4]{\text{\mathversion{normal2}$\mathoper{\dot{\mathcal{A}}^{{#1}}}$\mathversion{normal}$\ifempty{#2}{}{\llbracket#2\rrbracket^{#4}_{#3}}$}}
+\newcommand*{\ASsem}[5]{\text{\mathversion{normal2}$\mathoper{\dot{\mathcal{E}}^{{#1}}}$\mathversion{normal}$\ifempty{#2}{}{\llbracket#2\rrbracket_{(#3,#4)}^{#5}}$}}
+\newcommand*{\ADsem}[3]{\text{\mathversion{normal2}$\mathoper{\dot{\mathcal{P}}^{{#1}}}$\mathversion{normal}$\ifempty{#2}{}{\llbracket#2\rrbracket_{#3}}$}}
+\newcommand*{\AFsem}[2]{\text{\mathversion{normal2}$\mathoper{\dot{\mathcal{F}}^{{#1}}}$\mathversion{normal}$\ifempty{#2}{}{\llbracket#2\rrbracket}$}}
+
+\newcommand*{\equivA}{\dot{\equiv}}
+
+\newcommand*{\gtrACEB}{\mathrel{\gtrdot}}
+\newcommand*{\leqACEB}{\mathrel{\leqdot}}
+\newcommand*{\geqACEB}{\mathrel{\geqdot}}
+\monobioperator{\lubACEB}{\dot\sqcup}{\dot\bigsqcup}
+
+\newcommand*{\widek}[3]{\ifempty{#2}{\medtriangledown_{#1}}{#2 \medtriangledown_{#1} #3}}
+
+%% Examples %%
+
+\newcommand{\tcpa}{t_{\mbox{\tiny cpa}}}
+
+
+%% Constraint Systems%%
+\newcommand*{\CS}{\langle \CSdom, \CSleq, \CSlub \rangle}
+% \newcommand*{\CSys}{\mathbf{C}} %constraint system
+\newcommand*{\CSdom}{\mathversion{normal2}\text{$\mathcal{C}$}\mathversion{normal}} %insieme di constraint
+\newcommand*{\CSimp}{\mathrel{\vdash}}%implicazione
+\newcommand*{\CSnimp}{\mathrel{\nvdash}}%non-implicazione
+\newcommand*{\CSequiv}{{\equiv}_{\CSdom}}
+\newcommand*{\CSrep}[1]{[#1]_{{\equiv}_{\CSdom}}}
+\newcommand*{\CSleq}{\mathrel{\preceq}}%contrario implicazione
+\newcommand*{\CSgeq}{\mathrel{\succeq}}%contrario implicazione
+\newcommand*{\CSnleq}{\mathrel{\npreceq}}%contrario implicazione
+\newcommand*{\CSngeq}{\mathrel{\nsucceq}}%contrario implicazione
+\newcommand*{\CSmerge}{\mathbin{\wedge}}%merge constraints
+\newcommand*{\CSjoin}{\mathbin{\vee}}%join constraints
+\newcommand*{\CSbigmerge}{\bigwedge}
+\newcommand*{\CSfalse}{\mathit{false}} %insieme di constraint
+\newcommand*{\CStrue}{\mathit{true}} %insieme di constraint
+\newcommand*{\CSc}[1][c]{#1}
+\newcommand*{\instop}[2]{\ifempty{#1}{\downarrow}{{#1}\downarrow_{#2}}}
+\newcommand*{\simpl}{\parensmathoper{\mathit{simplify}}}
+
+\newcommand{\evalAExpr}[2]{\mathit{eval}_{\AExprDom}(#1,#2)}
+\newcommand{\evalFAExpr}[2]{\widetilde{\mathit{eval}}_{\FAExprDom}(#1,#2)}
+\newcommand{\evalBExpr}[2]{\mathit{eval}_{\BExprDom}(#1,#2)}
+\newcommand{\evalFBExpr}[2]{\widetilde{\mathit{eval}}_{\FBExprDom}(#1,#2)}
+
+\newcommand{\emptyPath}{\varepsilon}
+
+
+\newcommand{\PathDom}{\mathit{Path}}
+\newcommand{\paths}{\dot\Pi}
+\newcommand{\pathsInterp}{\bar\Pi}
+\newcommand{\botPaths}{\bot_{\PathDom}}
+\newcommand{\leqPrefix}{\mathrel{\leq_{\mathit{prefix}}}}
+\newcommand{\nleqPrefix}{\mathrel{\not{\leq}_{\mathit{prefix}}}}
+\newcommand{\mcp}{\parensmathoper{\mathit{mcp}}}
+
+\newcommand{\maxE}[2]{\mathit{max}\ifempty{#1}{}{\ifempty{#2}{(#1)}{(#1,#2)}}}
+\newcommand{\minE}[2]{\mathit{min}\ifempty{#1}{}{\ifempty{#2}{(#1)}{(#1,#2)}}}
+
+
+%% Program Transformation %%
+
+\newcommand*{\betaPos}{\parensmathoper{\beta^{+}}}
+\newcommand*{\betaNeg}{\parensmathoper{\beta^{-}}}
+\newcommand*{\tauProg}{\parensmathoper{\tau}}
+\newcommand*{\rerr}{\epsilon}
+\newcommand*{\fperr}{\rerr}
+\newcommand*{\fv}{\parensmathoper{\mathit{fv}}}
+
+
+\newcommand*{\alphaeta}[2]{\alpha\ifempty{#1}{}{(#1,#2)}}
+\newcommand*{\fpop}{\widetilde{\rop}}

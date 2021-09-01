@@ -1,0 +1,146 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        %
+%   DOMAINS and orders   %
+%                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Generic Concrete Domain (for preliminaries)
+
+\newcommand*{\CC}{\mathbb{C}}
+\newcommand*{\CCleq}{\sqsubseteq} %% order on Concrete Domain
+\newcommand*{\CCnleq}{\nsqsubseteq} %% negated order on Concrete Domain
+\monobioperator{\CClub}{\sqcup}{\bigsqcup}
+\monobioperator{\CCglb}{\sqcap}{\bigsqcap}
+\newcommand*{\CCbot}{\bot} %% bottom of Concrete Domain
+\newcommand*{\CCtop}{\top} %% top of Concrete Domain
+
+\newcommand*{\CCcpo}{\cpo{\CC}{\CCleq}}
+\newcommand*{\CClattice}{\lattice{\CC}{\CCleq}{\CClub{}{}}{\CCglb{}{}}{\CCtop}{\CCbot}}
+
+% Default Concrete Domain (for paper body, to be localized)
+
+\newcommand*{\Clubbigsym}{\bigsqcup}
+\newcommand*{\Cglbbigsym}{\bigsqcap}
+\newcommand*{\Clubsym}{\sqcup}
+\newcommand*{\Cglbsym}{\sqcap}
+
+\newcommand*{\C}{\CC}
+\newcommand*{\Cleq}{\CCleq}
+\newcommand*{\Cgeq}{\sqsupseteq}
+\newcommand*{\Cnleq}{\CCnleq}
+\monobioperator{\Club}{\sqcup}{\bigsqcup}
+\monobioperator{\Cglb}{\Cglbsym}{\Cglbbigsym}
+\newcommand*{\Cbot}{\CCbot}
+\newcommand*{\Ctop}{\CCtop}
+
+\newcommand*{\Ccpo}{\cpo{\C}{\Cleq}}
+\newcommand*{\Clattice}{\lattice{\C}{\Cleq}{\Club{}{}}{\Cglb{}{}}{\Ctop}{\Cbot}}
+
+% Generic Abstract Domain (for preliminaries)
+
+\renewcommand*{\AA}{\mathbb{A}}
+\newcommand*{\AAleq}{\leq} %% order on Abstract Domain
+\newcommand*{\AAgeq}{\geq} %% order on Abstract Domain
+\newcommand*{\AAnleq}{\nleq} %% order on Abstract Domain
+\monobioperator{\AAlub}{\vee}{\bigvee}
+\monobioperator{\AAglb}{\wedge}{\bigwedge}
+\newcommand*{\AAbot}{\bot} %% bottom of Abstract Domain
+\newcommand*{\AAtop}{\top} %% top of Abstract Domain
+
+\newcommand*{\AAcpo}{\cpo{\AA}{\AAleq}}
+\newcommand*{\AAlattice}{\lattice{\AA}{\AAleq}{\AAlub{}{}}{\AAglb{}{}}{\AAtop}{\AAbot}}
+
+
+% Default Concrete Domain (for paper body, to be localized)
+
+\newcommand*{\Alubbigsym}{\bigvee}
+\newcommand*{\Aglbbigsym}{\bigwedge}
+\newcommand*{\Alubsym}{\vee}
+\newcommand*{\Aglbsym}{\wedge}
+
+\newcommand*{\A}{\AA}
+\newcommand*{\Aleq}{\AAleq}
+\newcommand*{\Ageq}{\AAgeq}
+\newcommand*{\Anleq}{\AAnleq}
+\monobioperator{\Alub}{\Alubsym}{\Alubbigsym}
+\monobioperator{\Aglb}{\Aglbsym}{\Aglbbigsym}
+\newcommand*{\Abot}{\AAbot}
+\newcommand*{\Atop}{\AAtop}
+
+\newcommand*{\Acpo}{\cpo{\A}{\Aleq}}
+\newcommand*{\Alattice}{\lattice{\A}{\Aleq}{\Alub{}{}}{\Aglb{}{}}{\Atop}{\Abot}}
+
+\newcommand*{\al}{\parensmathoper{\alpha}}
+\newcommand*{\ga}{\parensmathoper{\gamma}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                               %
+%   Names of Standard Domains   %
+%                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\POS}{\ensuremath{\mathit{POS}}}
+
+\newcommand*{\POSpreabs}[1][]{\parensmathoper{\Gamma_{#1}}}
+\newcommand*{\POSabs}{\parensmathoper{\alpha_{\Gamma}}}
+\newcommand*{\POSconc}{\parensmathoper{\gamma_{\Gamma}}}
+\newcommand*{\POSlub}{\Alub}
+\newcommand*{\POSglb}{\Aglb}
+\newcommand*{\POSleq}{\Aleq}
+\newcommand*{\POSrestrict}[2]{{#1}|_{#2}}
+\newcommand*{\POSTp}{\Tp[g]}
+\newcommand*{\POSinterp}{\I[g]}
+\newcommand*{\POSeval}{\eval[g]}
+
+\newcommand*{\Iff}{\leftrightarrow}
+
+% still to be organized
+
+\newcommand*{\KCTerms}[1][\KVsyms]{\SigTerms{\Csyms}{\Vsyms\cup #1}} %[1][\Fsyms]{\TermsSym(#1, )} %% terms
+\newcommand*{\KI}{{\I[\kappa]}}
+\newcommand*{\KSz}{\Sz[\kappa]}
+\newcommand*{\KTerms}[1][\KVsyms]{\Terms[{\Vsyms\cup #1}]} %[1][\Fsyms]{\TermsSym(#1, )} %% terms
+\newcommand*{\KTp}{\Tp[\kappa]}
+\newcommand*{\KVsyms}{\widehat{\Vsyms}}
+\newcommand*{\Kcut}[2][k]{#2 \lightning_{#1}}
+\newcommand*{\Keval}{\eval[\kappa]}
+\newcommand*{\depthk}[1][k]{\ensuremath{\mathit{depth}(#1)}}
+
+
+\newcommand*{\wide}[2]{\ifempty{#1}{\medtriangledown}{#1 \medtriangledown #2}}
+\newcommand*{\Lat}{\mathbb{L}}
+
+% BACKWARD COMPATIBILITY
+
+% \backcompatibility{\botAA}{\AAbot}
+% \backcompatibility{\botA}{\Abot}
+% \backcompatibility{\botCC}{\CCbot}
+% \backcompatibility{\botC}{\Cbot}
+% \backcompatibility{\cpoAA}{\AAcpo}
+% \backcompatibility{\cpoA}{\AAcpo}
+% \backcompatibility{\cpoCC}{\CCcpo}
+% \backcompatibility{\cpoC}{\CCcpo}
+% \backcompatibility{\glbAA}{\AAglb}
+% \backcompatibility{\glbA}{\Aglb}
+% \backcompatibility{\glbCC}{\CCglb}
+% \backcompatibility{\glbC}{\Cglb}
+% \backcompatibility{\latticeAA}{\AAlattice}
+% \backcompatibility{\latticeA}{\Alattice}
+% \backcompatibility{\latticeCC}{\CClattice}
+% \backcompatibility{\latticeC}{\Clattice}
+% \backcompatibility{\leqAA}{\AAleq}
+% \backcompatibility{\leqA}{\Aleq}
+% \backcompatibility{\leqCC}{\CCleq}
+% \backcompatibility{\leqC}{\Cleq}
+% \backcompatibility{\lubAA}{\AAlub}
+% \backcompatibility{\lubA}{\Alub}
+% \backcompatibility{\lubCC}{\CClub}
+% \backcompatibility{\lubC}{\Club}
+% \backcompatibility{\nleqAA}{\AAnleq}
+% \backcompatibility{\nleqA}{\Anleq}
+% \backcompatibility{\nleqCC}{\CCnleq}
+% \backcompatibility{\nleqC}{\Cnleq}
+% \backcompatibility{\topAA}{\AAtop}
+% \backcompatibility{\topA}{\Atop}
+% \backcompatibility{\topCC}{\CCtop}
+% \backcompatibility{\topC}{\Ctop}

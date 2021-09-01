@@ -1,0 +1,58 @@
+\section{Introduction}
+\label{sec:introduction}
+
+There are two common sources of randomness in a numerical computation (a
+straight-line program). First, the computation might be using inherently noisy data, for example from analog sensors in cyber-physical systems such as robots, autonomous vehicles, and
+drones.  A prime example is data from GPS sensors, whose error distribution can be described very precisely~\cite{bornholt2014uncertain} and which we study in some detail in \cref{sec:overview}.
+Second, the computation itself might sample from random number
+generators. Such probabilistic numerical routines, known as Monte-Carlo
+methods, are used in a wide variety of tasks, such as integration~\cite{press1990recursive,lepage1980vegas},
+optimization~\cite{press1988numerical}, finance~\cite{glasserman2013monte}, fluid
+dynamics~\cite{landau2014guide}, and computer graphics~\cite{kajiya1986rendering}.  We call
+ numerical computations whose input values are sampled from
+some probability distributions \emph{probabilistic computations}.  
+
+
+Probabilistic computations are typically implemented using
+floating-point arithmetic, which leads to roundoff errors being introduced in
+the computation. To strike the right balance between the performance
+and energy consumption versus the quality of the computed result, expert
+programmers rely on either a manual or automated floating-point error analysis
+to guide their design decisions. However, the current state-of-the-art
+approaches in this space have primary focused on \emph{worst-case} roundoff error
+analysis of \emph{deterministic} computations.  So what can we say about
+floating-point roundoff errors in a probabilistic context? Is it possible to
+probabilistically quantify them by computing confidence intervals?  Can we, for
+example, say with 99\% confidence that the roundoff error of the computed
+result is smaller than some chosen constant?  What is the distribution of
+outputs when roundoff errors are taken into account? In this paper, we explore these and similar questions.  To answer them, we propose a rigorous -- that is to say \emph{sound} -- approach to quantifying
+roundoff errors in probabilistic computations. Based on this
+approach, we develop an automatic tool that efficiently computes an overapproximate
+probabilistic profile of roundoff errors.
+
+As an example, consider the floating-point arithmetic expression $(X+Y)\div Y$, where $X$ and $Y$ are random inputs described formally as independent random variables (usually defined over some intervals). In \cref{sec:errordist}, we first show how the computation in \emph{finite-precision} of a single arithmetic operation such as $X+Y$ can be modelled as $(X+Y)(1+\varepsilon)$, where $\varepsilon$ is also a random variable. We then show how this random variable can be computed from first principles and why it makes sense to view $(X+Y)$ and  $(1+\varepsilon)$ as independent expressions, which in turn allows us to easily compute the distribution of $(X+Y)(1+\varepsilon)$.
+The distribution of $\varepsilon$ depends on that of $X+Y$, and we therefore need to evaluate arithmetic operations between random variables. When the operands are independent -- as in $X+Y$ -- this is standard~\cite{springer1979algebra}, but when the operands are dependent -- as in the case of the division in $(X+Y)\div Y$ -- this is a hard problem. To solve it, we adopt and improve a technique for soundly bounding these distributions described in~\cite{bouissou2012generalization}.  Our improvement comes from the use of an SMT solver to reason about the dependency between $(X+Y)$ and $Y$ and remove regions of the state-space with zero probability. We describe this in \cref{sec:model}.
+
+We can thus soundly bound the output distribution of any probabilistic computation, such as $(X+Y)\div Y$, performed in finite-precision floating-point arithmetic. This gives us the ability to perform \emph{probabilistic range analysis} and prove rigorous assertions like: 99\% of the outputs of a floating-point computation are smaller than a given constant bound.
+In order to perform \emph{probabilistic roundoff error analysis} we develop \emph{symbolic affine arithmetic} in \cref{sec:symbolicaffine}. This technique is combined with probabilistic range analysis to compute \emph{conditional roundoff errors}. Specifically, we over-approximate the maximal error conditioned on the output landing in the 99\% range computed by the probabilistic range analysis, \ie conditioned on the computations not returning an outlier.  This allows us to quantify very precisely the idea of the maximal error of a `typical' computation.
+
+Here we need to make a comment about how to understand the notion of \emph{sound} or \emph{rigorous} error bounds in a probabilistic context.  The usual meaning of these words is anchored in a non-deterministic model of computation where inputs are known to belong to some intervals and soundly bounding the error amounts to bounding the error of \emph{all possible computations}.
+%
+If the inputs are drawn from a distribution, this understanding of soundness corresponds to bounding errors with 100\% confidence, and thereby ignoring the probabilistic information completely.
+%
+This is why the state-of-the-art refers to this non-deterministic model as \emph{worst-case} analysis, because it does not account for the distribution of the inputs.
+%
+On the other hand, in a probabilistic model of computation,  we will say that we are giving a sound (or rigorous) probabilistic guarantee if there is 100\% certainty about the probabilistic guarantee.   For example when saying \emph{99\% of outputs will land in the interval $[a,b]$} we are making a sound probabilistic statement based on some analytical description of the output distribution, and there is therefore no uncertainty about this statement.  An example of \emph{unsound} probabilistic statement is given by making probabilistic statements based on Monte-Carlo sampling. When saying \emph{based on 1 billion runs, 99\% of outputs will land in the interval $[a,b]$} we are making an unsound probabilistic statement which may fail in another run of the experiment. Another example of unsound probabilistic statement would be \emph{with 95\% certainly, 99\% of outputs will land in the interval $[a,b]$}, as is done in \eg PAC learning \cite{valiant1984theory}.  By working with `p-boxes'~\cite{bouissou2012generalization} -- structures which upper- and lower-bound cumulative distribution functions (see \cref{sec:preliminaries} and \cref{sec:errordist}) -- we will be able to give probabilistic guarantees which are all \emph{sound}.
+
+We implemented our model and algorithms in a tool called \Tool (for Probabilistic Analysis of Floating-point errors). We evaluated \Tool on the standard floating-point benchmark suite FPBench~\cite{fpbench}, and compared its range and error analysis with the worst-case roundoff error analyzer FPTaylor~\cite{2015_fm_sjrg,solovyev2018rigorous} and the probabilistic roundoff error analyzer PrAn~\cite{probdaisy}. We present the results in \cref{sec:evaluation},  and show that FPTaylor's worst-case analysis is often overly pessimistic in the probabilistic setting, while \Tool also generates tighter probabilistic error bounds than PrAn on all but one benchmark. 
+
+We summarize our contributions as follows:
+\begin{enumerate}[(i)]
+\item We derive several closed-form expressions for the distribution of roundoff errors associated with a random variable.  We prove that roundoff errors are generally close to being uncorrelated with their input distribution.
+\item Based on these results we propose a model of IEEE754 floating-point arithmetic for numerical expressions with probabilistic inputs.
+\item We evaluate this model by developing a new algorithm for rigorously bounding the output range and roundoff error distributions of floating-point arithmetic expressions with probabilistic inputs.
+\item We implement this model in the \Tool tool, and perform probabilistic range and roundoff error analysis on a standard benchmark suite. Our comparison
+	with the current state-of-the-art shows the advantages of our approach in terms of computing tighter, and yet still rigorous,
+	probabilistic bounds.
+\end{enumerate}
+

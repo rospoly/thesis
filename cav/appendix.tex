@@ -1,0 +1,567 @@
+
+\appendix
+
+\section{Proofs}
+We define $\ceil{x}\defeq \sup\{y\in\R\mid \round(y)=\round(x)\}$ and $\floor{x}\defeq \inf\{z\in\R\mid \round(z)=\round(x)\}$. Recall also that 
+\[
+\fintvl\stackrel{\triangle}{=}\left\{y\in\R\mid \round(y)=\round(z)\right\}.
+\]
+
+\subsection{Proofs for \cref{subsec:LPerror_dist}.}
+
+\begin{myproof}{\cref{thm:LP_errorDensity}}
+For $t\in\left]-1,1\right[$, the cumulative distribution function of the measure associated with the random variable $\erel(X)$ is given by:
+\begin{align*}
+c(t)\stackrel{\triangle}{=}~\Pro{\erel(X)\leq t\uro}=~\Pro{~\bigvee_{z\in\F}\left(\frac{X-z}{X}\leq t\uro\wedge X\in \fintvl[z]\right)}
+\end{align*}
+As explained in \cref{subsec:LPerror_dist} we exclude the floating-point representable numbers $\{-\infty, 0, \infty\}$ which correspond to the discrete components $\Pro{X\ssvin\fintvl[0]}\delta_1 + \Pro{X\ssvin\fintvl[-\infty]}\delta_{\infty}\ \hspace{-3pt}+ \Pro{X\ssvin\fintvl[\infty]}\delta_{-\infty}$ of the distribution $dist$.
+
+Using the $\sigma$-additivity of measures (see \cref{subsec:prob}) we get the following density for $dist_c$:
+\newcommand{\ssin}{\hspace{-2pt}\in\hspace{-2pt}}
+\begin{align*}
+d(t)=&\dt\sum_{z\in\F\setminus\{-\infty,0,\infty\}}\hspace{-8pt}\Pro{\frac{X-z}{X}\leq t\uro\wedge X\in \fintvl[z]}\\
+=&\hspace{-6pt} \sum_{z\in\F^+_{0,-\infty}}\hspace{-8pt}\dt\Pro{\frac{z}{1-t\uro}\hspace{-2pt}\geq\hspace{-2pt} X\wedge X\ssin\fintvl[z]}+\hspace{-4pt}
+\sum_{z\in\F^-_{0,\infty}}\hspace{-4pt}\dt\Pro{\frac{z}{1-t\uro}\hspace{-2pt}\leq\hspace{-2pt} X \wedge X\ssin \fintvl[z]}
+\end{align*}
+where $\F^+_{0,\infty}$ (resp. $\F^-_{0,-\infty}$) denotes the strictly positive (resp. negative) finite floating-point representable numbers.
+Since $X$ is described by a probability density function $f:\R\to\R$, we get:
+\begin{align}
+d(t)
+=&\hspace{-6pt}\sum_{z\in\F^+_{0,-\infty}}\hspace{-8pt}\dt\one_{\fintvl[z]}\hspace{-2pt} \left(\frac{z}{1-t\uro}\right)\hspace{-2pt} \int^{\frac{z}{1-t\uro}}_{\floor{z}}\hspace{-4pt}f(s)\hspace{1pt}ds\nonumber+
+\hspace{-4pt}\sum_{z\in\F^-_{0,\infty}}\hspace{-6pt} \dt\one_{\fintvl[z]}\hspace{-2pt}\left(\frac{z}{1-t\uro}\right)\hspace{-2pt} \int^{\ceil{z}}_{\frac{z}{1-t\uro}}\hspace{-5pt} f(s)\hspace{1pt}ds\nonumber 
+\\
+=&\sum_{z\in\F\setminus\{-\infty,0,\infty\}}\hspace{-5pt}\one_{\fintvl[z]}\left(\frac{z}{1-t\uro}\right) f\left(\frac{z}{1-t\uro}\right) \frac{\uro\absv{z}}{(1-t\uro)^2}\nonumber
+\end{align}
+\end{myproof}
+
+\subsection*{Proofs for \cref{subsec:HPerror_dist}.}
+
+We now give some useful results about floating-point numbers.
+The following lemma collects explicit representations of $\ceil{z}$ and $\floor{z}$ which will be useful in what follows, the proof is by direct computation.
+\begin{lemma}\label{lem:floorceil}
+For $z=z(0,e,k)\in \F$ the values of $\ceil{z}$ and $\floor{z}$ are given by: 
+\begin{align*}
+\floor{z}& =
+\begin{cases}
+2^{e-1} & \text{if }e=\emin, k=0\\
+2^{e-1}\left(1+\frac{2^{p+1}-1}{2^{p+1}}\right) & \text{if }e>\emin, k=0\\
+2^e\left(1+\frac{2k-1}{2^{p+1}}\right) & \text{otherwise}
+\end{cases} 
+& \qquad & \\
+\ceil{z}&=\begin{cases}
+z&\text{if }e=n, k=2^p-1\\
+2^e\left(1+\frac{2k+1}{2^{p+1}}\right) & \text{otherwise}
+\end{cases}
+\end{align*}
+For $z=z(1,e,k)$ we use the identities $\floor{-z}=-\ceil{z}$ and $\ceil{-z}=-\floor{z}$.
+\end{lemma}
+
+Using this lemma we can prove a result relating the length $\tau(z)\defeq\ceil{z}-\floor{z}$ of the interval corresponding to a representable number $z\in\F$ with its absolute value $\absv{z}$. Note that $\ceil{z}-\floor{z}$ is always a positive quantity, hence the relation with $\absv{z}$. The following result will be used heavily in the proof of \cref{thm:HP_errorDensity} . Again, the proof can be obtained by direct computation.
+
+\begin{lemma}\label{lem:Ccoeff}
+For any $z(s,e,k)\in\F, z\neq 0$ it is the case that 
+\[
+u\absv{z} =  C(e,k)\left(\ceil{z}-\floor{z}\right)
+\]
+where the coefficients $C(e,k)$ are given by:
+\begin{align*}
+&C(\emin,0) = \frac{2^{p+1}+1}{2^p(2^{p+1}-1)} & & C(e,0)=\frac{2}{3},\quad e>\emin\\
+&C(\emax,2^p-1)=\frac{3(2^{p+1}-1)}{2^{p+1}} & & C(e,k)=\frac{2^p+k}{2^{p+1}},\quad\text{otherwise}.
+\end{align*}
+\end{lemma}
+\noindent Finally, we will need the following technical lemma which can also be shown by direct computation.
+\begin{lemma}\label{lem:trange}
+If $z=z(s,e,k)$ with $e\neq \emin,\emax$ then 
+\[
+\frac{z}{1-t\uro}\in\fintvl \text{ iff } 
+\begin{cases}
+\frac{-2^{p+1}}{2^{p+2}-1}\leq t\leq \frac{2^{p+1}}{2^{p+1}+1} & k=0\\
+\frac{-2^{p+1}}{2^{p+1}+2k-1}\leq t\leq \frac{2^{p+1}}{2^{p+1}+2k+1}&\text{otherwise}
+\end{cases}
+\]
+\end{lemma}
+Note in particular that $\frac{z}{1-t\uro}\in\fintvl$ whenever $\absv{t}\leq \frac{1}{2}$. We are now ready to prove the theorem of \cref{subsec:HPerror_dist}.
+
+
+\begin{myproof}{\cref{thm:HP_errorDensity}}
+We start by plugging the coefficients of Prop. \ref{lem:Ccoeff} into \cref{eq:LPerrorDensity}:
+\begin{align*}
+d(t)=\sum_{z\in\F\setminus\{-\infty,0,\infty\}}\one_{\fintvl[z]}\left(\frac{z}{1-t\uro}\right) f\left(\frac{z}{1-t\uro}\right) \frac{C(e,k) (\ceil{z}-\floor{z})}{(1-t\uro)^2}.
+\end{align*}
+We start by considering the case where $\absv{t}\leq \frac{1}{2}$. As shown in \cref{lem:trange} if $\absv{t}\leq \frac{1}{2}$ then $\one_{\fintvl[z]}\left(\frac{z}{1-t\uro}\right) = 1$, and $d(t)$ thus simplifies to
+\begin{align*}
+d(t)=\sum_{z\in\F\setminus\{-\infty,0,\infty\}} f\left(\frac{z}{1-t\uro}\right) \frac{C(e,k) (\ceil{z}-\floor{z})}{(1-t\uro)^2}.
+\end{align*}
+We now restrict ourselves to floating-point representable whose exponents are not extremal, \ie $z(s,e,k)$ with $k\notin\{\emin,\emax\}$, and put the usually minuscule contribution made by these numbers in the error term $R$, \ie we will take
+ \[
+ \Pro{\round(X)=z(s,\emin, k)} +  \Pro{\round(X)=z(s,\emax, k)} 
+ \]
+to be part of the error term $R$. We do this chiefly for mathematical expediency (to avoid the special behaviour of \cref{lem:Ccoeff}).
+We are now left with the sum 
+\begin{align}
+d(t) =& \frac{1}{(1-t\uro)^2} \sum_{s, e=\emin+1}^{\emax-1} \left(\frac{2}{3}f\left(\frac{z(s,e,0)}{1-t\uro}\right)(\ceil{z(s,e,0)}-\floor{z(s,e,0)})\right. \nonumber\\
+&
++\left. \sum_{k=1} \frac{2^p+k}{2^{p+1}} f\left(\frac{z(s,e,k)}{1-t\uro}\right)(\ceil{z(s,e,k)}-\floor{z(s,e,k)}) \right)\nonumber
+\\
+\stackrel{(1)}{=} & \frac{1}{(1-t\uro)^2} \sum_{s, e=\emin+1}^{\emax-1} \left(\frac{1}{2}f\left(\frac{z(s,e,0)}{1-t\uro}\right)(\ceil{z(s,e,0}-z(1-\uro))\right.\nonumber\\
+&
++\left. \sum_{k=1}^{2^{p-1}} \frac{z(s,e,k)}{2^{e+1}} f\left(\frac{z(s,e,k)}{1-t\uro}\right)(\ceil{z(s,e,k)}-\floor{z(s,e,k)}) \right)
+\nonumber\\
+\stackrel{(2)}{=} & \frac{1}{1-t\uro} \sum_{s, e=\emin+1}^{\emax-1}\frac{1}{2^{e+1}} \left(\frac{z(s,e,0)}{1-t\uro}f\left(\frac{z(s,e,0)}{1-t\uro}\right)(\ceil{z(s,e,0}-z(1-\uro))\right.\nonumber\\
+&
++\left. \sum_{k=1}^{2^{p-1}} \frac{z(s,e,k)}{1-t\uro} f\left(\frac{z(s,e,k)}{1-t\uro}\right)(\ceil{z(s,e,k)}-\floor{z(s,e,k)}) \right)
+\nonumber\\
+\stackrel{(3)}{=} &  \frac{1}{1-t\uro} \sum_{s, e=\emin+1}^{\emax-1}\frac{1}{2^{e+1}} \left(\int_{(-1)^s2^e(1-u)}^{(-1)^s2^e(2-u)} \absv{x} f(x) ~dx \right) + S(e,s,t)\label{eq:case_one_half}
+\end{align}
+where $(1)$ follows by computing the distance $\ceil{z(s,e,0)}-\floor{z(s,e,0)}$ with \cref{lem:floorceil} and by substituting $k$ for its value in terms of $z$ via $z=2^e(1+\frac{k}{2^p})$, and $(2)$ follows from writing $\frac{1}{2}$ as $\frac{z(s,e,0)}{2^{e+1}}$. The last step follows by noticing that the sum in step (2) approximates the integral in (3) (where the absolute value $\absv{x}$ takes care of the fact that the bounds of the integral will be the 'wrong way round' when $s=1$).  Indeed, when $t=0$ it corresponds to the  so-called \emph{mid-point rule} of numerical integration. We can explicitly compute the error $S(e,s,t)$ incurred from this approximation using standard technique from numerical analysis. Specifically,  for a fixed $z(s,e,k)$ we write the function $xf(x)$ as a Taylor expansion around $\frac{z}{1-tu}f\left(\frac{z}{1-tu}\right)$ with a first-order remainder in Lagrange form to get
+\begin{align}
+xf(x) = \frac{z}{1-tu}f\left(\frac{z}{1-tu}\right) + \left(x- \frac{z}{1-tu}\right)\left(f'(\xi_x)\xi_x + f(\xi_x)\right)\label{eq:Taylor}
+\end{align}
+for some $\xi_x$ between $x$ and  $\frac{z}{1-tu}$.  Using this representation we get the error term
+\begin{align*}
+S(z, t) \defeq & \int_{z_0}^{\ceil{z}} f\left(\frac{z(s,e,k)}{1-t\uro}\right)(\ceil{z(s,e,k)}-\floor{z(s,e,k)})  - \int_{z_0}^{\ceil{z}} xf(x)~dx
+\\
+& = \left(f'(\xi_k)\xi_k + f(\xi_k)\right) \frac{-zt\uro}{1-t\uro}\left(\ceil{z}-z_0\right)
+\end{align*}
+where $z_{0}=z(1-\uro)$ when the significand of $z$ is 0 and $z_0=\floor{z}$ otherwise. The last step uses the Mean Value Theorem extract a unique $\xi_k\in[z_0,\ceil{z}]$.. Note that when $t=0$ the error term above disappears. This is completely expected since $t=0$ corresponds to the mid-point rule which is a second-order numerical integration technique (it has no first-order error). We should therefore expand \cref{eq:Taylor} to the second order in the case where $t=0$. however, since we will integrate over every $t$, what happens at $t=0$ can be ignored since the Lebesgue measure is continuous.  Now summing over every significand and using the Mean Value Theorem once more we get and cumulative error
+\begin{align*}
+S(e,s,t)& \defeq \sum_{k=0}^{2^p-1}S(z(s,e,k), t) \\
+&= \left(f'(\xi_{e,s})\xi_{e,s} + f(\xi_e)\right)\sum_{k=0}^{2^p-1}\frac{-z(s,e,k)t\uro}{1-t\uro}\left(\ceil{z(s,e,k)}-z_0\right)
+\end{align*}
+for some $\xi_{e,s}$ in $[2^e(1-\uro), 2^e(2-\uro)]$ when $s=0$ and  $[-2^e(2-\uro), -2^e(1-\uro)]$ when $s=1$,  and for $z_0$ defined as above. We can bound $\absv{S(e,s,t)}$ as follows. We first compute
+\begin{align*}
+\absv{\frac{-zt\uro}{1-t\uro}\left(\ceil{z}-z_0\right))}&=\absv{\frac{t}{1-t\uro}} \absv{z}\uro\left(z-z_0\right)\\
+&\stackrel{(1)}{=}\absv{\frac{t}{1-t\uro}} \frac{2^p+k}{2^{p+1}}\left(z-z_0\right)^2\\
+&\stackrel{(2)}{=}\absv{\frac{t}{1-t\uro}} \frac{2^p+k}{2^{p+1}}\frac{2^{2e}}{2^{2p}}
+\end{align*}
+where (1) follows by \cref{lem:Ccoeff} and (2) follows from the fact that all the intervals $z-z_0$ have the same size given by $\nicefrac{2^e}{2^p}$. We can now bound $S(e,s,t)$ by
+\begin{align}
+\absv{S(e,s,t)}&= \absv{f'(\xi_{e,s})\xi_{e,s} + f(\xi_{e,s})}\sum_{k=0}^{2^p-1} \absv{\frac{t}{1-t\uro}} \frac{2^p+k}{2^{p+1}}\frac{2^{2e}}{2^{2p}}\nonumber \\
+&=  \absv{f'(\xi_{e,s})\xi_{e,s} + f(\xi_{e,s})}\absv{\frac{t}{1-t\uro}} \frac{3}{4}(2^p-1)\frac{2^{2e}}{2^{2p}}\nonumber \\
+&=  \absv{f'(\xi_{e,s})\xi_{e,s} + f(\xi_{e,s})}\absv{\frac{t}{1-t\uro}} \frac{3}{4}(1-u)\frac{2^{2e}}{2^{p}}\nonumber \\
+& \leq \absv{f'(\xi_{e,s})\xi_{e,s} + f(\xi_{e,s})} \frac{3}{4}\frac{2^{2e}}{2^{p}}\label{eq:error_term}
+\end{align}
+since $\absv{t}\leq 1$.
+
+We now consider the case where $\frac{1}{2}<\absv{t}\leq 1$.  We can follow the derivation leading to  \cref{eq:case_one_half} by simply appending a coefficient given by $\one_{\fintvl[z]}$ at every step up to the penultimate one.  Now using \cref{lem:trange} and substituting $k$ by its value in terms of $z$ via $z=2^e(1+\frac{k}{2^p})$ we get:
+\[
+\one_{\fintvl[z]}\left(\frac{z(s,e,k)}{1-t\uro}\right) = 1\Leftrightarrow
+\begin{cases}
+ z\leq 2^e(\frac{1}{t}-\uro) & z> 0\\
+ z\leq 2^e(-\frac{1}{t}+\uro) & z <0.
+\end{cases}
+\]
+This means that in the last step of the derivation of  \cref{eq:case_one_half} we simply need to replace the bounds of the integrals by $2^e(\frac{1}{t}-\uro)$ and $2^e(\frac{1}{t}+\uro)$, which leads to the final expression
+\[
+\frac{1}{(1-t\uro)}\sum\limits_{s, e=\emin+1}^{\emax-1} \int_{(-1)^s2^e(1-\uro)}^{(-1)^s2^e(\frac{1}{\absv{t}}-\uro)}\frac{\absv{x}}{2^{e+1}} f(x) ~dx 
+\]
+
+In terms of error, it is clear that since we're approximating the same integrals $\int xf(x)~dx$ in the same way, but on a more narrow interval, the error term \cref{eq:error_term} also provides an upper bound the error made in the integrals $\int_{(-1)^s2^e(1-\uro)}^{(-1)^s2^e(\frac{1}{\absv{t}}-\uro)}\frac{\absv{x}}{2^{e+1}} f(x) ~dx$,  in other words 
+\[
+\absv{S(e,s,t)}\leq  \absv{f'(\xi_e)\xi_e + f(\xi_e)} \frac{3}{4}\frac{2^{2e}}{2^{p}}
+\]
+also when $\nicefrac{1}{2}\leq \absv{t}\leq 1$. It thus follows by the triangular inequality that we can bound the total error made from converting discrete sums into integrals by
+\[
+\frac{3}{4} \left(\sum_{s, \emin<e<\emax} \left(f'(\xi_{e,s})\xi_{e,s} + f(\xi_{e,s})\right)\frac{2^{2e}}{2^{p}}\right)
+\]
+as claimed.
+\end{myproof}
+
+
+\subsection*{Proofs for \cref{subsec:typical}.}
+
+\begin{myproof}{\cref{thm:typical_dist}}
+We start with the exact expression given in \cref{eq:LPerrorDensity}, namely
+\begin{align*}
+d(t)=\sum_{z\in\F\setminus\{-\infty,0,\infty\}}\one_{\fintvl[z]}\left(\frac{z}{1-t\uro}\right) f\left(\frac{z}{1-t\uro}\right) \frac{\uro\absv{z}}{(1-t\uro)^2}
+\end{align*}
+We are now going to sum over significands (since they are assumed to be equiprobable). Using \cref{lem:Ccoeff} to re-write $u\absv{z}$ and ignoring the terms with maximal exponents as we did in the proof of \cref{thm:HP_errorDensity} (this is not strictly necessary, but it make the proof a lot less cumbersome) we get:
+\begin{align}
+d(t) =&\sum_{k=0}^{2^p-1}\frac{C(e,k)}{(1-tu)^2}\sum_{e=emin+1}^{emax-1}\sum_{s=0}^1 f\left(\frac{z(e,s,k)}{1-tu}\right)(\ceil{z(e,s,k)}-\floor{z(e,s,k)})\nonumber
+\\
+=&\sum_{k=0}^{2^p-1}\frac{C(e,k)}{(1-tu)^2}\Pro{\round(X)=z(s,e,k)})+ S(k,p, t)\nonumber 
+\\
+&=\frac{1}{2^p(1-tu)^2}\left(\frac{2}{3}+\sum_{k=1}^{2^p-1}\frac{2^p+k}{2^{p+1}}\right)+ S(k,p,t) \nonumber
+\\
+&=\frac{1}{2^p(1-tu)^2}\left(\frac{2}{3}+\frac{3(2^{p}-1)}{4}\right)+ S(k,p,t)\label{eq:pdfleq1/2}
+\end{align}
+where $S(k,p,t)$  is an error term quantifying the error made by the numerical integration scheme evaluating $\Pro{\round(X)=z(s,e,k)})$ as the sum in the first step of the derivation above. It can be quantified in the same way as in the proof of \cref{thm:HP_errorDensity}. Crucially $\lim_{p\to\infty}S(k,p,t)=0$ for every $k,t$. 
+We thus get that for $\absv{t}<\nicefrac{1}{2}$
+\[
+\lim_{p\to\infty}d(t) = \lim_{p\to\infty} \frac{1}{2^p(1-t2^{-p})^2}\left(\frac{2}{3}+\frac{3(2^{p}-1)}{4}\right)+ S(k,p) = \frac{3}{4}.
+\]
+
+As shown by \cref{lem:trange}, when $\frac{1}{2}< t\leq 1$  not all mantissas in the sum of \cref{eq:LPerrorDensity} are possible,. Using the explicit characterisation of \cref{lem:trange}, we get that for $\nicefrac{1}{2}< \absv{t}\leq 1$ \eqref{eq:pdfleq1/2} becomes 
+\begin{align*}
+d(t)&=\frac{1}{2^p(1-tu)^2}\left(\frac{2}{3}+\sum_{k=1}^{\alpha(t)}\frac{2^p+k}{2^{p+1}}\right) + S(k,p,t)
+\\
+&=\frac{1}{2^p(1-tu)^2}\left(\frac{2}{3}+\frac{1}{2}\alpha(t)+\frac{1}{2^{p+2}}(\alpha(t)^2)\right)+ S(k,p,t)
+\end{align*}
+where $\alpha(t)=\floor{2^p(\frac{1}{t}-1)-\frac{1}{2}}$ is the usual floor function applied to $2^p(\frac{1}{t}-1)-\frac{1}{2}$.  Taking the limit of the equation above we get
+\begin{align}
+\lim_{p\to\infty}d(t) & = \lim_{p\to\infty}  \frac{1}{(1-t2^{-p})^2}\left(\frac{1}{2}\left(\frac{1}{t}-1\right)+\frac{1}{4}\left(\frac{1}{t}-1\right)^2\right)+S(k,p,t)\nonumber \\
+&= \frac{1}{2}\left(\frac{1}{t}-1\right)+\frac{1}{4}\left(\frac{1}{t}-1\right)^2\label{eq:pdfgeq1/2}
+\end{align}
+The case where $-1\leq t< -\frac{1}{2}$ is treated in the same way and yields the same asymptotic distribution.  Combining \ref{eq:pdfleq1/2} and \ref{eq:pdfgeq1/2} we get
+\begin{align*}
+\lim_{p\to\infty}d(t) =\begin{cases}
+\frac{3}{4}&\text{if }t\in\left[-\frac{1}{2} ,\frac{1}{2}\right]  \\
+\frac{1}{2}\left(\frac{1}{t}-1\right)+\frac{1}{4}\left(\frac{1}{t}-1\right)^2& \text{else }\\
+\end{cases}
+\end{align*}
+as announced.
+\end{myproof}
+
+\subsection*{Proofs for \cref{subsec:covar}.}
+
+We assume throughout this section that $\erel(X)$ is distributed according to $d_{hp}$ in \cref{eq:HPerrorDensity}.
+We start by bounding $\Exp{\erel(X)}$. The proof of the following Proposition is a little technical but not conceptually difficult and can be found in the Appendix.
+
+\begin{proposition}\label{prop:ExpError}
+$K\frac{\uro}{6}\leq \Exp{\erel(X)}\leq K\frac{4\uro}{3}$
+where
+\[
+K=\sum_{s,e=\emin+1}^{\emax-1} \int_{(-1)^s2^e(1-\uro)}^{(-1)^s2^e(2-u)} \frac{\absv{x}}{2^{e+1}} f(x) ~dx
+\]
+\end{proposition}
+\begin{proof}
+Consider the definition \cref{eq:HPerrorDensity}, when $\frac{1}{2}< \absv{t}\leq 1$. Note that the terms
+\[
+K(t)\defeq \sum\limits_{s, e=\emin+1}^{\emax-1} \int_{(-1)^s2^e(1-\uro)}^{(-1)^s2^e(\frac{1}{\absv{t}}-\uro)} \frac{\absv{x}}{2^{e+1}} f(x) ~dx
+\]
+are symmetric around 0 due to the dependence on $\absv{t}$ (note also that the constant $K= K(\frac{1}{2})$). It follows by a simple change of variable that
+\begin{align*} 
+\int_{-1}^{-\frac{1}{2}} \frac{t}{(1-t\uro)^2}K(t)~dt &= \int_{1}^{\frac{1}{2}}\frac{-s}{(1+s\uro)^2}K(-s)~(-ds)\\
+&= \int_{\frac{1}{2}}^1 \frac{-s}{(1+s\uro)^2}K(s)~ds
+\end{align*}
+and thus
+\begin{align*}
+\int_{-1}^{-\frac{1}{2}} d(t)t~dt + \int^{1}_{\frac{1}{2}} d(t)t~dt& = -\int_{\frac{1}{2}}^{1}\frac{t}{(1+t\uro)^2} K(t)~dt +  \int^{1}_{\frac{1}{2}} d(t)t~dt
+\\
+& \geq - \int_{\frac{1}{2}}^{1}\frac{t}{(1-t\uro)^2} K(t)~dt + \int^{1}_{\frac{1}{2}} d(t)t~dt = 0
+\end{align*}
+From this it follows that the net contribution $\Exp{\erel(X)}$ of the two `wings' of the distribution is positive and in particular that
+\[
+\int_{-\frac{1}{2}}^{\frac{1}{2}}d(t) t~dt\leq \int_{-1}^{1}d(t) t~dt=\Exp{\erel(X)}.
+\]
+Moreover, by definition of $K$ we have
+\[
+\int_{-\frac{1}{2}}^{\frac{1}{2}}d(t) t~dt = K\int_{-\frac{1}{2}}^{\frac{1}{2}}\frac{t}{(1-t\uro)^2}~dt
+\]
+We now integrate by parts to get
+\begin{align*}
+K\int_{-\frac{1}{2}}^{\frac{1}{2}}\frac{t}{(1-t\uro)^2}~dt &= K \left.\frac{t}{\uro(1-t\uro)}\right|^{\frac{1}{2}}_{-\frac{1}{2}} - \int_{-\frac{1}{2}}^{\frac{1}{2}} \frac{1}{\uro(1-t\uro)}~dt
+\\
+&=\frac{K}{\uro}\left.\left(\frac{t}{\uro(1-t\uro)}-\frac{\ln(1-t\uro)}{\uro}\right)\right|^{\frac{1}{2}}_{-\frac{1}{2}}
+\\
+&=\frac{K}{\uro}\left(\frac{1}{1-\frac{\uro^2}{4}}- \frac{2}{\uro}\arctanh\left(\frac{\uro}{2}\right) \right)
+\end{align*} 
+For small values of $\uro$ the term above is very nearly linear with slope $\frac{1}{6}$ and intercept 0. To an extremely good approximation we therefore get for small values of $\uro$ (say below $2^{-2}$) that
+\[
+K\int_{-\frac{1}{2}}^{\frac{1}{2}}\frac{t}{(1-t\uro)^2}~dt = K\frac{\uro}{6}
+\]
+which proves the lower bound.
+
+For the upper bound we proceed in a similar way. Note that 
+\begin{align*}
+\Exp{\erel(X)} =  &\int_{-1}^{-\frac{1}{2}}d(t) t~dt + \int_{-\frac{1}{2}}^{\frac{1}{2}}d(t) t~dt +\int_{\frac{1}{2}}^1d(t) t~dt
+\\
+= &
+~\int_{-1}^{-\frac{1}{2}}\frac{t}{(1-t\uro)^2}K(t) ~dt +
+K \int_{-\frac{1}{2}}^{\frac{1}{2}}\frac{t}{(1-t\uro)^2} ~dt + \int_{\frac{1}{2}}^1\frac{t}{(1-t\uro)^2} K(t) ~dt
+\\
+\leq & ~K \int_{-1}^{1}\frac{t}{(1-t\uro)^2}~dt\qquad\qquad\qquad\text{(since }K(t)\leq K\text{ )}
+\\
+= & ~ \frac{K}{\uro} \left(\frac{2}{(1-\uro^2)} - \frac{2}{\uro} \arctanh(\uro) \right)
+\end{align*}
+Again, the expression above is very nearly linear in $\uro$ for small values of $\uro$ (say below $2^{-2}$), with slope $\frac{4}{3}$ and intercept 0. It follows that for small values of $\uro$
+\[
+\Exp{\erel(X)}\leq K\frac{4\uro}{3}
+\]
+proving the upper bound.
+\flushright{$\square$}
+\end{proof}
+Note that $K\leq 1$ since $\absv{x}\leq 2^{e+1}$ in each summand. The \emph{expected relative error $\Exp{\erel(X)}$ will therefore always be at most of the order of $\uro$} by the previous result. This makes good intuitive sense.
+
+We now turn to $\Exp{X.\erel(X)}$. The proof of the following result is conceptually more involved. It is based on the fundamental definition of Lebesgue integration as the limit of a monotone sequence of so-called simple functions. 
+
+\begin{proposition}\label{prop:expXerelX}$\Exp{X.\erel(X)} = \sum_{s,e} f((-1)^s2^e)(-1)^s2^{2e}\frac{3\uro^2}{2}$
+\end{proposition}
+In particular $\Exp{X.\erel(X)}=0$ if $f$ is symmetric. More generally, the value of $\Exp{X.\erel(X)}$ is determined by the competing terms $2^{2e}$ and $\uro^2$. A quick calculation shows that as long as the distribution $f$ assigns most of its mass to values below $2^{\frac{p}{2}}$, $\Exp{X.\erel(X)}$ will be of order $u$. In fact, for all the benchmarks considered in \cref{sec:evaluation} bar one, $\Exp{X.\erel(X)}$ is of the order of $\uro$ or smaller.
+\begin{proof}
+In order to (over)approximate the support of the joint distribution $\mathbb{P}$ and the integral \cref{eq:expdef}, we consider for each $n\in\N$ the following collection of sets
+\begin{align*}
+A^n(z,k) \defeq &\left[\floor{z}+\frac{k}{n}\tau(z), \floor{z}+\frac{k+1}{n}\tau(z)\right]\times \\
+&\left[\erel\left(\floor{z}+\frac{k}{n}\tau(z)\right), \erel\left(\floor{z}+\frac{k+1}{n}\tau(z)\right)\right]
+\end{align*}
+where $z\in \F, 0\leq k < n$, and $\tau(z)\defeq \ceil{z}-\floor{z}$ is the size of the interval $\fintvl$. These sets contain pairs $(x,\erel(x))$ where $x$ is restricted to a sub-interval of $\fintvl$ whose size is controlled by $n$. For any $n$, the support of $\mathbb{P}$ is included in the union $\bigcup_{z,k}A^n(z,k)$, by definition of $\mathbb{P}$. Moreover,  by definition of the joint probability $\mathbb{P}$ and the assumption that $f$ is constant on $\fintvl$, we have
+\begin{align*}
+\Pro{A^n(z,k)} = & \int_{\floor{z}+\frac{k}{n}\tau(z)}^{\floor{z}+\frac{k+1}{n}} f(x)~dx\\
+= & f(z) \frac{\tau(z)}{n}
+\end{align*}
+The sets $A^n(k,z)$ were chosen is such a way that the \emph{simple functions} (see \cite{dudley2002real}) $h_n: \R\times [-1,1]\to\R$ given by
+\[
+h_n(x,t) = \sum_{z,k} \sup\{y\uro s : (y,s)\in A^n(z,k)\} .\one_{A^n(z,k)}(x,t)
+\]
+provide a monotonically decreasing (over)approximation of the function
+\[
+h(x,t) = x\uro t
+\]
+which we want to integrate. Using the common notation of integration theory: $h_n \downarrow h$. It now follows from the definition of the Lebesgue integral that
+\begin{align*}
+\Exp{X.\erel(X)} & = \int_{\R\times [-1,1]} x\uro t~d\mathbb{P}\\
+& \defeq \int_{\R\times [-1,1]} h(x,t)~d\mathbb{P}\\
+&\leq \int_{\R\times [-1,1]} h_n(x,t)~d\mathbb{P}\\
+&= \sum_{z,k} \sup_{(x,t)\in A^n(z,k)} x\uro t~ \Pro{A^n(z,k)}
+\end{align*}
+The supremum is easily seen to be
+\[
+\sup_{(x,t)\in A^n(z,k)} x\uro t = 
+\begin{cases}
+\left(\floor{z}+\frac{k+1}{n}\tau(z)\right)\erel(\floor{z}+\frac{k+1}{n}\tau(z)) & z > 0
+\\
+\left(\floor{z}+\frac{k}{n}\tau(z)\right)\erel(\floor{z}+\frac{k}{n}\tau(z)) & z<0
+\end{cases}
+\]
+Clearly, multiplying any real by its own relative error will yield its absolute error:
+\[
+\sup_{(x,t)\in A^n(z,k)} x\uro t = 
+\begin{cases}
+(\floor{z}+\frac{k+1}{n}\tau(z))-z & z > 0\\
+(\floor{z}+\frac{k}{n}\tau(z))-z & z<0
+\end{cases}
+\]
+and we thus have
+\begin{align*}
+\Exp{X.\erel(X)}\leq & \sum_{k,z>0} (\floor{z}+\frac{k+1}{n}\tau(z))-z) f(z) \frac{\tau(z)}{n} + \\
+&\sum_{k,z<0} (\floor{z}+\frac{k}{n}\tau(z))-z) f(z) \frac{\tau(z)}{n}\\
+ = &\sum_{z>0} f(z) \sum_k (\floor{z}+\frac{k+1}{n}\tau(z))-z)\frac{\tau(z)}{n}+\\
+&\sum_{z<0} f(z) \sum_k (\floor{z}+\frac{k}{n}\tau(z))-z)\frac{\tau(z)}{n}.
+\end{align*}
+It is not too hard to see that as $n\to\infty$ the expression $\sum_k (\floor{z}+\frac{k+1}{n}\tau(z))-z)\frac{\tau(z)}{n}$ and $\sum_k (\floor{z}+\frac{k}{n}\tau(z))-z)\frac{\tau(z)}{n}$ both approach the Riemann integral
+\[
+\int_{\floor{z}}^{\ceil{z}} (x-z)~dx
+\] 
+In other words:
+\[
+\Exp{X.\erel(X)}\leq \sum_z f(z) \int_{\floor{z}}^{\ceil{z}} (x-z)~dx
+\]
+There are now two cases. If the significand of $z$ is zero then the interval $\fintvl$ is not symmetric around $z$, it is in fact divided in a $\frac{1}{3}$:$\frac{2}{3}$ ratio around $z$ and we therefore have
+\begin{align*}
+\int_{\floor{z}}^{\ceil{z}} (x-z)~dx &= \int_{\floor{z}}^{z+\frac{\tau(z)}{3}} (x-z)~dx+ \int_{z+\frac{\tau(z)}{3}}^{\ceil{z}} (x-z)~dx\\
+&=0+\int_{z+\frac{\tau(z)}{3}}^{\ceil{z}} (x-z)~dx\\
+\end{align*} 
+For $z=z(0,e,0)=2^e$ the expression above yields:
+\[
+\int_{2^e(1+\uro)}^{2^e(1+2\uro)} (x-2^e)~dx = 2^{2e}\frac{3\uro^2}{2}.
+\]
+Similarly for $z=z(1,e,0)=-2^e$ we get
+\[
+\int^{-2^e(1+\uro)}_{-2^e(1+2\uro)} (x+2^e)~dx = -2^{2e}\frac{3\uro^2}{2}.
+\]
+All other intervals $\fintvl$ are centred around $z$ and therefore
+\[
+\int_{\floor{z}}^{\ceil{z}} (x-z)~dx = 0
+\]
+We thus have the following bound for the expectation $\Exp{X.\erel(X)}$:
+\[
+\Exp{X.\erel(X)}\leq \sum_{s,e} f((-1)^s2^e)(-1)^s2^{2e}\frac{3\uro^2}{2}
+\]
+A completely analogous argument using an under-approximating sequence of simple function $h_n\uparrow h$ defined by $\inf(A^n(z,k))$ instead of $\sup(A^n(z,k))$ shows that
+\[
+\Exp{X.\erel(X)}\geq \sum_{s,e} f((-1)^s2^e)(-1)^s2^{2e}\frac{3\uro^2}{2}
+\]
+and the equality follows.
+\flushright{$\square$}
+\end{proof}
+
+
+
+\begin{myproof}{\cref{thm:covar}}
+This is a direct corollary of \cref{prop:ExpError} and \cref{prop:expXerelX}.
+\end{myproof}
+
+%
+%\begin{align*}
+%\int_{-1}^1 d(t) t~dt = \underbrace{\int_{-1}^{-\frac{1}{2}}d(t) t~dt}_A + \underbrace{\int_{-\frac{1}{2}}^{\frac{1}{2}}d(t) t~dt}_B +\underbrace{\int_{\frac{1}{2}}^1d(t) t~dt}_C
+%\end{align*}
+%
+%
+%For notational clarity we write 
+%\begin{align*}
+%K & = \sum\limits_{s, e=\emin+1}^{\emax-1} 2^{e}u f(z(s,e,0))  \\
+%L & = \sum\limits_{s, e=\emin+1}^{\emax-1} \int_{(-1)^s2^e(1+u)}^{(-1)^s2^e(2-u)} \frac{\absv{x}}{2^{e+1}} f(x) ~dx.
+%\end{align*}
+%We now integrate by parts to get
+%\begin{align*}
+%B & = \int_{-\frac{1}{2}}^{\frac{1}{2}} \frac{(K+L) t}{(1-tu)^2}~dt\\
+%& = \frac{(K+L)}{u}\left.\left(\frac{t}{1-tu}+\frac{\ln(1-tu)}{u}\right)\right|^{\frac{1}{2}}_{-\frac{1}{2}}\\
+%&=\frac{(K+L)}{u}\left(\frac{1}{1-\frac{u^2}{4}}- 2\arctanh\left(\frac{u}{2}\right) \right)
+%\end{align*}
+%For small values of $u$ the term in $u$ is almost linear  with slope $\frac{1}{6}$ and intercept 0. To a very good approximation we get for small $u$
+%\[
+%B = (K+L)\frac{u}{6}
+%\]
+%Now for the terms $A$ and $C$ which are integrated similarly.
+%\begin{align*}
+%C & = \int_{\frac{1}{2}}^1 \frac{t}{(1-tu)^2}\sum_{s, e=\emin+1}^{\emax-1} \left(2^{e}u f(z(s,e,0)) + \int_{(-1)^s2^e(1+u)}^{(-1)^s2^e(\frac{1}{\absv{t}}-u)} \frac{\absv{x}}{2^{e+1}} f(x) ~dx \right)~dt
+%\end{align*}
+%Using the definition of $K$ given above we get
+%\begin{align*}
+%A &= \int^{-\frac{1}{2}}_{-1} \frac{Kt}{(1-tu)^2} ~dt + \sum_{s, e=\emin+1}^{\emax-1}  \int^{-\frac{1}{2}}_{-1} \frac{t}{(1-tu)^2}\int_{(-1)^s2^e(1+u)}^{(-1)^s2^e(\frac{1}{\absv{t}}-u)} \frac{\absv{x}}{2^{e+1}} f(x) ~dx ~dt
+%\\
+%C &= \int_{\frac{1}{2}}^1 \frac{Kt}{(1-tu)^2} ~dt + \sum_{s, e=\emin+1}^{\emax-1}  \int_{\frac{1}{2}}^1 \frac{t}{(1-tu)^2}\int_{(-1)^s2^e(1+u)}^{(-1)^s2^e(\frac{1}{\absv{t}}-u)} \frac{\absv{x}}{2^{e+1}} f(x) ~dx ~dt
+%\end{align*}
+%The first summands of $A$ and $C$ are evaluated just like $B$ and we get
+%\begin{align}
+%&\frac{K}{u}\left.\left(\frac{t}{1-tu}+\frac{\ln(1-tu)}{u}\right)\right|_{-1}^{-\frac{1}{2}}\nonumber \\
+%=&
+%\frac{K}{u}\left(\frac{1}{2(1+u)(1+\frac{u}{2})}+\frac{1}{u}\ln\left(\frac{1+\frac{u}{2}}{1+u}\right)\right)\label{eq:app:A1}
+%\end{align}
+%and
+%\begin{align}
+%&\frac{K}{u}\left.\left(\frac{t}{1-tu}+\frac{\ln(1-tu)}{u}\right)\right|^{1}_{\frac{1}{2}}\nonumber \\
+%=&
+%\frac{K}{u}\left(\frac{1}{2(1-u)(1-\frac{u}{2})}+\frac{1}{u}\ln\left(\frac{1-u}{1-\frac{u}{2}}\right)\right)\label{eq:app:C1}
+%\end{align}
+%Again, the expression \cref{eq:app:A1} (resp. \cref{eq:app:C1}) is nearly linear for small values of $u$ with intercept $-\frac{3}{8}$ (resp. $\frac{3}{8}$) and slope $\frac{7}{12}$. The sum of \cref{eq:app:A1} and \cref{eq:app:C1} is thus
+%\[
+%\left(-\frac{3}{8}+\frac{7u}{12}\right)K + \left(\frac{3}{8}+\frac{7u}{12}\right)K = \frac{7u}{6}K
+%\]
+%Since we know the antiderivative of $\frac{t}{(1-tu)^2}$, we can compute the double integral in the definition of $A$ and $C$ above via an integration by part and the fundamental theorem of calculus. More precisely we get
+%\begin{align}
+%&\sum_{s,e=\emin+1}^{\emax-1}\int^{-\frac{1}{2}}_{-1} \frac{t}{(1-tu)^2}\int_{(-1)^s2^e(1+u)}^{(-1)^s2^e(\frac{1}{\absv{t}}-u)} \frac{\absv{x}}{2^{e+1}} f(x) ~dx ~dt\nonumber \\
+%=&\sum_{s,e=\emin+1}^{\emax-1}\left.\frac{1}{u}\left(\frac{t}{1-tu}+\frac{\ln(1-tu)}{u}\right)\int_{(-1)^s2^e(1+u)}^{(-1)^s2^e(\frac{1}{\absv{t}}-u)}\frac{\absv{x}}{2^{e+1}}f(x)~dx\right|_{-1}^{-\frac{1}{2}} - 
+%\nonumber \\
+%& \sum_{s,e=\emin+1}^{\emax-1}\int^{-\frac{1}{2}}_{-1}  \frac{1}{u}\left(\frac{t}{1-tu}+\frac{\ln(1-tu)}{u}\right) \frac{2^e(\frac{1}{t}-u)}{2^{e+1}}f\left((-1)^s2^e\left(\frac{1}{t}-u\right)\right) (-1)^s2^e\ln(t)~dt\label{eq:app:A2}
+%\end{align}
+%and
+%\begin{align}
+%&\sum_{s,e=\emin+1}^{\emax-1}\int_{\frac{1}{2}}^1 \frac{t}{(1-tu)^2}\int_{(-1)^s2^e(1+u)}^{(-1)^s2^e(\frac{1}{t}-u)} \frac{\absv{x}}{2^{e+1}} f(x) ~dx ~dt\nonumber \\
+%=&\sum_{s,e=\emin+1}^{\emax-1}\left.\frac{1}{u}\left(\frac{t}{1-tu}+\frac{\ln(1-tu)}{u}\right)\int_{(-1)^s2^e(1+u)}^{(-1)^s2^e(\frac{1}{t}-u)}\frac{\absv{x}}{2^{e+1}}f(x)~dx\right|^{1}_{\frac{1}{2}} - 
+%\nonumber \\
+%& \sum_{s,e=\emin+1}^{\emax-1}\int_{\frac{1}{2}}^1  \frac{1}{u}\left(\frac{t}{1-tu}+\frac{\ln(1-tu)}{u}\right) \frac{2^e(\frac{1}{t}-u)}{2^{e+1}}f\left((-1)^s2^e\left(\frac{1}{t}-u\right)\right) (-1)^s2^e\ln(t)~dt\label{eq:app:C2}
+%\end{align}
+%The first summand of \cref{eq:app:C2}  evaluates to
+%\begin{align}
+%\sum_{s,e=\emin+1}^{\emax-1}-\frac{1}{u}\left(\frac{1}{1-u}+\frac{\ln(1-u)}{u}\right)\int_{(-1)^s2^e(1-u)}^{(-1)^s2^e(1+u)}\frac{\absv{x}}{2^{e+1}}f(x)~dx
+%\nonumber \\
+%\hspace{1.3em} -\frac{1}{u}\left(\frac{1}{2(1-\frac{u}{2})}+\frac{\ln(1-\frac{u}{2})}{u}\right) 
+%\int_{(-1)^s2^e(1+u)}^{(-1)^s2^e(2-u)}\frac{\absv{x}}{2^{e+1}}f(x)~dx \label{eq:app:C22}
+%\end{align}
+%The function in from of the first integral is almost linear for small values of $u$ with intercept $\frac{1}{8}$ and slope $\frac{1}{12}$. Similarly, the function in front of the second integral is almost linear for small values of $u$ with intercept $\frac{1}{2}$ and slope $\frac{2}{3}$. Moreover, under \cref{ass:regularity} the last integral can be re-written as
+%\[
+%\int_{(-1)^s2^e(1-u)}^{(-1)^s2^e(1+u)}\frac{\absv{x}}{2^{e+1}}f(x)~dx =\frac{2^e}{2^{e+1}} f(z(s,e,0) 2^e u=\frac{1}{2} 2^e u f(s,e,0).
+%\] 
+%Using the definitions of $K$ and $L$ we can now re-write \cref{eq:app:C22} as
+%\[
+%\left(\frac{1}{2}+\frac{2u}{3}\right)\frac{K}{2}+\left(\frac{1}{8}+\frac{u}{12}\right)L
+%\]
+%A similar computation for the first summand of \cref{eq:app:A2} yields
+%\[
+%\left(\frac{1}{2}-\frac{2u}{3}\right)\frac{K}{2}+\left(\frac{1}{8}-\frac{u}{12}\right)L
+%\]
+%and as a result the sum of the first summands in \cref{eq:app:A2} and \cref{eq:app:C2} yield
+%\[
+%\frac{K}{4}+\frac{L}{8}
+%\]
+
+%Variance:
+%
+%\begin{align*}
+%\int_{-1}^1d(t)t^2~dt = \underbrace{\int_{-1}^{-\frac{1}{2}}d(t) t^2~dt}_A + \underbrace{\int_{-\frac{1}{2}}^{\frac{1}{2}}d(t) t^2~dt}_B +\underbrace{\int_{\frac{1}{2}}^1d(t) t^2~dt}_C
+%\end{align*}
+%We integrate by substitution by putting $x=1-tu$ and we get
+%\begin{align*}
+%B & = \int_{-\frac{1}{2}}^{\frac{1}{2}} \frac{(K+L) t^2}{(1-tu)^2}~dt\\
+%\int_{-\frac{1}{2}}^{\frac{1}{2}} \frac{(K+L) t^2}{(1-tu)^2}~dt\\
+%& = \frac{(K+L)}{u}\left.\left(\frac{t}{1-tu}+\frac{\ln(1-tu)}{u}\right)\right|^{\frac{1}{2}}_{-\frac{1}{2}}\\
+%&=\frac{(K+L)}{u}\left(\frac{1}{1-\frac{u^2}{4}}- 2\arctanh\left(\frac{u}{2}\right) \right)
+%\end{align*}
+
+\section{Implementation}\label{sec:appdx-implementation}
+
+\subsubsection{Independent Operation.}\label{sec:appdx-independent}
+We report the pseudo-code in \cref{independentalg}.
+%
+When the operands $X,Y$ are independent, we can compute $Z=X\iop Y$ with a simple pairwise operation (line 3, 4) between focal elements using interval arithmetic (line 5), and we multiply the corresponding probabilities (line 6).  
+%
+No matter the independence, we still populate and propagate the trace for future dependent operations (line 8).
+%
+This is very much similar to the pen-and-paper approach using a joint table.
+% 
+\begin{algorithm}[H]
+	\caption{Independent Operation $Z=X\iop Y$}\label{independentalg}
+	\begin{algorithmic}[1]
+		\Function {ind\_op}{$DS_X,\iop,DS_Y,trace_x,trace_y$} 
+		\State $DS_Z=list()$
+		\ForAll {$ ([x_1, x_2], p_{x}) \in DS_X$} 
+		\ForAll {$ ([y_1, y_2], p_{y}) \in DS_Y$}
+		\State $[z_1, z_2]=[x_1, x_2]\;op\;[y_1, y_2]$ \Comment{operation between intervals}
+		\State $p_{z}=p_{x}*p_{y}$
+		\State $DS_Z.append(([z_1, z_2],p_z))$
+		\EndFor
+		\EndFor
+		\State $trace_Z=trace_X \cup trace_Y\cup\{Z=X\iop Y\}$
+		\State \textbf{return} $DS_Z$, $trace_Z$
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+\subsection{Linear Programming Routine}\label{sec:appdx-lp}
+We can create a linear programming (LP) routine to delineate upper bound and lower bounds for the p-box.
+%
+In the following we report the pseudo-code for the evaluation of the upper bound of a p-box. The lower bound is similar.
+%
+
+\begin{align*}
+%1\leq i,j\leq N \land 
+&\text{\textbf{maximize}}\sum_{evp\:\in\:z_{i,j}} p_{z_{i,j}}\\
+&\text{\textbf{subject to}}\quad 0\leq p_{z_{i,j}}\leq 1\\
+&\qquad\qquad\quad\quad \forall i \in [1,N], \sum_{1\leq j\leq N} p_{z_{i,j}} = p_{y_{i}} \\
+&\qquad\qquad\quad\quad \forall j \in [1,N], \sum_{1\leq i\leq N} p_{z_{i,j}} = p_{x_{i}}\\
+\end{align*}
+%
+
+
+%
+The probabilities in the DS structures of the operands ($p_{y_i}$, $p_{x_i}$) are called the \emph{marginals}. The focal elements we use to populate $DS_Z$ are called the \emph{insiders} ($p_{z_{i,j}}$).
+%
+The constraints in the LP program force the insiders to have a probability between 0 and 1, and they relate the insiders with the marginals. The insiders have to sum up to the marginals. This is very similar to a so called \emph{joint table}.
+%
+
+The LP program takes in input an \emph{evaluation point} (evp) and returns a probability value.
+%
+In order to construct the $DS_Z$ exactly we should pick one evaluation point per focal element. This has quadratic complexity.
+%
+A good trade-off between accuracy and execution time consists in picking only $N$ out of the $N^2$ evaluation points (e.g. using some heuristics), at the price of a slightly over-approximation.
+%
+We run the linear programming routines in parallel, because the analysis of a single evaluation point is completely independent from the others.
+%
+
+\section{Experimental Evaluation}
+\label{sec:appdx-evaluation}
+
+\input{tables/table-ranges}
+
+%\input{tables/table-uniform-cdf}
+%In Table~\ref{cdfuni} we report the absolute variational distance between the
+%CDFs of \Tool and sampling with respect to the golden distribution, assuming
+%that all the input variables are uniformly distributed.
+%
+%On average, the execution time of \Tool is 127 seconds. Our range analysis
+%performs better than sampling in 23 out of 25 benchmarks for the maximal
+%distance, and for 1 benchmark the distance is the same. In average, \Tool
+%perform better than sampling for 15 benchmarks.
+%
+%For the error distributions, \Tool error analysis performs better than sampling
+%for 11 benchmarks for the maximal absolute distance. On average, sampling is
+%always closer to the golden distribution than \Tool.
+%
+%We observe a better accuracy for \Tool for the range analysis with respect to
+%the error analysis. The reason for this slight imprecision is the high
+%dependency between operands in the computation of the absolute error
+%distribution.
+%
+%However, we note how close both \Tool and sampling are to the golden model.
+

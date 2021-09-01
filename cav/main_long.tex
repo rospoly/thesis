@@ -1,0 +1,201 @@
+\documentclass[runningheads]{llncs}
+%
+\usepackage[left=1.228in, right=1.228in, top=1.024in, bottom=1.187in]{geometry}
+%% Some recommended packages.
+\usepackage{booktabs}   %% For formal tables:
+%% http://ctan.org/pkg/booktabs
+\usepackage{subcaption}
+\captionsetup{compatibility=false} %% For complex figures with subfigures/subcaptions
+%% http://ctan.org/pkg/subcaption
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{listings, framed}
+\lstset{
+	language=Java,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	frame=none,
+	numbers=none,
+	keywordstyle=\bfseries\color{red},
+	commentstyle=\itshape\color{red},
+	identifierstyle=\color{black},
+	stringstyle=\color{blue},
+	numberstyle={\ttfamily},
+	%  breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3,
+	escapechar=|
+}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{relsize}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage{xspace}
+\usepackage{amsmath}
+\usepackage{adjustbox}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{arydshln}
+\usepackage{wrapfig}
+\usepackage{proof}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{nicefrac}
+%% COMMENT PACKAGE (comment out releveant line):
+\usepackage[disable]{todonotes}
+%\usepackage{todonotes}
+
+\renewcommand{\ttdefault}{pxtt}
+
+%% FEEDBACK
+\newcommand{\zvon}[1]{\textcolor{red}{Zvon sayz: #1}}
+\newcommand{\rocco}[1]{\textcolor{blue}{Rocco: #1}}
+\newcommand{\fred}[1]{\textcolor{magenta}{Fred: #1}}
+
+%% EDITING
+\newcommand{\opcit}{\textit{op.}\ \textit{cit.}\ }
+\newcommand{\viz}{\textit{viz.}\ }
+\newcommand{\cf}{\textit{cf.}\  }
+\newcommand{\ie}{i.e.\ }
+\newcommand{\eg}{e.g.\ }
+\newcommand{\wrt}{w.r.t.\ }
+\newcommand{\rsp}{resp.\ }
+\crefname{section}{\S\hspace{-2pt}}{}
+\crefname{subsection}{\S\hspace{-2pt}}{}
+\crefname{subsubsection}{\S\hspace{-2pt}}{}
+\crefname{appendix}{Appendix}{Appendices}
+\crefname{equation}{Eq.}{Eqs.}
+\crefname{figure}{Fig.}{}
+\crefname{assumption}{Assumption}{}
+\crefname{lemma}{Lemma}{}
+\crefname{proposition}{Prop.}{}
+\crefname{corollary}{Corollary}{}
+\crefname{theorem}{Theorem}{}
+\crefname{algorithm}{Algorithm}{Algorithms}
+\newtheorem{assumption}{Assumption}
+\newenvironment{myproof}[1]{\noindent\textbf{Proof of #1:}}{\hfill$\square$}
+% For tables
+\newcommand{\mydashline}{\hdashline[1pt/1pt]}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%% Probabilities
+\newcommand{\Pro}[1]{\mathbb{P}\left[ #1 \right]}
+\newcommand{\uniform}[2]{\mathsf{Unif}(#1,#2)}
+\newcommand{\normal}[2]{\mathsf{Norm}(#1,#2)}
+\newcommand{\betad}[2]{\mathsf{Beta}(#1,#2)}
+\newcommand{\cov}{\mathrm{Cov}}
+\newcommand{\Exp}[1]{\mathbb{E}\left[#1\right]}
+
+%% Rounding, etc
+% Unit Roundoff/ Machine epsilon
+\newcommand{\uro}{u}
+\newcommand{\emin}{e_{min}}
+\newcommand{\emax}{e_{max}}
+\newcommand{\round}{\mathrm{Round}}
+% Absolute error function
+\newcommand{\eabs}{\mathrm{err}_{\mathrm{abs}}}
+% Relative error function
+\newcommand{\erel}{\mathrm{err}_{\mathrm{rel}}}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\intvl}[1]{\mathlarger{\left[\right.}  #1 \mathlarger{\left.\right]}}
+\newcommand{\fintvl}[1][z]{\mathlarger{\lfloor}#1,#1\mathlarger{\rceil}}
+\newcommand{\Err}{\mathcal{E}}
+%% Sets
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\eR}{\overline{\R}}
+\newcommand{\N}{\mathbb{N}}
+% Machine operation
+\newcommand{\mop}{~\mathtt{op_m}~}
+% Infinite-precision operation
+\newcommand{\iop}{~\mathrm{op}~}
+% Indicator function
+\newcommand{\one}{\mathbbm{1}}
+%% General maths
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\ssvin}{\hspace{-2pt}\in\hspace{-2pt}} % SPACE-SAVING \in
+\newcommand{\inv}{^{-1}}
+\newcommand{\absv}[1]{\left\lvert #1\right\rvert}
+\newcommand{\dt}{\frac{\partial}{\partial t}}
+\newcommand{\arctanh}{\mathrm{arctanh}}
+% Definition
+\newcommand\defeq\triangleq
+% Semantic brackets
+\newcommand{\sem}[1]{\left\llbracket#1\right\rrbracket}
+
+\newcommand{\Tool}{\textsc{PAF}\xspace}
+\newcommand{\pacal}{\textsc{PaCAL}\xspace}
+\setlength{\abovecaptionskip}{0pt plus 1pt minus 1pt}
+\setlength{\belowcaptionskip}{0pt plus 1pt minus 1pt}
+\setlength{\textfloatsep}{5pt}
+\setlength{\parskip}{2pt}
+
+\input{definitions}
+
+\newgeometry{left=1.228in, right=1.228in, top=1.024in, bottom=1.187in}
+
+\pagestyle{empty}
+\begin{document}
+
+\title{Rigorous Roundoff Error Analysis of Probabilistic Floating-Point
+Computations\thanks{Supported in part by the National Science
+Foundation awards CCF 1552975, 1704715,  the Engineering and Physical
+Sciences Research Council (EP/P010040/1), and the Leverhulme Project Grant ``Verification of Machine Learning Algorithms''.}}
+
+\titlerunning{Roundoff Error Analysis of Probabilistic Floating-Point
+Computations}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+
+\author{George Constantinides\inst{1} \and
+Fredrik Dahlqvist\inst{1,2} \and
+Zvonimir Rakamaric\inst{3}\and Rocco Salvia\inst{3}}
+
+\authorrunning{G.~Constantinides \and
+F.~Dahlqvist \and
+Z.~Rakamaric \and R.~Salvia}
+
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+\institute{Imperial College London \email{g.constantinides@ic.ac.uk} \and
+University College London \email{f.dahlqvist@ucl.ac.uk} \and University of Utah \email{\{rocco,zvonimir\}@cs.utah.edu}}
+
+\maketitle              % typeset the header of the contribution
+
+\begin{abstract}
+We present a detailed study of roundoff errors in probabilistic floating-point computations.
+We derive closed-form expressions for the distribution of roundoff errors associated with a random variable, and we prove that roundoff errors are generally close to being uncorrelated with their generating distribution. Based on these theoretical advances, we propose a model of IEEE floating-point arithmetic for numerical expressions with probabilistic inputs and an algorithm for evaluating this model.  Our algorithm provides rigorous bounds to the output and error distributions of arithmetic expressions over random variables, evaluated in the presence of roundoff errors.  It keeps track of complex dependencies between random variables using an SMT solver,  and is capable of providing sound but tight probabilistic bounds to roundoff errors using symbolic affine arithmetic.  We implemented the algorithm in the PAF tool, and evaluated it on FPBench, a standard benchmark suite for the analysis of roundoff errors. Our evaluation shows that PAF computes tighter bounds than current state-of-the-art on almost all benchmarks.
+\end{abstract}
+
+
+\input{introduction_long}
+\input{motivation_long}
+\input{preliminaries_long}
+\input{theory_long}
+\input{affine_long}
+\input{algorithm_long}
+\input{evaluation_long}
+\input{related-work_long}
+\input{conclusions}
+
+\newpage
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\newpage
+
+\input{appendix}
+
+\end{document}

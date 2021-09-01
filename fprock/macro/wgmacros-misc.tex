@@ -1,0 +1,85 @@
+\makeatletter
+\@ifpackageloaded{listings}{
+    \newcommand*{\mlst}[1]{\mbox{\lstinline[multicols=]`#1`}}
+}{
+    \newcommand*{\mlst}[1]{\fbox{\fbox{load package listings}\texttt{\string#1}}}
+}
+
+\@ifpackageloaded{datetime2}{
+    \newcommand*{\currenttime}{\DTMcurrenttime}
+}{
+}
+\makeatother
+
+\providecommand*{\currenttime}{\fbox{NO TIME package}}
+\providecommand*{\mathscr}{\PackageWarning{WGmacros}{no mathscr font}\mathcal} 
+\providecommand*{\mathfrak}{\PackageWarning{WGmacros}{no mathfrak font}\mathcal} 
+
+\providecommand*{\eg}   {e.g.} 
+\providecommand*{\etc}  {\emph{etc}.}
+\providecommand*{\ie}   {i.e.,} 
+\providecommand*{\resp} {respectively}
+\providecommand*{\st}   {s.t.}
+\providecommand*{\wrt}  {w.r.t.}
+\providecommand*{\wlg}  {w.l.o.g.}
+% \providecommand*{\Wlog} {\wlg}
+% 
+\newcommand*{\paradigm}[1][] {\Fbox{default #1 paradigm}}
+\newcommand*{\proglang}{\Fbox{default programming language}}
+\newcommand*{\program}[1][A]{\ifempty{#1}{P}{p}rogram}
+\newcommand*{\programs}[1][A]{\program[#1]s}
+\newcommand*{\progequiv}{\program\ equivalence}
+\newcommand*{\progequivs}{\progequiv s}
+\newcommand*{\progrule}{\program\ rule}
+\newcommand*{\progrules}{\progrule s}
+\newcommand*{\query}[1][A]{\ifempty{#1}{Q}{q}uery}
+\newcommand*{\queries}[1][A]{\ifempty{#1}{Q}{q}ueries}
+\newcommand*{\expression}[1][A]{\ifempty{#1}{E}{e}xpression}
+\newcommand*{\expressions}[1][A]{\expression[#1]s}
+\newcommand*{\deffun}[1][A]{\ifempty{#1}{defined }{}function}
+\newcommand*{\deffuns}[1][A]{\deffun[#1]s}
+
+
+\providecommand*{\bibURLext}[2]{\draft{CONSIDER convert bib entry with `url' field!}Available at URL: \href{#1}{\texttt{#2}}}
+\providecommand*{\bibURL}[1]{\draft{CONSIDER convert bib entry with `url' field!}Available at URL: \href{#1}{\texttt{#1}}}
+\providecommand*{\href}[2]{\wgmWarn{\href}\underline{#2}}
+
+\providecommand*{\email}[1]{\texttt{#1}}
+
+\newcommand*{\xcite}[1]{[{#1}]}
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{color}
+
+\newcommand*{\Fbox}{\fcolorbox{black}{yellow}}
+\newcommand*{\Flbox}{\fcolorbox{black}{lightyellow}}
+\newcommand*{\Dbox}[1]{\draft{\Fbox{#1}}}
+
+\definecolor{aliciacolor}{RGB}{0,125,0}
+
+\newcommand{\Cesar}[1]{\textcolor{red}{[Cesar's comment: #1]}}
+\newcommand{\Santi}[2][]{\hole{\colorbox{yellow}{Santi} #1 \quad #2}}
+\newcommand{\Marco}[2][]{{\color{blue}\hole{\colorbox{yellow}{Marco} #1 \quad #2}}}
+\newcommand{\MarcoPN}[2]{\begin{draftpleasenote}[Marco: #1]\color{blue} #2\end{draftpleasenote}}
+\newcommand{\Maria}[2][]{\hole{\colorbox{yellow}{Maria} #1 \quad #2}}
+\newcommand{\Moreno}[2][]{\hole{\colorbox{yellow}{Moreno} #1 \quad #2}}
+
+\newcommand{\Alicia}[2][]{\hole{\textbf{#1}\hfill{\color{aliciacolor}\textbf{Alicia}}\\[-1.7ex]\rule{\linewidth}{0.5mm}\\ #2}}
+\newcommand{\Giovanni}[2][]{\hole{\textbf{#1}\hfill{\color{blue}\textbf{Giovanni}}\\[-1.7ex]\rule{\linewidth}{0.5mm}\\ #2}}
+
+% nonstandard color names
+
+\RequirePackage{xcolor}
+
+\newcommand{\FromTo}[2]{\csname#1\endcsname[\colorbox{pink}{@#2}]}
+
+\newcommand{\Laura}[2][]{\hole{\textbf{#1}\hfill{\color{violet}\textbf{Laura}}\\[-1.7ex]\rule{\linewidth}{0.5mm}\\ #2}}
+\newcommand{\Luca}[2][]{\hole{\textbf{#1}\hfill{\color{orange}\textbf{Luca}}\\[-1.7ex]\rule{\linewidth}{0.5mm}\\ #2}}
+\newcommand{\MarcoA}[2][]{\hole{\textbf{#1}\hfill{\color{orange}\textbf{MarcoA}}\\[-1.7ex]\rule{\linewidth}{0.5mm}\\ #2}}
+
+% \newcommand{\AtAlicia}{\FromTo{Marco}{Alicia}}%[1]\Marco[\colorbox{pink}{@Alicia}]{#1}}
+% \newcommand{\AtGiovanni}{\FromTo{Marco}{Giovanni}}%[1]{\Marco[\colorbox{pink}{@Giovanni}]{#1}}
+% \newcommand{\AtLaura}{\FromTo{Marco}{Laura}}%[1]{\Marco[\colorbox{pink}{@Laura}]{#1}}
+% \newcommand{\AtLuca}{\FromTo{Marco}{Luca}}%[1]{\Marco[\colorbox{pink}{@Luca}]{#1}}
+

@@ -1,0 +1,91 @@
+\newcommand*{\dfn}{\coloneq}
+\newcommand*{\revdfn}{\eqqcolon}
+
+% \makeatletter
+% \@ifpackagelater{mathtools}{2011/02/12}{%
+% \DeclarePairedDelimiterX{\set}[2]{\{}{\}}{#1\ifempty{#2}{}{\,\delimsize\vert\, #2}}
+% \DeclarePairedDelimiterX{\mset}[2]{\langle}{\rangle}{#1\ifempty{#2}{}{\,\delimsize\vert\, #2}}
+% }{%
+% \PackageWarning{WGmacros}{The version of `mathtools' package is too old, expect wrong output}
+% \DeclarePairedDelimiter{\set}{\{}{|}
+% \DeclarePairedDelimiter{\mset}{\langle}{|}
+% }
+% \makeatother
+
+\providecommand{\annote}[1]{}
+
+\newcommand*{\cpo}[2]{{(#1, \, \mathord{#2})}}
+
+\newcommand*{\lattice}[6]{{(#1, \, \mathord{#2}, \, \annote{$\vee$}\mathord{#3}, 
+  \, \mathord{#4}\ifempty{#5}{}{, \,
+  \annote{$\top$}\mathord{#5}, \, \mathord{#6}})}}
+
+\newcommand*{\semilattice}[5]{{(#1,
+                                \, \mathord{#2},
+                                \, \mathord{#3},
+                                \, \mathord{#4},
+                                \, \mathord{#5})}}
+
+\newcommand*{\zseq}[2][]{\overrightarrow{{#2}_{#1}}} %% indexed (short) sequence
+\newcommand*{\seq}[2][n]{#2_{1}, \dots, #2_{#1}} %% indexed sequence
+\newcommand*{\hoseq}[3][n]{#2{{#3}_{1}}, \dots, #2{{#3}_{#1}}}
+\newcommand*{\emptyseq}{\diamondsuit}
+
+\newcommand*{\glb}{\ensuremath{\mathit{glb}}}
+\newcommand*{\lub}{\ensuremath{\mathit{lub}}}
+
+\newcommand*{\quotient}[2]{{#1}\big/_{\! #2}}
+\newcommand*{\eqClass}[2]{[{#1}]_{#2}}
+
+\newcommand*{\PowerSet}[1]{\mathop{\powerset}(#1)}
+\newcommand*{\FinPowerSet}[1]{\mathop{\powerset_{f}}(#1)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                 %
+%   Macros that some package may already provide  %
+%                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\providecommand*{\mathoper}[1]{\mathop{\mathit{#1}}\nolimits}
+
+\providecommand*{\pair}[2]{{\langle #1, \, #2 \rangle}}
+\providecommand*{\triple}[3]{{\langle #1, \, #2, \, #3 \rangle}}
+\providecommand*{\quadruple}[4]{{\langle #1, \, #2, \, #3, \, #4 \rangle}}
+
+\providecommand*{\true}{\mathit{true}}       %% simbolo di costante logica (T)
+\providecommand*{\false}{\mathit{false}}     %% simbolo di costante logica (F)
+\providecommand*{\id}[1][]{\mathit{id}_{#1}} %% funzione identica
+
+\providecommand*{\True}{\mathit{True}}
+\providecommand*{\False}{\mathit{False}}
+
+\providecommand*{\nimplies}{\nRightarrow}
+\renewcommand*{\implies}{\Rightarrow}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                 %
+%   Symbols that some package like MnSymbol may already provide   %
+%                                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ProvideWarnCommand{\powerset}{\wp} 
+\ProvideWarnCommand{\llbracket}{[\![}
+\ProvideWarnCommand{\rrbracket}{]\!]}
+
+\ProvideWarnCommand{\coloneqq}{\mathrel{\vcentcolon=}} %% :=
+\ProvideWarnCommand{\coloneq}{\mathrel{\coloneqq}} 
+\ProvideWarnCommand{\eqqcolon}{\mathrel{=\vcentcolon}} % =:
+
+% Negated symbols
+\ProvideWarnCommand{\ngg}{\not\gg} 
+\ProvideWarnCommand{\nin}{\notin}
+\ProvideWarnCommand{\notin}{\not\in}
+\ProvideWarnCommand{\npreccurlyeq}{\not\preccurlyeq}
+\ProvideWarnCommand{\nsimeq}{\not\simeq}
+\ProvideWarnCommand{\nsqsubseteq}{\not\sqsubseteq}
+\ProvideWarnCommand{\nrightarrowtriangle}{\not\rightarrowtriangle}
+\ProvideWarnCommand{\nRightarrow}{\not\Rightarrow} 
+
+% BACKWARD COMPATIBILITY
+
+\backcompatibility{\equivClass}{\quotient}

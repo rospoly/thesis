@@ -1,0 +1,62 @@
+\begin{thebibliography}{10}
+
+\bibitem{fptuner}
+Wei-Fan Chiang, Mark Baranowski, Ian Briggs, Alexey Solovyev, Ganesh
+  Gopalakrishnan, and Zvonimir Rakamari\'c.
+\newblock Rigorous floating-point mixed-precision tuning.
+\newblock In {\em POPL}, 2017.
+
+\bibitem{darulova2018daisy}
+Eva Darulova, Anastasiia Izycheva, Fariha Nasir, Fabian Ritter, Heiko Becker,
+  and Robert Bastian.
+\newblock Daisy --- framework for analysis and optimization of numerical
+  programs.
+\newblock In {\em TACAS}, 2018.
+
+\bibitem{rosa}
+Eva Darulova and Viktor Kuncak.
+\newblock Sound compilation of reals.
+\newblock In {\em POPL}, 2014.
+
+\bibitem{satire}
+Arnab Das, Ian Briggs, Ganesh Gopalakrishnan, Sriram Krishnamoorthy, and Pavel
+  Panchekha.
+\newblock Scalable yet rigorous floating-point error analysis.
+\newblock In {\em SC}, 2020.
+
+\bibitem{fluctuat}
+David Delmas, Eric Goubault, Sylvie Putot, Jean Souyris, Karim Tekkal, and
+  Franck V{\'e}drine.
+\newblock Towards an industrial use of {FLUCTUAT} on safety-critical avionics
+  software.
+\newblock In {\em FMICS}, 2009.
+
+\bibitem{ieee754}
+{Microprocessor Standards Committee of the IEEE Computer Society}.
+\newblock {IEEE Standard for Floating-Point Arithmetic.}, 2019.
+
+\bibitem{patriot}
+The patriot missile failure.
+
+\bibitem{solovyev2018rigorous}
+Alexey Solovyev, Marek~S Baranowski, Ian Briggs, Charles Jacobsen, Zvonimir
+  Rakamari\'c, and Ganesh Gopalakrishnan.
+\newblock Rigorous estimation of floating-point round-off errors with {Symbolic
+  Taylor Expansions}.
+\newblock {\em TOPLAS}, 2018.
+
+\bibitem{2015_fm_sjrg}
+Alexey Solovyev, Charles Jacobsen, Zvonimir Rakamari\'c, and Ganesh
+  Gopalakrishnan.
+\newblock Rigorous estimation of floating-point round-off errors with {Symbolic
+  Taylor Expansions}.
+\newblock In {\em FM}, 2015.
+
+\bibitem{precisa}
+Laura Titolo, Marco~A. Feli{\'u}, Mariano Moscato, and C{\'e}sar~A.
+  Mu{\~{n}}oz.
+\newblock An abstract interpretation framework for the round-off error analysis
+  of floating-point programs.
+\newblock In {\em VMCAI}, 2018.
+
+\end{thebibliography}

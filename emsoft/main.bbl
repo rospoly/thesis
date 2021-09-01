@@ -1,0 +1,564 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{42}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[\protect\citeauthoryear{Abate, Bessa, Cattaruzza, Cordeiro, David,
+  Kesseli, Kroening, and Polgreen}{Abate et~al\mbox{.}}{2017}]%
+        {Abate2017}
+\bibfield{author}{\bibinfo{person}{A. Abate}, \bibinfo{person}{I. Bessa},
+  \bibinfo{person}{D. Cattaruzza}, \bibinfo{person}{L.C. Cordeiro},
+  \bibinfo{person}{C. David}, \bibinfo{person}{P. Kesseli}, \bibinfo{person}{D.
+  Kroening}, {and} \bibinfo{person}{E. Polgreen}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Automated Formal Synthesis of Digital Controllers
+  for State-Space Physical Plants}. In \bibinfo{booktitle}{\emph{Computer Aided
+  Verification (CAV)}}. \bibinfo{pages}{462--482}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Alessio and Bemporad}{Alessio and
+  Bemporad}{2009}]%
+        {Alessio2009}
+\bibfield{author}{\bibinfo{person}{A. Alessio} {and} \bibinfo{person}{A.
+  Bemporad}.} \bibinfo{year}{2009}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{A Survey on Explicit Model Predictive
+  Control}}.
+\newblock \bibinfo{publisher}{Springer}, \bibinfo{pages}{345--369}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Anta, Majumdar, Saha, and Tabuada}{Anta
+  et~al\mbox{.}}{2010}]%
+        {Anta10}
+\bibfield{author}{\bibinfo{person}{A. Anta}, \bibinfo{person}{R. Majumdar},
+  \bibinfo{person}{I. Saha}, {and} \bibinfo{person}{P. Tabuada}.}
+  \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Automatic Verification of Control System
+  Implementations}. In \bibinfo{booktitle}{\emph{Proceedings of the Tenth ACM
+  International Conference on Embedded Software}}
+  \emph{(\bibinfo{series}{EMSOFT '10})}. \bibinfo{publisher}{ACM},
+  \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{9--18}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Bemporad}{Bemporad}{2006}]%
+        {Bemporad:2006}
+\bibfield{author}{\bibinfo{person}{Alberto Bemporad}.}
+  \bibinfo{year}{2006}\natexlab{}.
+\newblock \showarticletitle{Model Predictive Control Design: New Trends and
+  Tools}. In \bibinfo{booktitle}{\emph{Proceedings of the 45th {IEEE}
+  Conference on Decision and Control}}. \bibinfo{publisher}{{IEEE}}.
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.1109/cdc.2006.377490}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Bemporad, Morari, Dua, and
+  Pistikopoulos}{Bemporad et~al\mbox{.}}{2002}]%
+        {Bemporad:2002}
+\bibfield{author}{\bibinfo{person}{A. Bemporad}, \bibinfo{person}{M. Morari},
+  \bibinfo{person}{V. Dua}, {and} \bibinfo{person}{E.N. Pistikopoulos}.}
+  \bibinfo{year}{2002}\natexlab{}.
+\newblock \showarticletitle{The Explicit Linear Quadratic Regulator for
+  Constrained Systems}.
+\newblock \bibinfo{journal}{\emph{Automatica}} \bibinfo{volume}{38},
+  \bibinfo{number}{1} (\bibinfo{date}{Jan.} \bibinfo{year}{2002}),
+  \bibinfo{pages}{3--20}.
+\newblock
+\showISSN{0005-1098}
+
+
+\bibitem[\protect\citeauthoryear{Camacho and Alba}{Camacho and Alba}{2013}]%
+        {camacho2013model}
+\bibfield{author}{\bibinfo{person}{Eduardo~F Camacho} {and}
+  \bibinfo{person}{Carlos~Bordons Alba}.} \bibinfo{year}{2013}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Model predictive control}}.
+\newblock \bibinfo{publisher}{Springer Science \& Business Media}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Darulova, Izycheva, Nasir, Ritter, Becker, and
+  Bastian}{Darulova et~al\mbox{.}}{2018a}]%
+        {Daisy}
+\bibfield{author}{\bibinfo{person}{E. Darulova}, \bibinfo{person}{A. Izycheva},
+  \bibinfo{person}{F. Nasir}, \bibinfo{person}{F. Ritter}, \bibinfo{person}{H.
+  Becker}, {and} \bibinfo{person}{R. Bastian}.}
+  \bibinfo{year}{2018}\natexlab{a}.
+\newblock \showarticletitle{{Daisy - Framework for Analysis and Optimization of
+  Numerical Programs}}. In \bibinfo{booktitle}{\emph{TACAS}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Darulova, Sharma, and Horn}{Darulova
+  et~al\mbox{.}}{2018b}]%
+        {DaisyTuning}
+\bibfield{author}{\bibinfo{person}{E. Darulova}, \bibinfo{person}{S. Sharma},
+  {and} \bibinfo{person}{E. Horn}.} \bibinfo{year}{2018}\natexlab{b}.
+\newblock \showarticletitle{Sound Mixed-Precision Optimization with Rewriting}.
+  In \bibinfo{booktitle}{\emph{ICCPS}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{De~Dinechin, Lauter, and
+  Melquiond}{De~Dinechin et~al\mbox{.}}{2006}]%
+        {Gappa}
+\bibfield{author}{\bibinfo{person}{F. De~Dinechin}, \bibinfo{person}{C.Q.
+  Lauter}, {and} \bibinfo{person}{G. Melquiond}.}
+  \bibinfo{year}{2006}\natexlab{}.
+\newblock \showarticletitle{Assisted {{Verification}} of {{Elementary
+  Functions}} Using {{Gappa}}}. In \bibinfo{booktitle}{\emph{{{ACM}} Symposium
+  on {{Applied}} Computing}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{de~Figueiredo and Stolfi}{de~Figueiredo and
+  Stolfi}{2004}]%
+        {affineArithmetic}
+\bibfield{author}{\bibinfo{person}{L.~H. de Figueiredo} {and}
+  \bibinfo{person}{J. Stolfi}.} \bibinfo{year}{2004}\natexlab{}.
+\newblock \showarticletitle{Affine {A}rithmetic: {C}oncepts and
+  {A}pplications}.
+\newblock \bibinfo{journal}{\emph{Numerical Algorithms}} \bibinfo{volume}{37},
+  \bibinfo{number}{1-4} (\bibinfo{year}{2004}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{de~la Pe{\~{n}}a, Alamo, Ram{\'{\i}}rez, and
+  Camacho}{de~la Pe{\~{n}}a et~al\mbox{.}}{2005}]%
+        {delaPea:2005}
+\bibfield{author}{\bibinfo{person}{D.~Mu{\~{n}}oz de~la Pe{\~{n}}a},
+  \bibinfo{person}{T. Alamo}, \bibinfo{person}{D.R. Ram{\'{\i}}rez}, {and}
+  \bibinfo{person}{E.F. Camacho}.} \bibinfo{year}{2005}\natexlab{}.
+\newblock \showarticletitle{Min-Max Model Predictive Control as a Quadratic
+  Program}.
+\newblock \bibinfo{journal}{\emph{{IFAC} Proceedings Volumes}}
+  \bibinfo{volume}{38}, \bibinfo{number}{1} (\bibinfo{year}{2005}),
+  \bibinfo{pages}{263--268}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Donz{\'e} and Maler}{Donz{\'e} and
+  Maler}{2010}]%
+        {donze2010robust}
+\bibfield{author}{\bibinfo{person}{A. Donz{\'e}} {and} \bibinfo{person}{O.
+  Maler}.} \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Robust satisfaction of temporal logic over
+  real-valued signals}. In \bibinfo{booktitle}{\emph{International Conference
+  on Formal Modeling and Analysis of Timed Systems}}. Springer,
+  \bibinfo{pages}{92--106}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{{Farahani}, {Majumdar}, {Prabhu}, and
+  {Soudjani}}{{Farahani} et~al\mbox{.}}{2018}]%
+        {FMPS18}
+\bibfield{author}{\bibinfo{person}{S.~S. {Farahani}}, \bibinfo{person}{R.
+  {Majumdar}}, \bibinfo{person}{V.~S. {Prabhu}}, {and} \bibinfo{person}{S.
+  {Soudjani}}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Shrinking Horizon Model Predictive Control with
+  Signal Temporal Logic Constraints under Stochastic Disturbances}.
+\newblock \bibinfo{journal}{\emph{IEEE Trans. Automat. Control}}
+  (\bibinfo{year}{2018}), \bibinfo{pages}{1--8}.
+\newblock
+\showISSN{0018-9286}
+
+
+\bibitem[\protect\citeauthoryear{Gaffar, Mencer, Luk, and Cheung}{Gaffar
+  et~al\mbox{.}}{2004}]%
+        {Gaffar2004}
+\bibfield{author}{\bibinfo{person}{A.A. Gaffar}, \bibinfo{person}{O. Mencer},
+  \bibinfo{person}{W. Luk}, {and} \bibinfo{person}{P.Y.K. Cheung}.}
+  \bibinfo{year}{2004}\natexlab{}.
+\newblock \showarticletitle{{Unifying Bit-Width Optimisation for Fixed-Point
+  and Floating-Point Designs.}}
+\newblock \bibinfo{journal}{\emph{FCCM}} (\bibinfo{year}{2004}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{{Herceg}, {Kvasnica}, {Jones}, and
+  {Morari}}{{Herceg} et~al\mbox{.}}{2013}]%
+        {matlabMPT}
+\bibfield{author}{\bibinfo{person}{M. {Herceg}}, \bibinfo{person}{M.
+  {Kvasnica}}, \bibinfo{person}{C.~N. {Jones}}, {and} \bibinfo{person}{M.
+  {Morari}}.} \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{Multi-Parametric Toolbox 3.0}. In
+  \bibinfo{booktitle}{\emph{2013 European Control Conference (ECC)}}.
+  \bibinfo{pages}{502--510}.
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.23919/ECC.2013.6669862}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{IEEE}{IEEE}{2008}]%
+        {ieee75408}
+\bibfield{author}{\bibinfo{person}{Computer~Society IEEE}.}
+  \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{{IEEE} {S}tandard for {F}loating-{P}oint
+  {A}rithmetic}.
+\newblock \bibinfo{journal}{\emph{IEEE Std 754-2008}} (\bibinfo{year}{2008}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ingole, Kvasnica, Silva, and Gustafson}{Ingole
+  et~al\mbox{.}}{2017}]%
+        {memoryMPC}
+\bibfield{author}{\bibinfo{person}{Deepak Ingole}, \bibinfo{person}{Michal
+  Kvasnica}, \bibinfo{person}{Himeshi~De Silva}, {and} \bibinfo{person}{John
+  Gustafson}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Reducing Memory Footprints in Explicit Model
+  Predictive Control using Universal Numbers}.
+\newblock \bibinfo{journal}{\emph{IFAC-PapersOnLine (20th IFAC World
+  Congress)}} \bibinfo{volume}{50}, \bibinfo{number}{1} (\bibinfo{year}{2017}),
+  \bibinfo{pages}{11595 -- 11600}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{J}{J}{2017}]%
+        {lcon2vertMatlab}
+\bibfield{author}{\bibinfo{person}{Matt J}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \bibinfo{title}{Analyze N-dimensional Polyhedra in terms of Vertices
+  or (In)Equalities}.
+\newblock
+  \bibinfo{howpublished}{\url{https://de.mathworks.com/matlabcentral/fileexchange/30892-analyze-n-dimensional-polyhedra-in-terms-of-vertices-or-in-equalities}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Johansen, Jackson, Schreiber, and
+  Tondel}{Johansen et~al\mbox{.}}{2007}]%
+        {Johansen:2007}
+\bibfield{author}{\bibinfo{person}{Tor~A. Johansen}, \bibinfo{person}{Warren
+  Jackson}, \bibinfo{person}{Robert Schreiber}, {and} \bibinfo{person}{Petter
+  Tondel}.} \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{Hardware Synthesis of Explicit Model Predictive
+  Controllers}.
+\newblock \bibinfo{journal}{\emph{{IEEE} Transactions on Control Systems
+  Technology}} \bibinfo{volume}{15}, \bibinfo{number}{1} (\bibinfo{date}{Jan.}
+  \bibinfo{year}{2007}), \bibinfo{pages}{191--197}.
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.1109/tcst.2006.883206}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Jones, Grieder, and Rakovi{\'{c}}}{Jones
+  et~al\mbox{.}}{2006}]%
+        {Jones:2006}
+\bibfield{author}{\bibinfo{person}{C.N. Jones}, \bibinfo{person}{P. Grieder},
+  {and} \bibinfo{person}{S.V. Rakovi{\'{c}}}.} \bibinfo{year}{2006}\natexlab{}.
+\newblock \showarticletitle{A logarithmic-time solution to the point location
+  problem for parametric linear programming}.
+\newblock \bibinfo{journal}{\emph{Automatica}} \bibinfo{volume}{42},
+  \bibinfo{number}{12} (\bibinfo{date}{dec} \bibinfo{year}{2006}),
+  \bibinfo{pages}{2215--2218}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{{Kapasouris}, {Athans}, and
+  {Stein}}{{Kapasouris} et~al\mbox{.}}{1988}]%
+        {Kapasouris:1998}
+\bibfield{author}{\bibinfo{person}{P. {Kapasouris}}, \bibinfo{person}{M.
+  {Athans}}, {and} \bibinfo{person}{G. {Stein}}.}
+  \bibinfo{year}{1988}\natexlab{}.
+\newblock \showarticletitle{{Design of feedback control systems for unstable
+  plants with saturating actuators}}.
+\newblock \bibinfo{journal}{\emph{NASA STI/Recon Technical Report N}}
+  \bibinfo{volume}{89} (\bibinfo{date}{Nov.} \bibinfo{year}{1988}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Karaman, Sanfelice, and Frazzoli}{Karaman
+  et~al\mbox{.}}{2008}]%
+        {KaramanSF08}
+\bibfield{author}{\bibinfo{person}{Sertac Karaman}, \bibinfo{person}{Ricardo~G.
+  Sanfelice}, {and} \bibinfo{person}{Emilio Frazzoli}.}
+  \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{Optimal control of Mixed Logical Dynamical systems
+  with Linear Temporal Logic specifications}. In
+  \bibinfo{booktitle}{\emph{Proc. of {CDC} 2008: the 47th {IEEE} Conference on
+  Decision and Control}}. \bibinfo{publisher}{{IEEE}},
+  \bibinfo{pages}{2117--2122}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Kim, Sadraddini, Belta, Arcak, and Seshia}{Kim
+  et~al\mbox{.}}{2017}]%
+        {kim2017dynamic}
+\bibfield{author}{\bibinfo{person}{E.S. Kim}, \bibinfo{person}{S. Sadraddini},
+  \bibinfo{person}{C. Belta}, \bibinfo{person}{M. Arcak}, {and}
+  \bibinfo{person}{S.A. Seshia}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Dynamic contracts for distributed temporal logic
+  control of traffic networks}. In \bibinfo{booktitle}{\emph{Decision and
+  Control (CDC), 2017 IEEE 56th Annual Conference on}}. IEEE,
+  \bibinfo{pages}{3640--3645}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Kinsman and Nicolici}{Kinsman and
+  Nicolici}{2009}]%
+        {Kinsman2009}
+\bibfield{author}{\bibinfo{person}{A.~B. Kinsman} {and} \bibinfo{person}{N.
+  Nicolici}.} \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{{Finite Precision Bit-Width Allocation using
+  SAT-Modulo Theory}}. In \bibinfo{booktitle}{\emph{DATE}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lee, Gaffar, Cheung, Mencer, Luk, and
+  Constantinides}{Lee et~al\mbox{.}}{2006}]%
+        {Lee2006}
+\bibfield{author}{\bibinfo{person}{D.~U. Lee}, \bibinfo{person}{A.~A. Gaffar},
+  \bibinfo{person}{R.~C.~C. Cheung}, \bibinfo{person}{O. Mencer},
+  \bibinfo{person}{W. Luk}, {and} \bibinfo{person}{G.~A. Constantinides}.}
+  \bibinfo{year}{2006}\natexlab{}.
+\newblock \showarticletitle{{Accuracy-Guaranteed Bit-Width Optimization}}.
+\newblock \bibinfo{journal}{\emph{Trans. Comp.-Aided Des. Integ. Cir. Sys.}}
+  \bibinfo{volume}{25}, \bibinfo{number}{10} (\bibinfo{year}{2006}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{{Lofberg}}{{Lofberg}}{2004}]%
+        {matlabYALMIP}
+\bibfield{author}{\bibinfo{person}{J. {Lofberg}}.}
+  \bibinfo{year}{2004}\natexlab{}.
+\newblock \showarticletitle{YALMIP : a toolbox for modeling and optimization in
+  MATLAB}. In \bibinfo{booktitle}{\emph{2004 IEEE International Conference on
+  Robotics and Automation (IEEE Cat. No.04CH37508)}}.
+  \bibinfo{pages}{284--289}.
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.1109/CACSD.2004.1393890}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Mallik, Sinha, Banerjee, and Zhou}{Mallik
+  et~al\mbox{.}}{2007}]%
+        {Mallik2007}
+\bibfield{author}{\bibinfo{person}{A. Mallik}, \bibinfo{person}{D. Sinha},
+  \bibinfo{person}{P. Banerjee}, {and} \bibinfo{person}{H. Zhou}.}
+  \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{{Low-Power Optimization by Smart Bit-Width
+  Allocation in a SystemC-Based ASIC Design Environment.}}
+\newblock \bibinfo{journal}{\emph{IEEE Trans. on CAD of Integ. Cir. and Sys.}}
+  (\bibinfo{year}{2007}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{M\"{o}nnigmann and Kastsian}{M\"{o}nnigmann
+  and Kastsian}{2011}]%
+        {Mnnigmann:2011}
+\bibfield{author}{\bibinfo{person}{M. M\"{o}nnigmann} {and} \bibinfo{person}{M.
+  Kastsian}.} \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{Fast explicit {MPC} with multiway trees}.
+\newblock \bibinfo{journal}{\emph{{IFAC} Proceedings Volumes}}
+  \bibinfo{volume}{44}, \bibinfo{number}{1} (\bibinfo{date}{jan}
+  \bibinfo{year}{2011}), \bibinfo{pages}{1356--1361}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Moore}{Moore}{1966}]%
+        {intervals}
+\bibfield{author}{\bibinfo{person}{R.E. Moore}.}
+  \bibinfo{year}{1966}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Interval {A}nalysis}}.
+\newblock \bibinfo{publisher}{Prentice-Hall}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Osborne, Cheung, Coutinho, Luk, and
+  Mencer}{Osborne et~al\mbox{.}}{2007}]%
+        {Osborne2007}
+\bibfield{author}{\bibinfo{person}{W.~G. Osborne}, \bibinfo{person}{R.~C.~C.
+  Cheung}, \bibinfo{person}{J. Coutinho}, \bibinfo{person}{W. Luk}, {and}
+  \bibinfo{person}{O. Mencer}.} \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{{Automatic Accuracy-Guaranteed Bit-Width
+  Optimization for Fixed and Floating-Point Systems}}. In
+  \bibinfo{booktitle}{\emph{FPL}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Pang, Radecka, and Zilic}{Pang
+  et~al\mbox{.}}{2011}]%
+        {Pang2011}
+\bibfield{author}{\bibinfo{person}{Yu Pang}, \bibinfo{person}{Katarzyna
+  Radecka}, {and} \bibinfo{person}{Zeljko Zilic}.}
+  \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{{An Efficient Hybrid Engine to Perform Range
+  Analysis and Allocate Integer Bit-widths for Arithmetic Circuits}}. In
+  \bibinfo{booktitle}{\emph{ASPDAC}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Pant, Abbas, and Mangharam}{Pant
+  et~al\mbox{.}}{2017}]%
+        {pant2017smooth}
+\bibfield{author}{\bibinfo{person}{Y.V. Pant}, \bibinfo{person}{H. Abbas},
+  {and} \bibinfo{person}{R. Mangharam}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Smooth operator: Control using the smooth
+  robustness of temporal logic}. In \bibinfo{booktitle}{\emph{Control
+  Technology and Applications (CCTA), 2017 IEEE Conference on}}. IEEE,
+  \bibinfo{pages}{1235--1240}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Park, Pajic, Sokolsky, and Lee}{Park
+  et~al\mbox{.}}{2017}]%
+        {ParkPSL17}
+\bibfield{author}{\bibinfo{person}{J. Park}, \bibinfo{person}{M. Pajic},
+  \bibinfo{person}{O. Sokolsky}, {and} \bibinfo{person}{I. Lee}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Automatic Verification of Finite Precision
+  Implementations of Linear Controllers}. In \bibinfo{booktitle}{\emph{Tools
+  and Algorithms for the Construction and Analysis of Systems {TACAS}, Uppsala,
+  Sweden, April 22-29}}. \bibinfo{pages}{153--169}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Park, Pajic, Sokolsky, and Lee}{Park
+  et~al\mbox{.}}{2019}]%
+        {Park2019}
+\bibfield{author}{\bibinfo{person}{Junkil Park}, \bibinfo{person}{Miroslav
+  Pajic}, \bibinfo{person}{Oleg Sokolsky}, {and} \bibinfo{person}{Insup Lee}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{{LCV:} {A} Verification Tool for Linear Controller
+  Software}. In \bibinfo{booktitle}{\emph{Tools and Algorithms for the
+  Construction and Analysis of Systems (TACAS)}}. \bibinfo{pages}{213--225}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Qin and Badgwell}{Qin and Badgwell}{2003}]%
+        {QinBadgwell03}
+\bibfield{author}{\bibinfo{person}{S.J. Qin} {and} \bibinfo{person}{T.A.
+  Badgwell}.} \bibinfo{year}{2003}\natexlab{}.
+\newblock \showarticletitle{A survey of industrial model predictive control
+  technology}.
+\newblock \bibinfo{journal}{\emph{Control engineering practice}}
+  \bibinfo{volume}{11(7)} (\bibinfo{year}{2003}), \bibinfo{pages}{733--764}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Raman, Donz{\'e}, Maasoumy, Murray,
+  Sangiovanni-Vincentelli, and Seshia}{Raman et~al\mbox{.}}{2014}]%
+        {raman2014model}
+\bibfield{author}{\bibinfo{person}{V. Raman}, \bibinfo{person}{A. Donz{\'e}},
+  \bibinfo{person}{M. Maasoumy}, \bibinfo{person}{R.M Murray},
+  \bibinfo{person}{A. Sangiovanni-Vincentelli}, {and} \bibinfo{person}{S.A.
+  Seshia}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Model predictive control with signal temporal logic
+  specifications}. In \bibinfo{booktitle}{\emph{Decision and Control (CDC),
+  2014 IEEE 53rd Annual Conference on}}. IEEE, \bibinfo{pages}{81--87}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ramirez and Camacho}{Ramirez and
+  Camacho}{2006}]%
+        {RamirezC06}
+\bibfield{author}{\bibinfo{person}{D.R. Ramirez} {and} \bibinfo{person}{E.F.
+  Camacho}.} \bibinfo{year}{2006}\natexlab{}.
+\newblock \showarticletitle{Piecewise affinity of min-max {MPC} with bounded
+  additive uncertainties and a quadratic criterion}.
+\newblock \bibinfo{journal}{\emph{Automatica}}  \bibinfo{volume}{42(2)}
+  (\bibinfo{year}{2006}), \bibinfo{pages}{295--302}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Rawlings, Mayne, and Diehl}{Rawlings
+  et~al\mbox{.}}{2017}]%
+        {RMD17}
+\bibfield{author}{\bibinfo{person}{James~B. Rawlings},
+  \bibinfo{person}{David~Q. Mayne}, {and} \bibinfo{person}{Moritz~M. Diehl}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Model Predictive Control: Theory,
+  Computation, and Design} (\bibinfo{edition}{2} ed.)}.
+\newblock \bibinfo{publisher}{Nob Hill Publishing}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Saha and Majumdar}{Saha and Majumdar}{2012}]%
+        {SahaM12}
+\bibfield{author}{\bibinfo{person}{I. Saha} {and} \bibinfo{person}{R.
+  Majumdar}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Trigger memoization in self-triggered control}. In
+  \bibinfo{booktitle}{\emph{{EMSOFT} 2012}}. \bibinfo{publisher}{{ACM}},
+  \bibinfo{pages}{103--112}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Shmarov, Soudjani, Paoletti, Bartocci, Lin,
+  Smolka, and Zuliani}{Shmarov et~al\mbox{.}}{2019}]%
+        {SSPBLSZ19}
+\bibfield{author}{\bibinfo{person}{Fedor Shmarov}, \bibinfo{person}{Sadegh
+  Soudjani}, \bibinfo{person}{Nicola Paoletti}, \bibinfo{person}{Ezio
+  Bartocci}, \bibinfo{person}{Shan Lin}, \bibinfo{person}{Scott~A. Smolka},
+  {and} \bibinfo{person}{Paolo Zuliani}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Automated Synthesis of Safe Digital Controllers for
+  Sampled-Data Stochastic Nonlinear Systems}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/1901.03315}
+  (\bibinfo{year}{2019}).
+\newblock
+\showeprint[arxiv]{1901.03315}
+
+
+\bibitem[\protect\citeauthoryear{Suardi, Longo, Kerrigan, and
+  Constantinides}{Suardi et~al\mbox{.}}{2016}]%
+        {imperialrmpc}
+\bibfield{author}{\bibinfo{person}{A. Suardi}, \bibinfo{person}{S. Longo},
+  \bibinfo{person}{E.C. Kerrigan}, {and} \bibinfo{person}{G.A.
+  Constantinides}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Explicit MPC: Hard constraint satisfaction under
+  low precision arithmetic}.
+\newblock \bibinfo{journal}{\emph{Control Engineering Practice}}
+  \bibinfo{volume}{47} (\bibinfo{year}{2016}), \bibinfo{pages}{60 -- 69}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wongpiromsarn, Topcu, and
+  Murray}{Wongpiromsarn et~al\mbox{.}}{2012}]%
+        {WongpiromsarnTM12}
+\bibfield{author}{\bibinfo{person}{T. Wongpiromsarn}, \bibinfo{person}{U.
+  Topcu}, {and} \bibinfo{person}{R.M. Murray}.}
+  \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Receding Horizon Temporal Logic Planning}.
+\newblock \bibinfo{journal}{\emph{{IEEE} Trans. Automat. Contr.}}
+  \bibinfo{volume}{57}, \bibinfo{number}{11} (\bibinfo{year}{2012}),
+  \bibinfo{pages}{2817--2830}.
+\newblock
+
+
+\end{thebibliography}

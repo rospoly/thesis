@@ -1,0 +1,72 @@
+\section{Symbolic Affine Arithmetic}
+\label{sec:symbolicaffine}
+
+In this section, we introduce \emph{symbolic affine arithmetic}, which we
+employ to generate the symbolic form for the roundoff error that we use in
+\cref{subsec:conderror}.
+%
+Affine arithmetic~\cite{affineoriginal} is a model for range analysis that extends classic interval arithmetic~\cite{intervalarithmetic} with information about linear correlations between operands.
+%
+Symbolic affine arithmetic extends standard affine arithmetic by keeping the coefficients of the noise terms \emph{symbolic}.
+%
+%Thus, we use a single quote to distinguish a symbolic operation $(f(x))^{\prime}$ from its concrete counterpart $f(x)$. In other words,  all the operands and operators in $(f(x))^{\prime}$ are symbolic. 
+%
+We define a \emph{symbolic affine form} as
+%
+\begin{align}
+\hat{x}= x_{0}+\sum_{i=1}^{n} x_{i}\epsilon_{i},\qquad\text{where}\; \epsilon_{i} \in [-1, 1]. \label{eq:affineform}
+\end{align}
+%
+We call $x_{0}$ the central symbol of the affine form, while $x_{i}$ are the symbolic coefficients for the noise terms $\epsilon_{i}$.
+We can always convert a symbolic affine form to its corresponding interval representation. 
+%
+This can be done using interval arithmetic or, to avoid precision loss, using a
+global optimizer.
+%
+
+Affine operations between symbolic forms follow the usual rules, such as
+\begin{align*} 
+\alpha\hat{x}+\beta\hat{y}+\zeta=\alpha{x_{0}}+\beta{y_{0}}+\zeta+\sum_{i=1}^{n}{(\alpha x_{i}+\beta y_{i})\epsilon_{i}} 
+\end{align*}
+%
+Non-linear operations cannot be represented exactly using an affine form.
+%
+Hence, we approximate them like in standard affine arithmetic~\cite{affinebook}.
+%
+
+\noindent \textbf{Sound Error Analysis with Symbolic Affine Arithmetic.}
+We now show how the roundoff errors get propagated through the four basic arithmetic operation.
+%
+We apply these propagation rules to an arithmetic expression
+to accurately keep track of the roundoff errors. 
+%
+Since the (absolute) roundoff error directly depends on the range of a computation,  we describe range and error together as a pair
+%
+\todo[inline]{Fred: terminology question: this last statement is only true of the \emph{absolute} error.  Is this what \emph{roundoff error} means? If yes, is there another conventional name for the \emph{realtive} error.}
+\texttt{(range: Symbol, $\widehat{err}$: Symbolic Affine Form)}.
+Here, \texttt{range} represents the infinite-precision range of the computation, while $\widehat{err}$ is the symbolic affine form for the roundoff error in floating-point precision.
+Unary operators (e.g., rounding) take as input a (range, error form) pair, and return a new output pair;
+binary operators take as input two pairs, one per operand.
+%
+For linear operators, the ranges and errors get propagated using the standard rules of affine arithmetic.
+%
+
+For the multiplication, we distribute each term in the first operand to every term in the second operand:
+\begin{align}
+\nonumber
+(\texttt{x},\:\widehat{err}_x)*(\texttt{y}, \:\widehat{err}_y)=(\texttt{x*y},\:\texttt{x}*\widehat{err}_y + \texttt{y}*\widehat{err}_x + \widehat{err}_x*\widehat{err}_y)
+\end{align}
+The output range is the product of the input ranges and the remaining terms contribute to the error.
+% The remaining three terms contribute to the output error.
+%
+Only the last (quadratic) expression cannot be represented exactly in symbolic affine arithmetic;
+we bound such non-linearities using a global optimizer.
+%
+The division is computed as the term-wise multiplication of the numerator with the inverse of the denominator.
+%
+Hence, we need the inverse of the denominator error form, and then we can proceed as for multiplication.
+%
+To compute the inverse, we leverage the symbolic expansion used in FPTaylor~\cite{solovyev2018rigorous}.
+
+Finally, after every operation we apply the unary rounding operator from \cref{eq:traditional}. The infinite-precision range is not affected by rounding. The rounding operator appends a fresh noise term to the symbolic error form. 
+The coefficient for the new noise term is the (symbolic) floating-point range given by the sum of the input range with the input error form.

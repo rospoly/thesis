@@ -1,0 +1,90 @@
+\section{Overview Through an Application}\label{sec:overview}
+
+GPS sensors provide latitude and longitude  coordinates that are inherently noisy.  As shown in detail in~\cite{bornholt2013abstractions}, the conditional probability distribution of the true longitude and latitude coordinates $(\mathtt{TrueLat}, \mathtt{TrueLong})$,  given a GPS sensor reading $(\mathtt{ReadLat}, \mathtt{ReadLong})$, is distributed according to a Rayleigh distribution
+\begin{align*}
+ & \Pro{\mathrm{Location}=(\mathtt{TrueLat}, \mathtt{TrueLong}) \mid \mathrm{GPS}=(\mathtt{ReadLat}, \mathtt{ReadLong}) } \\
+\sim~ & \mathrm{Rayleigh}\left(\norm{\mathtt{TrueLat}, \mathtt{TrueLong}) - (\mathtt{ReadLat}, \mathtt{ReadLong}) }; \nicefrac{\varepsilon}{\sqrt{\ln 400}}\right)
+\end{align*}
+where $\varepsilon$ is a hardware dependent measure of accuracy of the GPS reading known as horizontal accuracy.  Interestingly and somewhat surprisingly, since the density of any Rayleigh distribution is always zero at $x=0$,  it is extremely unlikely that the true coordinates lie in a small neighbourhood of those given by the GPS reading.  This leads to errors described in \cite{bornholt2013abstractions} and \cite{bornholt2014uncertain} and to the suggestion that the coordinates given by a GPS sensor should be corrected by adding a probabilistic error term which will, on average, shift the observed coordinates into an area of high probability for the true coordinates. \cref{fig:latitude} gives the correction of \cite{bornholt2014uncertain}, where the value of the variable $\mathtt{radius}$ is drawn from the Rayleigh distribution with parameter $\frac{\varepsilon}{\sqrt{\ln 400}}$, the value of the variable $\mathtt{angle}$ is draw from the uniform distribution on $[0,2\pi]$, and  \texttt{DEGREES\_PER\_METER} is a constant ($\approx$ 0.000009009) used to convert the $\mathtt{radius}$ variable (expressed in meters) into degrees.
+\begin{figure}[b]
+	\begin{lstlisting}
+	TrueLat = ReadLat + ((radius * sin(angle)) * DEGREES_PER_METER)
+	TrueLong = ReadLong + ((radius * cos(angle)) * DEGREES_PER_METER)
+	\end{lstlisting}
+	\caption{Probabilistic correction of GPS coordinates from \cite{bornholt2014uncertain}: $\mathtt{radius}$ is Rayleigh distributed, $\mathtt{angle}$ is uniformly distributed.}\label{fig:latitude}
+\end{figure}
+
+A developer trying to strike the right balance between resources, such as energy consumption or execution time, versus the accuracy of the computation, particularly in the context of mobile and embedded devices, might want to run a rigorous worst-case floating-point analysis tool to decide which floating-point format is accurate enough to process GPS signals.
+%
+This is a mandatory decision if the developer requires rigorous error bounds holding with 100\% certainty.
+%
+The problem such a developer would face when analyzing a piece of code involving the probabilistic correction above, is that the Rayleigh distribution --- that is to say the value of the variable $\mathtt{radius}$ in \cref{fig:latitude} --- has a semi-infinite support (\ie $[0, \infty)$), and \emph{any} rigorous (\ie sound) worst-case roundoff error analysis would return an infinite error bound in the presence of unbounded variables.
+%
+This is because, in the \emph{worst-case} scenario, the unbounded variable assumes exactly the infinite value, thus resulting in an infinite roundoff error.
+%
+In order to get a meaningful (numeric) error bound from worst-case roundoff error tools, the range of $\mathtt{radius}$ will therefore have to be truncated. The main consequence of truncation is that soundness --- which is the purpose of these tools --- is lost, because regardless of \emph{where} you decide to truncate the distribution, you are going to discard a part of its support with non-zero probability. To mitigate this issue and be `as sound as possible', the natural truncation is given by the interval $[0,max_{(p, e)}]$ where $max_{(p, e)}$ is the largest representable number not causing an overflow, in a generic floating-point format with $p$ bits for the mantissa and $e$ bits for the exponent representations.
+As we show next, the main issue with this natural truncation is that all the useful probabilistic information is lost, and regions of high probability are treated in the same way as regions which would never be explored even if we sampled for billions of years.
+
+As an example, let us consider the latitude correction of \cref{fig:latitude}:
+\begin{align}
+\mathtt{ReadLat + ((radius * sin(angle)) * DEGREES\_PER\_METER)},\label{latitude}
+\end{align}
+and set $\mathtt{ReadLat}$ to $51.4769^{\circ}$, the latitude of the Greenwich observatory, and DEGREES\_PER\_METER to 0.000009009.
+%
+In \cref{tab:erroranalysisGPS}, we report our detailed roundoff error analysis when \eqref{latitude} is implemented in the well-known IEEE-754 double-, single-, and half-precision formats.
+With each implementation format (reported in the Format column), we associate the range $[0,max_{(p,e)}]$, with $max_{(p,e)}$ reported in the Max column, of the Rayleigh distribution truncated in the natural manner described above. In double-precision, for example, we truncate the Rayleigh distribution to the range $[0, 10^{307}]$ since $10^{307}\approx max_{(53,11)}$.
+We computed worst-case roundoff error bounds for \eqref{latitude}  in each precision format with the state-of-the-art error analyzer FPTaylor~\cite{2015_fm_sjrg}, with the variable \texttt{radius} constrained to the corresponding truncated range. We show the results in the column FPTaylor.
+%
+Note that in double-precision, FPTaylor returns a roundoff error bound of 4.3e+286. 
+%
+The reason for such an enormous error is the fact that FPTaylor does not take into consideration how \texttt{radius} is distributed in the range, \ie how rare the values contributing to such a large error are.
+%
+We also computed worst-case roundoff errors with our tool \Tool by setting the confidence interval from which conditional roundoff errors are computed to 100\%. We report the results in the PAF 100\% column; these results are identical to the ones from FPTaylor,  thereby confirming empirically that worst-case roundoff error is synonymous with conditional roundoff error based on a 100\% confidence interval.
+%
+Finally, the PAF 99.9999\% column gives the 99.9999\% \emph{conditional roundoff error} computed by \Tool. This value is an upper bound to the roundoff error \emph{conditioned} on the computation having landed in an interval capturing (at least) 99.9999\% of all possible outputs.  The column Absolute gives the 99.9999\% conditional roundoff error of the latitude correction \eqref{latitude}, which is expressed in degrees, and the column Meters converts this value into meters, based on the fact that $1^{\circ}$ of latitude is roughly equal to 111km.
+%
+
+\input{tables/table-motivation.tex}
+
+Our probabilistic error analysis in \Tool with 99.9999\% confidence interval reduces the 100\% (i.e., worst-case) error bound by 300 orders of magnitude in the case of double-precision, and by 30 orders of magnitude in the case of single-precision.
+%
+The reason behind such dramatic reduction is that \Tool runs a sound probabilistic range analysis (described in \cref{sec:errordist} and \cref{subsec:dependentOperation}) in order to over-approximate the 99.9999\% confidence interval when \eqref{latitude} is implemented in floating-point arithmetic. This 99.9999\% interval is then used  to compute the \emph{conditional roundoff error} (described in \cref{subsec:conderror}).
+%
+Specifically, using \emph{symbolic affine arithmetic} (see \cref{sec:symbolicaffine}), \Tool will maximize the possible roundoff error \emph{for those computations that land in the 99.9999\% confidence interval}.
+%
+In other words, \Tool over-approximates the roundoff error of all possible computations except the 0.0001\% of outliers that lead to the most abnormal outputs.
+%
+
+Without our probabilistic error analysis, the developer might \emph{erroneously} conclude that half-precision format is the most appropriate to implement \eqref{latitude} because it results in the smallest error bound.
+%
+However, with the information provided by the 99.9999\% conditional roundoff error, the developer can see that the \emph{average} error, without the extremely rare outliers, is many orders of magnitude smaller than the worst-case scenarios.
+%
+Furthermore, the developer can also observe that in the case of the half-precision format (and in this case alone), the worst-case errors and the probabilistic errors are almost identical,  which means that the \emph{average} roundoff error is of the same order of magnitude as the worst-case error.
+%
+This is because in half-precision (and lower), the roundoff error of \eqref{latitude} is governed by the rounding errors of the constants,  and is thus completely independent from the chosen confidence interval.
+
+Armed with this information, the developer can conclude that with a roundoff error of roughly 40cm (4.1e-1 meters) when correcting 99.9999\% of GPS latitude readings, working in single-precision is an adequate compromise between efficiency and accuracy of the computation, since double-precision provides unnecessary accuracy (roundoff error of 4.5e-10 meters) and half-precision is \emph{always} overly imprecise (roundoff error of 2667 meters).  As a quantitative intuition of the 99.9999\% confidence level,  it is not hard to show (by using the Poisson approximation of the binomial distribution) that the probability of encountering at least one outlier after 700,000 latitude corrections given by \eqref{latitude} is about 50\%. Assuming one GPS reading every 5 seconds, this corresponds to at least 50\% chance that the roundoff error bound is never breached after 40 days of continual use.  Of course, we can run \Tool at higher levels of confidence if required.
+
+%
+This demonstrates the innovative concept of \emph{probabilistic precision tuning}, supported by this paper, in order to determine which floating-point format is the most appropriate to implement \eqref{latitude}.
+%
+In the current worst-case precision tuners~\cite{fptuner,darulova2018daisy}, the developer provides the tuner with an algebraic expression $f(x)$ (like \eqref{latitude}) where the arguments $x$ are properly bounded, together with a numerical roundoff error bound $\epsilon$.
+%
+The output from the tuner is the minimal (in terms of bits) floating-point format required when implementing the expression $f(x)$ that guarantees that the implementation will \emph{never} violate the given error bound.
+%
+Clearly, worst-case precision tuning suffers from the same limitations we discussed above, meaning we have no information on how rare the inputs violating the given error bound might be. 
+
+%
+As an example, let us do a precision tuning exercise for the latitude correction computation \eqref{latitude}. We bound the variable $\mathtt{radius}$ in the interval $[0, 10^{307}]$ and we set the error bound $\epsilon$ to 1e-5 (roughly $1m$).
+%
+We manually perform worst-case precision tuning using FPTaylor to determine that the minimal floating-point format not violating the given error bound $\epsilon$ consists of $1022$ bits for the mantissa and $11$ bits for the exponent.
+%
+Such custom floating-point format is prohibitively expensive, in particular for devices with an intensive usage of GPS readings, like smart-phones or smart-watches. 
+%
+Thus, worst-case error bounds are not only very pessimistic, but are also of little practical use from an implementation prospective in some cases.
+%Note there is an implicit confidence interval set to 100\% in standard precision tuning routines.
+
+%
+On the other hand, when we manually performed \emph{probabilistic precision tuning} using \Tool with a confidence interval set to 99.9999\%, we determine that the minimal required floating-point format consists of $22$ bits for the mantissa and $11$ bits for the exponent.
+%
+Thanks to \Tool, the confidence interval has now become an additional input parameter of the probabilistic precision tuning routine. Thus, in addition to the expression $f(x)$ and the error bound $\epsilon$, the developer can also provide a custom confidence interval of interest and ignore the extremaly unlikely corner cases like the ones we described for \eqref{latitude}.

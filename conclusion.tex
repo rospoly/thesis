@@ -1,0 +1,36 @@
+%%% -*-LaTeX-*-
+
+\chapter{Conclusions}
+\label{sec:conclusion}
+In this thesis we improved the state-of-the-art for what concern the rigorous roundoff error analysis of computer programs.
+%
+
+First, we introduced FPRoCK a prototype of an SMT solver able to precisely reason about control flow-instabilities stemming from the use of floating-point arithmetic in computers.
+%
+As opposed to the state-of-the-art, where the size of the instability region, from where an instability might be triggered, is over-approximated using conservative error analysis techniques, in FPRoCK we can precisely reason about the exact input values leading to the instability. 
+%
+In other words, in case the instability exists we get a model triggering the instability.
+%
+
+We integrated FPRoCk on the top of PRECiSA, a static analyzer of floating-point programs, to improve its accuracy for what concern the analysis on safety-critical applications with conditional statements.
+%
+
+Due to its modularity, FPRoCK could be use as a back-end for any existing static-analyzers to verify instabilities in conditionals, or alternatively, as a stand-alone tool to mix real and floating-point theories in the same SMT query.
+%
+
+Second, we reviewed the state-of-the-art for what concern worst-case roundoff error analysis and we show how it can be used, in existing embedded-system applications, to design robust micro-controllers, where the roundoff error stemming from the finite-precision implementation of the controller itself is included, at design time, in the set of all the disturbances affecting the system (e.g. friction, wind).
+%
+
+Using our framework, a developer can precisely quantify the trade-off between the memory footprint of the micro-controller, in a context where typically the available memory is very limited (e.g. 32KB), against the tolerance of the controller towards disturbance which, among the others, include roundoff errors. 
+%
+
+Finally, we introduced our framework for computing probabilistic roundoff errors where, as opposed to the state-of-the-art, the roundoff error bound holds for the \emph{average} computation rather than the \emph{worst-case} computation.
+%
+
+The main advantage in using average roundoff errors, as opposed to the worst-case counterpart, is we can trade some accuracy in the computations, in favor of resource savings, like energy consumption and execution time.
+%
+This is precious not only on devices where the usage of the battery, and the dimension of the device itself, are primary concerns, like smart-phones and smart-watches, but also on all applications where the rigid guarantees from the worst-case approach are prohibitive from an implementation prospective.
+%
+
+In our framework we can precisely quantify which precision format is required for the average computation, thus we can provide rigorous probabilistic guarantees.
+%

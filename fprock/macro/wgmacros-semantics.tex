@@ -1,0 +1,288 @@
+\makeatletter
+\providecommand{\ifempty}[3]{\def\@@@temp{#1}\ifx\@@@temp\@empty#2\else#3\fi}
+\@ifpackageloaded{mathtools}{}{\PackageWarning{WGmacros}%
+{Please load `mathtools' package explicitely in preamble}
+\RequirePackage{mathtools}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        %
+%   DOMAINS and orders   %
+%                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\Cinterps}[1][]{\mathbb{I}_{#1}} %% interpretations
+\newcommand*{\Ainterps}[1][\A]{\mathbb{I}_{#1}} %% interpretations
+\newcommand*{\CIleq}{\Cleq} %% order on interpretetions
+\newcommand*{\AIleq}{\Aleq} %% order on interpretetions
+\newcommand*{\CInleq}{\Cnleq} %% order on interpretetions
+\newcommand*{\AInleq}{\Anleq} %% order on interpretetions
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                       %
+%   TERMS (signature, positions, ...)   %
+%                                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% private (just for redefinition)
+\newcommand*{\mathT}{\mathit}
+\newcommand*{\TermsSym}{\mathT{T}}
+\newcommand*{\LinTermsSym}{\mathT{L}{\scriptstyle\TermsSym}}
+\newcommand*{\twoParsDenot}[3]{\mathop{#1}(#2, #3)}
+% public
+
+\newcommand*{\SigTerms}[2]{\twoParsDenot{\TermsSym}{#1}{#2}}
+\newcommand*{\LinSigTerms}[2]{\twoParsDenot{\LinTermsSym}{#1}{#2}}
+
+\newcommand*{\Osyms}{\Omega}
+\newcommand*{\FOsyms}{\widetilde\Osyms}       %% predicate symbols (signature)
+\newcommand*{\Psyms}{\Pi}       %% predicate symbols (signature)
+\newcommand*{\Fsyms}{\Sigma}    %% function symbols (signature)
+\newcommand*{\Csyms}{\mathT{C}} %% constructor symbols
+\newcommand*{\Dsyms}{\mathT{D}} %% defined symbols
+\newcommand*{\Vsyms}{\mathT{V}} %% variable symbols
+\backcompatibility{\Fsym}{\Fsyms}
+\backcompatibility{\Csym}{\Csyms}
+\backcompatibility{\Dsym}{\Dsyms}
+\backcompatibility{\Vsym}{\Vsyms}
+
+
+
+
+%% terms
+\newcommand*{\Terms}[1][\Vsyms]{\SigTerms{\Fsyms}{#1}}
+%% constructor terms
+\newcommand*{\CTerms}[1][\Vsyms]{\SigTerms{\Csyms}{#1}}
+
+%% Linear terms
+\newcommand*{\LinTerms}[1][\Vsyms]{\LinSigTerms{\Fsyms}{#1}}
+%% Linear constructor terms
+\newcommand*{\LinCTerms}[1][\Vsyms]{\LinSigTerms{\Csyms}{#1}} 
+
+\newcommand*{\leqT}{\preceq} %% order on terms
+
+% \newcommand*{\leqP}{\fbox{change}\preceq} %% order on positions
+% \newcommand*{\pos}[2][]{\mathit{O}_{#1}(#2)} %% term positions set 
+\newcommand*{\append}{\cdot} %% append
+\newcommand*{\replace}[3]{#1[#2]_{#3}} %% term replacement
+\newcommand*{\rootPos}{\Lambda} %% root position
+\newcommand*{\subterm}[2]{#1|_{#2}} %% subterm
+
+\newcommand*{\vars}[1]{\parensmathoper{var}{#1}} %% term variables
+\newcommand*{\fresh}{\ll} %% fresh variant
+
+\newcommand*{\termres}[2]{{#1} \ifempty{#2}{}{\triangleright {#2}}}
+
+\newcommand*{\call}[3]{\termres{\mathit{#1}\ifempty{#2}{}{\mathit{(#2)}}}{#3}}
+\newcommand*{\mgc}[4][]{\call{#2}{\mbox{$\zseq[#1]{#3}$}}{#4}}
+
+%% program (rewrite) rule
+\newcommand*{\genrule}[2]{#1 \rightarrow #2}
+\newcommand*{\prule}[3]{\genrule{\mathit{#1}\ifempty{#2}{}{\mathit{(#2)}}}{#3}}
+
+\newcommand*{\mghead}[3][]{\mathit{#2}\ifempty{#3}{}{(\zseq[#1]{\mathit{#3}})}}
+\newcommand*{\mgrule}[4][]{\genrule{\mghead[#1]{#2}{#3}}{#4}}
+
+% \newcommand*{\letop}[2]{\mathop{\mathit{let}} #1 \mathrel{\mathit{in}} #2 } %% let constr. (abstract syntax)
+
+%%%%%%%%%%%%%%%%%%%%%
+%                   %
+%   SUBSTITUTIONS   %
+%                   %
+%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\Substs}{\mathit{Substs}}
+\newcommand*{\CSubsts}{\Csyms\Substs} %% constructor substitutions
+\newcommand*{\MGCsym}{\mathbb{MGC}}
+\newcommand*{\MGC}[1][]{\MGCsym_{#1}} %% most general call set
+
+\newcommand*{\leqS}{\preceq} %% order on substitutions
+\newcommand*{\gtS}{\succ}    %% order on substitutions
+\newcommand*{\eqS}{\simeq}    %% order on substitutions
+\newcommand*{\neqS}{\nsimeq}    %% order on substitutions
+% \newcommand*{\lubS}{\mathbin{\uparrow}} % oppure mathrel?
+\monobioperator{\lubS}{\mathbin{\uparrow}}{\mathbin{\uparrow}}
+
+\newcommand*{\emptysubst}{\varepsilon} %% empty substitution
+\newcommand*{\dom}{\parensmathoper{dom}} %% domain
+\newcommand*{\range}{\parensmathoper{range}} %% range
+\newcommand*{\img}{\parensmathoper{img}}
+\backcompatibility{\domrestriction}{\restrict}
+\newcommand*{\restrict}[2]{{#1}\mathord{\restriction}_{#2}} %% domain restriction
+\newcommand*{\restrictVars}[2]{\restrict{#1}{\vars{#2}}}
+
+%%%%%%%%%%%%%%%%
+%              %
+%   PROGRAMS   %
+%              %
+%%%%%%%%%%%%%%%%
+
+\newcommand*{\ProgsSym}{\mathbb{P}}
+\newcommand*{\Progs}[1][\Fsyms]{\ProgsSym_{#1}} % \mathit{Progs}
+
+\newcommand*{\ProgSym}{P}
+\newcommand*{\prog}[1][]{\ensuremath{\ProgSym_{\mathit{#1}}^{}}} %% generic program
+\renewcommand*{\P}{\prog} %% generic program Alias
+
+\newcommand*{\CAnsw}[2]{{#1 \cdot #2}}%\talloblong\mathrel{}
+\backcompatibility{\cansw}{\CAnsw}
+\newcommand*{\CAleq}{\preceq}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                             %
+%   REWRITING AND NARROWING   %
+%                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \RequirePackage{theorems}
+\providecommand*{\starred}[2][*] {\wgmWarn{\starred}\mathrel{\mathord{#2}{}^{#1}}}
+
+
+\newcommand*{\rewriteStep}[2][\genrule{l}{r}]{\xrightarrow[{#1}]{#2}}
+% \newcommand*{\rewriteStep}[2][\genrule{l}{r}]{\xrightarrow[{\scriptscriptstyle #1}]{\scriptscriptstyle #2}}
+\newcommand*{\rewrites}[1][]{\rewriteStep[{#1}]{}}
+\newcommand*{\rewritesTo}[1][]{\starred{\rewrites[{#1}]}}
+\newcommand*{\nrewrites}{\nrightarrow}
+\newcommand*{\nrewritesTo}{\starred{\nrewrites}}
+
+
+\newcommand*{\narrows}[2][]{\mathrel{\mathop{\leadsto}\limits^{\scriptscriptstyle #2}_{\scriptscriptstyle #1}}}
+\newcommand*{\narrowsTo}[2][]{\starred{\narrows[#1]{#2}}}
+\newcommand*{\narrowStep}[3][\genrule{l}{r}]{\narrows[{#1}]{\extraArg{#2}{#3}}}
+\newcommand*{\nnarrows}{\not\leadsto}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                        %
+%   SEMANTICS INTERPRETATION FUNCTIONS   %
+%                                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% private (just for redefinition)
+\newcommand*{\mathC}{\mathit}
+\newcommand*{\BehaSym}{\mathC{B}}
+\newcommand*{\SemSym}{\mathC{S}}
+\newcommand*{\TrSym}{\mathC{N}}
+\newcommand*{\OsemSym}{\mathC{O}}
+\newcommand*{\FSym}{\mathC{F}}
+\newcommand*{\TpSym}{\mathC{P}}
+\newcommand*{\evalSym}{\mathC{E}}
+% public
+
+\newcommand*{\Q}[2]{#1 \mathbin{\scriptstyle\mathit{in}} #2} % _ in _
+\newcommand*{\Beha}[2][ss]{\syntaxoper{\BehaSym^{\mathit{#1}}}{#2}{}} %% general behavior macro
+\newcommand*{\Sem}[2][\alpha]{\syntaxoper{\SemSym^{#1}}{#2}{}} % a semantics S
+\newcommand*{\Tr}[3][]{\syntaxoperEXT{#2}{\TrSym_{#1}}{\Q{#2}{#3}}{}} %% semantics tree in P
+% \newcommand*{\CA}[1]{\syntaxoper{\mathit{CA}}{#1}{}} %% computed answers
+% \newcommand*{\CAin}[2]{\CA{\Q{#1}{#2}}} %% computed answers in P
+
+\newcommand*{\Osem}[1]{\syntaxoper{\OsemSym}{#1}{}} %% oper lfp characterization
+\newcommand*{\F}[2][\alpha]{\syntaxoper{\FSym^{#1}}{#2}{}} %% general lfp macro
+\newcommand*{\Tp}[3][\alpha]{\syntaxoper{\TpSym^{#1}}{#2}{{#3}}} %% general fixed-point op macro
+\newcommand*{\TpN}[3][\alpha]{\iter{\Tp[{#1}]{#2}{}}{#3}} %% n-th iteration of the lfp conctruction
+\newcommand*{\eval}[4][\alpha]{\syntaxoperEXT{#3}{\evalSym^{#1}}{\termres{#3}{#2}}{#4}}
+\newcommand*{\evalrules}[3][\alpha]{\syntaxoper{\xi^{#1}}{#2}{#3}}
+\newcommand*{\FUNeq}{\cong} %% variance on tree
+
+\newcommand*{\I}[1][\alpha]{\Isym{#1}} %% generic interpretation
+\newcommand*{\Sz}[1][\alpha]{\Ssym{#1}} %% generic specification
+\newcommand*{\Rz}[1][\alpha]{\Rsym{#1}}
+\newcommand*{\Isym}[1]{\mathC{I}^{#1}}
+\newcommand*{\Ssym}[1]{\mathC{S}^{#1}}
+\newcommand*{\Rsym}[1]{\mathC{X}^{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          %
+%   PROGRAM EQUIVALENCES   %
+%                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\ProgEquiv}[3][]{#2 \thickapprox_{#1} #3} % program equivalence
+\newcommand*{\nProgEquiv}[3][]{#2 \not\thickapprox_{#1} #3} % negated program equivalence
+\newcommand*{\BehaEq}[1][ss]{\ProgEquiv[\mathit{#1}]}
+\newcommand*{\SemEq}[1][{\F[]{}}]{\ProgEquiv[{#1}]} %% program small-step operational equivalence
+
+
+%%%%%%%%%%%%%%%%%%%
+%                 %
+%   PROOF TREES   %
+%                 %
+%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\ands}{\fbox{this should not be used, is just to prevent 
+    unobserved redefinition of command \string\ands}}
+\newcommand*{\sequent}[4][]{\gdef\and{\quad\hfill}
+    \gdef\ands{\;\hfill\ldots\hfill\;}\global\setlabel{#1}
+    {#1}\frac{\:\:#2\:\:}{\;#3\;}\;\text{\small%
+\begin{tabular}{@{}l@{}} #4 \end{tabular}}}
+    
+\newcommand*{\twsequent}[3][]{\Fbox{OBSOLETE}\sequent[{#1}]{#2 \and #3}}
+
+\newcommand*{\thsequent}[4][]{\Fbox{OBSOLETE}\sequent[{#1}]{#2 \and #3 \and #4}}
+
+\newcommand*{\manysequent}[3][]{\Fbox{OBSOLETE}\sequent[{#1}]{#2 \ands #3}}
+
+%%%%%%%%%%%%%
+%           %
+%   TREES   %
+%           %
+%%%%%%%%%%%%%
+
+\DeclarePairedDelimiter{\Theight}{|}{|}
+% \newcommand*{\Tleaf}{\parensmathoper{leaf}} %% leaf nodes of a tree
+% \newcommand*{\Tsteps}{\parensmathoper{steps}} %% steps set of a tree
+% \newcommand*{\Tstep}[4]{\quadruple{#1}{#2}{#3}{#4}} %% a relaxed-step in a tree
+% \newcommand*{\Tsubterm}[2]{\left. #1 \right\Downarrow_{#2}} %% induced subterm tree
+\newcommand*{\Tnode}[2]{\CAnsw{#1}{#2}} %% node constructor
+\newcommand*{\Tedges}{\parensmathoper{edges}}
+\newcommand*{\Tleaves}{\parensmathoper{leaves}} %% leaf nodes of a tree
+\newcommand*{\Tmaxpaths}{\parensmathoper{maxpaths}}
+\newcommand*{\Tnodes}{\parensmathoper{nodes}}
+\newcommand*{\Tpaths}{\parensmathoper{paths}}
+\newcommand*{\Troot}{\parensmathoper{rt}} %% root node of a tree
+\newcommand*{\Tsiblings}{\parensmathoper{siblings}}
+\newcommand*{\Tsons}{\parensmathoper{sons}}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%                   %
+%   Miscellaneous   %
+%                   %
+%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\mgu}{\parensmathoper{mgu}} %% most general unifier
+
+\newcommand*{\lfp}[1][]{\lfpof[{#1}]{}}
+\newcommand*{\gfp}[1][]{\gfpof[{#1}]{}}
+\newcommand*{\lfpof}[2][]{\mathoper{lfp}_{#1}\Braces{#2}}
+\newcommand*{\gfpof}[2][]{\mathoper{gfp}_{#1}\Braces{#2}}
+
+\newcommand*{\downiter}[2]{#1 \mathord{\downarrow} #2} %% iteration macro
+\newcommand*{\iter}[2]{#1 \mathord{\uparrow} #2} %% iteration macro
+\newcommand*{\sameof}[3]{#1 \mapsto \iter{#2}{#3} (\mathit{#1})}
+
+
+\newcommand*{\len}{\parensmathoper{length}}
+\newcommand*{\prefixtree}{\parensmathoper{prfxtree}}
+
+
+% BACKWARD COMPATIBILITY
+
+% \backcompatibility{\CSubst}{\CSubsts}
+% \backcompatibility{\Subst}{\Substs}
+% \backcompatibility{\Symbols}{\Fsyms}
+% \backcompatibility{\emptypos}{\rootPos}
+% \backcompatibility{\interpA}{\Ainterps}
+% \backcompatibility{\interpC}{\Cinterps}
+% \backcompatibility{\interp}{\Cinterps}
+
+% \backcompatibility{\leqIa}{\AIleq}
+% \backcompatibility{\leqIc}{\CIleq}
+% \backcompatibility{\leqI}{\CIleq}
+% \backcompatibility{\nleqIa}{\AInleq}
+% \backcompatibility{\nleqIc}{\CInleq}
+% \backcompatibility{\nleqI}{\CInleq}
+% \backcompatibility{\nrew}{\nrewrites}
+% \backcompatibility{\rewrule}{\genrule}
+\newcommand*{\rews}[2][noOpt]{\Fbox{USE \texttt{\string\rewritesTo}}\Fbox{$#1$}\rewritesTo[{#2}]}
+\newcommand*{\rew}[2][noOpt]{\Fbox{USE \texttt{\string\rewrites}}\Fbox{$#1$}\rewrites[{#2}]}

@@ -1,0 +1,394 @@
+\documentclass[runningheads,american,orivec,fleqn]{llncs}
+%
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{mathtools}[2011/02/12]
+\usepackage{mdwlist}
+\usepackage{nicefrac}
+\usepackage{stmaryrd}
+\usepackage{tikz}
+\usepackage{multirow}
+\usepackage[left=1.228in, right=1.228in, top=1.024in, bottom=1.187in]{geometry}
+
+\usepackage{etoolbox} % for "\patchcmd" macro
+\makeatletter
+\patchcmd{\ps@headings}{\rlap{\thepage}}{}{}{}
+\patchcmd{\ps@headings}{\llap{\thepage}}{}{}{}
+\makeatother
+\pagestyle{headings} % reload the now-modified "headings" page style
+
+\PassOptionsToPackage{hyphens}{url}\usepackage[linkcolor=blue, urlcolor=blue, citecolor=blue, backref=false, final]{hyperref}
+\usepackage[fancyproofs,fancyexamples,squareitemtag]{theorems}[2015/07/09]%,final,extended
+
+\input{./macro/wgmacros-support}
+\input{./macro/wgmacros-absint}
+\input{./macro/wgmacros-math}
+\input{./macro/wgmacros-misc}
+\input{./macro/wgmacros-semantics}
+\input{./macro/wgmacros-FPE}
+%
+
+\pagestyle{empty}
+\begin{document}
+
+\title{A Mixed Real and Floating-Point Solver}
+
+\author{Rocco Salvia\inst{1} \and Laura Titolo\inst{2} \and  Marco A. Feli\'{u}\inst{2} \and Mariano M. Moscato\inst{2} \and C\'{e}sar A. Mu\~{n}oz\inst{3} \and Zvonimir Rakamari\'c\inst{1}}
+
+\authorrunning{R. Salvia et al.}
+
+\institute{
+University of Utah\thanks{Partially supported by NSF awards CCF 1346756 and CCF 1704715.},\\
+\email{\{rocco,zvonimir\}@cs.utah.edu}
+\and
+National Institute of Aerospace\thanks{Research by the first four authors was supported by the
+National Aeronautics and Space Administration under NASA/NIA Cooperative Agreement NNL09AA00A.},\\
+\email{\{laura.titolo,marco.feliu,mariano.moscato\}@nianet.org}%
+\and
+NASA Langley Research Center,\\
+\email{cesar.a.munoz@nasa.gov}
+}
+
+\maketitle
+
+\begin{abstract}
+Reasoning about mixed real and floating-point constraints is essential
+for developing accurate analysis tools for floating-point
+programs. This paper presents FPRoCK, a prototype tool for solving
+mixed real and floating-point formulas. FPRoCK transforms a mixed
+formula into an equisatisfiable one over the reals. This
+formula is then solved using an off-the-shelf SMT solver.
+FPRoCK is also integrated with the PRECiSA static analyzer,
+which computes a sound estimation of the round-off error of a
+floating-point program. It is used to detect infeasible
+computational paths, thereby improving the accuracy of PRECiSA.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+% 
+Floating-point numbers are frequently used as an approximation of real numbers in computer programs.
+%
+A round-off error originates from the difference between a real number and its floating-point representation, and accumulates throughout a computation. The resulting error may affect both the computed value of arithmetic expressions as well as the control flow of the program.
+% 
+To reason about floating-point computations with possibly diverging control flows, it is essential to solve mixed real and floating-point arithmetic constraints.
+%
+This is known to be a difficult problem. In fact, constraints that are unsatisfiable over the reals may hold over the floats and vice-versa. In addition, combining the theories is not trivial since floating-point and real arithmetic do not enjoy the same properties.
+
+Modern \emph{Satisfiability Modulo Theories} (SMT) solvers, such as \Mathsat~\cite{CimattiGSS13} and \Zt~\cite{MouraB08}, encode floating-point numbers with bit-vectors.
+%
+This technique is usually inefficient due to the size of the binary representation of floating-point numbers.
+%
+For this reason, several abstraction techniques have been proposed to approximate floating-point formulas and to solve them in the theory of real numbers.
+% 
+Approaches based on the \emph{counterexample-guided abstraction refinement} (CEGAR) framework \cite{BrilloutKW09,RamachandranW16,ZeljicBWR18} simplify a floating-point formula and solve it in a proxy theory that is more efficient than the original one.
+%
+If a model is found for the simplified formula, a check on whether this is also a model for the original formula is performed. If it is, the model is returned, otherwise, the proxy theory is refined.
+%
+\Realizer{}~\cite{LeeserMRW14} is a framework built on the top of \Zt{} to solve floating-point formulas by translating them into equivalent ones in real arithmetic.
+%
+\Molly{}~\cite{RamachandranW16} implements a CEGAR loop where floating-point constraints are lifted in the proxy theory of mixed real and floating-point arithmetics.
+%
+To achieve this, it uses an extension of \Realizer{} that supports mixed real and floating-point constraints.
+%
+However, this extension is embedded in \Molly{} and cannot be used as a standalone tool. 
+% 
+The \Colibri~\cite{MarreBC18} solver handles the combination of real and floating-point constraints by using disjoint floating-point intervals and difference constraints.
+% 
+Unfortunately, the publicly available version of \Colibri{} does not support all the rounding modalities and the negation of Boolean formulas.
+%
+JConstraints~\cite{jconstraints} is a library for constraint solving that includes support for
+floating-points by encoding them into reals.
+
+This paper presents a prototype solver for mixed real and floating-point constraints called \smttool{}.\footnote{The \smttool{} distribution is available at \url{https://github.com/nasa/FPRoCK}.}
+% 
+It extends the transformation defined in \Realizer{}~\cite{LeeserMRW14} to mixed real/floating-point constraints.
+%
+Given a mixed real-float formula, \smttool{} generates an equisatisfiable real arithmetic formula that can be solved by an external SMT solver.
+%
+In contrast to \Realizer, \smttool{} supports mixed-precision floating-point expressions and different ranges for the input variables.
+%
+\smttool{} is also employed to improve the accuracy of the static analyzer \tool~\cite{TitoloFMM18}.
+% 
+In particular, it identifies spurious execution traces whose path conditions are unsatisfiable, which allows {\tool{}} to discard them.
+
+
+\section{Solving Mixed Real/Floating-Point Formulas}
+\label{sec:smt}
+% !TEX root = main.tex
+
+A \emph{floating-point number}~\cite{IEEE754floating}, or simply a \emph{float}, can be represented by a tuple $(s, m, \mathit{exp})$ where $s$ is a sign bit, $m$ is an integer called the \emph{significand} (or \emph{mantissa}), and $\mathit{exp}$ is an integer \emph{exponent}.
+%
+A float $(s, m, \mathit{exp})$ encodes the real number $(-1)^{s} \cdot m \cdot 2^\mathit{exp}$.
+%
+Henceforth, $\Fp$ represents the set of floating-point numbers.
+% 
+Let $\fpv{}$ be a floating-point number that represents a real number
+$\rv{}$. The difference $|\fpv{} - \rv{}|$ is called the \emph{round-off error} (or \emph{rounding error}) of $\fpv{}$ \wrt{} $\rv{}$.
+%
+Each floating-point number has a format $f$ that specifies its dimensions and precision, such as single or double.
+%
+The expression $\RtoF[f]{\rv{}}$ denotes the floating-point number in
+format $f$ \emph{closest} to $\rv{}$ assuming a given rounding mode.
+
+Let $\Var$ and $\FVar$ be two disjoint sets of variables representing real and floating-point values \resp{}.
+%
+The set $\AExprDom$ of mixed arithmetic expressions is defined by the grammar
+%
+\begin{equation*}
+\AExpr  ::= \rcnst  \mid x \mid \fpcnst \mid \fvar \mid
+             \AExpr \rop  \AExpr \mid 
+             \AExpr \fpop \AExpr \mid \RtoF[f]{A},
+\end{equation*}
+% 
+where $\rcnst \in \R$, $x \in \Var$, $\rop \in \{+,-,*,/,|\cdot|\}$
+(the set of basic real number arithmetic operators),
+$\fpcnst \in \Fp$, $\fvar \in \FVar$, $\fpop \in \{\tilde{+}_f,\tilde{-}_f,\tilde{*}_f,\tilde{/}_f\}$
+(the set of basic floating-point arithmetic operators) and
+$f \in\{\mathit{single},\mathit{double}\}$ denotes the desired precision for the result.
+%
+The rounding operator $\RtoF[f]{}$ is naturally extended to arithmetic expressions.
+%
+According to the IEEE-754 standard~\cite{IEEE754floating}, each
+floating-point operation is computed in exact real arithmetic
+and then rounded to the nearest float, \ie{} $\AExpr \fpop_f \AExpr =
+\RtoF[f]{\AExpr \rop \AExpr}$.
+%
+Since floats can be exactly represented as real numbers, an explicit transformation is not necessary.
+%
+The set of mixed real-float Boolean expressions $\BExprDom$  is defined by the grammar
+\begin{equation*}
+   \BExpr ::= \true \mid \false \mid \BExpr \wedge \BExpr
+               \mid \BExpr \vee \BExpr \mid \neg \BExpr
+               \mid \AExpr < \AExpr \mid \AExpr = \AExpr,
+\end{equation*}
+%
+where $\AExpr\in\AExprDom$.
+
+The input to \smttool{} is a formula $\tilde{\phi} \in \BExprDom$ that may contain both real and floating-point variables and arithmetic operators.
+%
+Each variable is associated with a type (real, single or
+double precision floating-point) and range that can be
+either bounded, \eg{}, $[1,10]$, or unbounded, e.g., $[-\infty, +\infty]$.
+%
+The precision of a mixed-precision floating-point arithmetic operation is automatically detected and set to the maximum precision of its arguments.
+%
+Given a mixed formula $\tilde{\phi} \in \BExprDom$, \smttool{} generates a formula $\phi$ over the reals such that $\tilde{\phi}$ and $\phi$ are equisatisfiable.
+%
+Floating-point expressions are transformed into equivalent real-valued expressions using the approach presented in \cite{LeeserMRW14}, while the real variables and operators are left unchanged.
+%
+It is possible to define $x \fop y$ as
+% 
+\begin{equation}
+    \label{eq:fop}
+    x \fop y = \left(\frac{\round{\frac{x \rop y}{2^\mathit{exp}}\cdot 2^p}}{2^p}\right) \cdot 2^\mathit{exp},
+\end{equation}
+% 
+where $p$ is the precision of the format, $\mathit{exp} = \mathit{max}\{i\in\Z \mid 2^i \leq |x \rop y|\}$, and
+$\round{}: \R \rightarrow \mathit{Int}$ is a function implementing the rounding modality~\cite{LeeserMRW14}.
+% 
+Therefore, given a floating-point formula $\tilde{\phi}$, an equisatisfiable formula without floating-point operators is obtained by replacing every occurrence of $x \fop y$ using Equation~\eqref{eq:fop}.
+% 
+This is equivalent to replacing the occurrences of $x \fop y$ with a new fresh real-valued variable $v$ and imposing $v = x \fop y$.
+% 
+From Equation~\eqref{eq:fop} it follows that $v \cdot 2^{p-\mathit{exp}} = \round{(x \rop y) \cdot 2^{p-\mathit{exp}}}$.
+% 
+Thus, the final formula $\phi$ is
+% 
+\begin{equation}
+    \phi \dfn \tilde{\phi}[v/x \fop y] \wedge v \cdot 2^{p-\mathit{exp}} = \round{(x \rop y) \cdot 2^{p-\mathit{exp}}},
+\end{equation}
+% 
+where $\tilde{\phi}[v/x \fop y]$ denotes the Boolean formula $\tilde{\phi}$ where all the occurrences of $x \fop y$ are replaced by $v$.
+%
+The precision $p$ is a constant that depends on the chosen floating-point format, while $\mathit{exp}$ is an integer representing the exponent of the binary representation of $x \fop y$.
+
+
+To find an assignment for the exponent $\mathit{exp}$, \smttool{} performs in parallel a sequential and binary search over the dimension of $x \fop y$, as opposed to the simple sequential search implemented in \Realizer{}.
+%
+The implementation of the function $\round{}$ depends on the selected rounding mode and can be defined using floor and ceiling operators (see \cite{LeeserMRW14} for details).
+%
+Therefore, the transformed formula $\phi$ does not contain any floating-point operators, and hence it can be solved by any SMT solver that supports the fragment of real/integer arithmetics including floor and ceiling operators.
+%
+\smttool{} uses three off-the-shelf SMT solvers as back-end procedures to solve the transformed formula: \Mathsat~\cite{CimattiGSS13}, \Zt~\cite{MouraB08}, and \CVCf~\cite{Barrett11}.
+Optionally, the constraint solver \Colibri~\cite{MarreBC18} is also
+available for use within \smttool{}.
+% 
+\smttool{} provides the option to relax the restriction on the minimum exponent to handle subnormal floats.
+% 
+This solution is sound in the sense that it preserves the unsatisfiability of the original formula.
+% 
+However, if this option is used, it is possible that \smttool{} finds an assignment to a float that is not representable in the chosen precision, and therefore is not a solution for the original formula.
+%
+Furthermore, \smttool{} currently does not support special floating-point values such as \emph{NaN} and \emph{Infinity}.
+
+\section{Integrating \smttool{} in \tool}
+\label{sec:precisa}
+\tool{}\footnote{The \tool{} distribution is available at \url{https://github.com/nasa/PRECiSA}.} (Program Round-off Error Certifier via Static Analysis)~\cite{TitoloFMM18} is a static analyzer based on abstract interpretation~\cite{CousotC77}.
+%
+\tool{} accepts as input a floating-point program and automatically
+generates a sound over-approximation of the floating-point round-off
+error and a proof certificate in the Prototype Verification System (PVS)~\cite{OwreRS92} ensuring its correctness.
+% 
+For every possible combination of real and floating-point execution paths, \tool{} computes a \emph{conditional error bound} of the form $\cerr{\eta}{\widetilde{\eta}}{r}{e}{}{}$, where
+%
+$\eta$ is a symbolic path condition over the reals,
+$\widetilde{\eta}$ is a symbolic path condition over the floats,
+and $r, e$ are symbolic arithmetic expressions over the reals.
+%
+Intuitively, $\cerr{\eta}{\widetilde{\eta}}{r}{e}{}{}$ indicates that if the conditions $\eta$ and $\widetilde{\eta}$ are satisfied, the output of the program using exact real number arithmetic is $r$ and the round-off error of the floating-point implementation is bounded by~$e$.
+%
+
+\tool{} initially computes round-off error estimations in symbolic form so that the analysis is modular.
+%
+Given the initial ranges for the input variables, \tool{} uses the Kodiak global optimizer~\cite{NarkawiczM13} to maximize the symbolic error expression $e$.
+% 
+Since the analysis collects information about real and floating-point execution paths, it is possible to consider the error of taking the incorrect branch compared to the ideal execution using real arithmetic.
+This happens when the guard of a conditional statement contains a floating-point expression whose round-off error makes the actual Boolean value of the guard differ from the value that would
+be obtained assuming real arithmetic.
+%
+When the floating-point computation diverges from the real one, it is said to be \emph{unstable}.
+
+For example, consider the function $\textit{sign}(\tilde{x}) = \; \tagif \tilde{x} \geq 0 \tagthen 1 \tagelse -1$.
+%
+\tool{} computes a set of four different conditional error bounds: 
+$\{
+\cerr{\real{\tilde{x}} \geq 0}{\tilde{x} \geq 0}{r=1}{e=0}{}{},
+\cerr{\real{\tilde{x}} < 0}{\tilde{x} < 0}{r=-1}{e=0}{}{},
+\cerr{\real{\tilde{x}} \geq 0}{\tilde{x} < 0}{r=-1}{e=2}{}{},
+\cerr{\real{\tilde{x}} < 0}{\tilde{x} \geq 0}{r=1}{e=2}{}{}
+\}$.
+%
+The function $\real{}: \FVar \ra \Var$ associates with the floating-point variable $\tilde{x}$ a variable $x \in \Var$ representing the real value of $\tilde{x}$.
+% 
+The first two elements correspond to the cases where real and floating-point computational flows coincide. In these cases, the error is 0 since the output is an integer number with no rounding error.
+%
+The other two elements model the unstable paths. In these cases, the
+error is $2$, which corresponds to the difference between the output of the two branches.
+%
+\tool{} may produce conditional error bounds with unsatisfiable
+symbolic conditions (usually unstable), which correspond to execution paths that cannot take place.
+%
+The presence of these spurious elements
+affects the accuracy of the computed error bound.
+%
+For instance, in the previous example, if $|\real{\tilde{x}} - \tilde{x}| \leq 0$ both unstable cases can be removed, and the overall error would be $0$ instead of $2$.
+%
+
+Real and floating-point conditions can be checked separately using SMT solvers that support real and/or floating-point arithmetic.
+%
+However, the inconsistency often follows from the combination of the real and floating-point conditions.
+%
+In fact, the floating-point expressions occurring in the conditions are implicitly related to their real arithmetic counterparts by their rounding error.
+%
+Therefore, besides checking the two conditions separately, it is necessary to check them in conjunction with a set of constraints relating each arithmetic expression $\widetilde{\mathit{expr}}$ occurring in the conditions with its real number counterpart $\FtoRA{\widetilde{\mathit{expr}}}$. 
+% 
+$\FtoRA{\widetilde{\mathit{expr}}}$ is defined by simply replacing in $\widetilde{\mathit{expr}}$ each floating-point operation with the corresponding real one and by applying $\real{}$ to floating-point variables.
+
+\smttool{} is suitable for solving such constraints thanks to its ability to reason about mixed real and floating-point formulas.
+%
+Given a set $\iota$ of ranges for the input variables, for each conditional error bound $c = \cerr{\eta}{\widetilde{\eta}}{r}{e}{}{t}$ computed by \tool{}, the following formula $\psi$ modeling the information contained in the path conditions is checked using \smttool{}:
+% 
+\begin{equation}
+    \begin{aligned}[t]
+    \psi \dfn \eta \wedge \widetilde{\eta} \wedge
+    \bigwedge\{|\widetilde{\mathit{expr}} - \FtoRA{\widetilde{\mathit{expr}}}| \leq \epsilon
+    \; \mid \; & \widetilde{\mathit{expr}} \text{ occurs in } \widetilde{\eta},\\
+      &
+     \widetilde{\mathit{expr}}\not\in\FVar, \widetilde{\mathit{expr}}\not\in\Fp,
+     \epsilon = \mathit{max}(e)|_{\iota}\}
+     \end{aligned}
+\end{equation}
+%
+The value $\mathit{max}(e)|_{\iota}$ is the round-off error of $\widetilde{\mathit{expr}}$ assuming the input ranges in $\iota$, and it is obtained by maximizing the symbolic error expression $e$ with the Kodiak global optimizer.
+If $\psi$ is unsatisfiable, then $c$ is dropped from the solutions computed by \tool{}.
+%
+Otherwise, a counterexample is generated that may help to discover cases for which the computation is diverging or unsound.
+
+Since \smttool{} currently supports only the basic arithmetic operators, while \tool{} supports a broader variety of operators including transcendental functions, a sound approximation is needed for converting \tool{} conditions into a valid input for \smttool{}.
+%
+The proposed approach replaces in $\psi$ each floating-point (\resp{} real) arithmetic expression with a fresh floating-point (\resp{} real) variable.
+% 
+This is sound but not complete, meaning it preserves just the unsatisfiability of the original formula.
+% 
+In other words, if $\psi[v_i/\widetilde{\mathit{expr}_i}]_{i=1}^n$ is unsatisfiable it follows that $\psi$ is unsatisfiable, but if a solution is found for $\psi[v_i/\widetilde{\mathit{expr}_i}]_{i=1}^n$ there is no guarantee that an assignment satisfying $\psi$ exists. 
+%
+This is enough for the purpose of eliminating spurious conditional bounds since it assures that no feasible condition gets eliminated.
+%
+In practice, it is accurate enough to detect spurious unstable paths.
+% 
+When a path condition is deemed unsatisfiable by \smttool{}, \tool{} states such unsatisfiability in the PVS formal certificate.
+%
+For simple path conditions, this property can be automatically checked by PVS. Unfortunately, there are cases where human intervention is required to verify this part of the certificates.
+
+\smartref{tbl:bm} compares the original version of \tool{} with the enhanced version that uses \smttool{} to detect the unsatisfiable conditions, along with the analysis tool Rosa~\cite{DarulovaK14} which also computes an over-approximation of the round-off error of a program.
+%
+All the benchmarks are obtained by applying the transformation defined in \cite{TitoloMFM18} to code fragments from avionics software and the FPBench library~\cite{DamoucheMPQST16}.
+%
+A transformed program is guaranteed to return either the result of the original floating-point program, when it can be assured that both its real and floating-point flows agree, or a warning when these flows may diverge.
+% 
+The results show that \smttool{} helps \tool{} improving the computed round-off error in 8 out of 11 benchmarks total.
+% 
+\smttool{} runs all search encoding (linear, binary) plus solver (MathSAT5, CVC4, Z3) combinations in parallel. It waits for all solvers to finish and performs a check on the consistency of the solutions.
+% 
+\begin{table}[tp]
+\caption{Experimental results showing absolute round-off error bounds and execution time in seconds (best results in bold).}
+   \begin{center}
+    {\footnotesize
+    \begin{tabular}{|l|r|r|r|r|r|r|}
+    \hline
+    \multicolumn{1}{|c|}{\multirow{2}{*}{Benchmark}} &
+      \multicolumn{2}{c|}{\tool} &
+      \multicolumn{2}{c|}{\tool+\smttool} &
+      \multicolumn{2}{c|}{Rosa}\\
+    \cline{2-7}
+    & \multicolumn{1}{c|}{Error} & \multicolumn{1}{c|}{Time(s)} & \multicolumn{1}{c|}{Error} & \multicolumn{1}{c|}{Time(s)}  & \multicolumn{1}{c|}{Error} & \multicolumn{1}{c|}{Time(s)}  \\
+    \hline
+    \hline
+    cubicSpline        & 2.70E+01  & \textbf{0.07}  & 2.70E+01 & 97.8    & \textbf{2.50E-01}  & 24.1  \\        
+    eps\_line          & 2.00E+00  & \textbf{0.02}  & \textbf{1.00E+00} & 48.8   & 2.00E+00  & 15.5  \\        
+    jetApprox          & 1.51E+01  & \textbf{12.79}  & 8.11E+00 & 263.3  & \textbf{4.97E+00}  & 924.8 \\         
+    linearFit          & 1.08E+00  & \textbf{0.06}  & 5.42E-01 & 259.7  & \textbf{3.19E-01}  & 12.4  \\        
+    los                & 2.00E+00  & \textbf{0.02}  & \textbf{1.00E+00} & 46.2   & not supported       & n/a     \\  
+    quadraticFit       & 3.68E+00  & \textbf{0.90}  & 3.68E+00 & 259.8  & \textbf{1.27E-01}  & 82.4  \\        
+    sign               & 2.00E+00  & \textbf{0.02}  & \textbf{1.00E+00} & 32.1    & 2.00E+00  & 4.7   \\       
+    simpleInterpolator & 2.25E+02  & \textbf{0.03}  & 1.16E+02 & 93.8   & \textbf{3.33E+01}  & 6.3   \\       
+    smartRoot          & \textbf{1.75E+00}  & \textbf{0.32}  & \textbf{1.75E+00} & 0.6    & not supported      & n/a     \\  
+    styblinski         & 9.35E+01  & \textbf{1.06}  & 6.66E+01 & 260.1  & \textbf{6.55E+00}  & 77.0  \\        
+    tau                & 8.40E+06  & \textbf{0.03}  & \textbf{8.00E+06} & 101.8  & 8.40E+06  & 20.7  \\     
+    \hline
+  \end{tabular}}
+\end{center}
+  \label{tbl:bm}
+\end{table}%
+
+\section{Conclusions}
+\label{sec:conclusion}
+% 
+This paper presents \smttool{}, a prototype tool for solving mixed real and floating-point formulas.
+%
+\smttool{} extends the technique used in \Realizer{} by adding support
+for such mixed formulas.
+%
+\smttool{} is integrated into PRECiSA to improve its precision.
+% 
+Similarly, it could be integrated into other static analyzers, such as \FPTaylor~\cite{SolovyevJRG15}.
+%
+% 
+The current version of \smttool{} has some limitations in terms of expressivity and efficiency.
+%
+Support for a vast range of operators, including transcendental functions, is contingent on the expressive power of the underlying SMT solvers.
+%
+The performance of \smttool{} can be improved by returning a solution as soon as the first solver finalizes its search.
+% 
+However, finding an assignment for the exponent of each floating-point variable is still the major bottleneck of the analysis.
+%
+The use of a branch-and-bound search to divide the state-space may help to mitigate this problem.
+
+\bibliographystyle{splncs04}
+\bibliography{biblio}
+
+\end{document}
+
+\grid

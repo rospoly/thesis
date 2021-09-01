@@ -1,0 +1,78 @@
+\section{Preliminaries}\label{sec:preliminaries}
+
+\subsection{Floating-Point Arithmetic}\label{subsec:fparith}
+
+Given a \emph{precision} $p\in\N$ and an \emph{exponent range} $[\emin,\emax]\defeq \{ n \mid n \in \N \wedge \emin \leq n \leq \emax \}$, we define $\F(p,\emin,\emax)$, or simply $\F$ if there is no ambiguity, as the set of extended real numbers
+\begin{align*}
+\F\defeq\left\{\left.(-1)^s 2^e\left(1+\frac{k}{2^p}\right)\right\rvert s\in\{0,1\}, e\in [\emin,\emax], 0\leq k<2^p\right\}\cup\{-\infty,0,\infty\}
+\end{align*}
+Elements $z=z(s,e,k)\in \F$ will be called \emph{floating-point representable numbers} (for the given precision $p$ and exponent range $[\emin,\emax]$) and we will use the variable $z$ to represent them. The variable $s$ will be called the \emph{sign}, the variable $e$ the \emph{exponent}, and the variable $k$ the \emph{significand} of $z(s,e,k)$.
+  
+Next, we introduce a \emph{rounding map} $\round:\R\to\F$ that rounds to nearest (or to $-\infty$/$\infty$ for values smaller/greater than the smallest/largest finite element of $\F$) and follows any of the IEEE754 rounding modes in case of a tie. We will not worry about which choice is made since the set of mid-points will always have probability zero for the  distributions we will be working with. All choices are thus equivalent, probabilistically speaking, and what happens in a tie can therefore be left unspecified.  We will denote the extended real line by $\eR\defeq \R\cup\{-\infty,\infty\}$. The (signed) \emph{absolute error function} $\eabs:\R\to\eR$ is defined as:
+$\eabs(x)=x-\round(x)$.
+We define the sets $\fintvl\stackrel{\triangle}{=}\left\{y\in\R\mid \round(y)=\round(z)\right\}$.   
+Thus if $z\in \F$, then $\fintvl[z]$ is the collection of all reals rounding to $z$.  As the reader will see, the basic result of \cref{sec:errordist} (\cref{eq:LPerrorDensity}) is expressed entirely using the notation $\fintvl[z]$ which is parametric in the choice of the $\round$ function.  It follows that our results apply to rounding modes other that round-to-nearest with minimal changes.  The \emph{relative error function} $\erel:\R\setminus\{0\}\to\eR$ is defined by
+\[
+\erel(x)=\frac{x-\round(x)}{x}.
+\]
+Note that $\erel(x)=1$ on $\fintvl[0]\setminus\{0\}$, $\erel(x)=\infty$ on $\fintvl[-\infty]$ and $\erel(x)=-\infty$ on $\fintvl[\infty]$.
+Recall also the fact \cite{higham2002accuracy} that $-2^{-(p+1)}<\erel(x)<2^{-(p+1)}$ outside of $\fintvl[0]\cup\fintvl[-\infty]\cup\fintvl[\infty]$. The quantity $2^{-(p+1)}$ is usually called the \emph{unit roundoff} and will be denoted by $\uro$. 
+
+For $z_1,z_2\in\F$ and $\mathrm{op}\in\{+,-,\times,\div\}$ an (infinite-precision) arithmetic operation, the traditional model of
+IEEE754 floating-point arithmetic~\cite{ieee754} \cite{higham2002accuracy} states that the finite-precision implementation $\mathtt{op_m}$ of $\mathrm{op}$ must satisfy
+\begin{align}
+z_1\mop z_2=(z_1\iop z_2)(1+\delta) \qquad\absv{\delta}\leq u, \label{eq:traditional}
+\end{align}
+We leave dealing with subnormal floating-point numbers to future work. The model given by \cref{eq:traditional} stipulates that the implementation of an arithmetic operation can induce a relative error of magnitude \emph{at most} $u$. The exact size of the error is, however, not specified and \cref{eq:traditional} is therefore a \emph{non-deterministic model of computation}. It follows that numerical analyses based on \cref{eq:traditional} must consider \emph{all} possible relative errors $\delta$ and are fundamentally \emph{worst-case} analyses. 
+Since the output of such a program might be the input of another,  one should also consider non-deterministic inputs, and this is indeed what happens with automated tools for roundoff error analysis, such as Daisy~\cite{darulova2018daisy} or FPTaylor~\cite{2015_fm_sjrg,solovyev2018rigorous}, which require for each variable of the program a (bounded) range of possible values in order to perform a worst-case analysis (\cf GPS example in \cref{sec:overview}).
+
+In this paper, we study a model formally similar to \cref{eq:traditional}, namely
+\begin{align}
+z_1\mop z_2=(z_1\iop z_2)(1+\delta) \qquad\delta\sim dist.\label{eq:probabilistic}
+\end{align}
+The difference is that $\delta$ is now \emph{distributed according to} $dist$, a probability distribution whose support is $\left[-u,u\right]$.  In other words, we move from a non-deterministic to a \emph{probabilistic} model of roundoff errors.  This is similar to the `Monte Carlo arithmetic' of \cite{parker2000monte}, but whilst \opcit \emph{postulates} that $dist$ is the uniform distribution on $[-u,u]$, we compute $dist$ from first principles in \cref{sec:errordist}.
+
+\subsection{Probability Theory}\label{subsec:prob}
+
+To fix the notation and be self-contained, we present some basic notions of probability theory which are essential to what follows.  
+
+\noindent \textbf{Cumulative Distribution Functions and Probability Density Functions.}
+We assume that the reader is (at least intuitively) familiar with the notion of a (real) random variable. Given a random variable $X$ we define its Cumulative Distribution Function (CDF) as the function $c(t)\defeq\Pro{X\leq t}$. If there exists a non-negative integrable function $d: \R\to\R$ such that
+\begin{align*}
+c(t)\defeq\Pro{X\leq t}=\int_{-\infty}^t d(t)~dt
+\end{align*}
+then we call $d(t)$ the Probability Density Function (PDF) of $X$.  If it exists,  then it can be recovered from the CDF by differentiation $d(t)=\dt c(t)$  by the fundamental theorem of calculus.  
+
+Not all random variables have a PDF: consider the random variable which takes value $0$ with probability $\nicefrac{1}{2}$ and value $1$ with probability $\nicefrac{1}{2}$. For this random variable it is impossible to write $\Pro{X\leq t}=\int d(t)~dt$. Instead, we will write the distribution of such a variable using the so-called Dirac delta measure at 0 and 1 as $\nicefrac{1}{2}\delta_0 + \nicefrac{1}{2}\delta_1$.  It is possible for a random variable to have a PDF covering part of its distribution -- this will be its \emph{continuous part} -- and a sum of Dirac deltas covering the rest of its distribution -- this will be its \emph{discrete part}. We will encounter examples of such random variables in \cref{sec:errordist}. Finally, note that if $X$ is a random variable and $f: \R\to\R$ is a (measurable) function, then $f(X)$ is a random variable.  In particular $\erel(X)$ is a random variable, which we will describe in  detail in \cref{sec:errordist}.
+
+\noindent \textbf{Arithmetic on Random Variables.}%\label{subsec:prob}
+ Suppose $X,Y$ are \emph{independent} random variables with PDFs $f_X$ and $f_Y$, respectively.  
+Using the arithmetic operations we can form new random variables $X+Y, X-Y, X\times Y, X\div Y$. The PDFs of these new random variables can be expressed as operations on $f_X$ and $f_Y$~\cite{springer1979algebra}:
+\begin{align}
+&f_{X+Y}(t)\defeq\hspace{-1pt}\int_{-\infty}^{\infty} \hspace{-3pt}f_X(x)f_Y(t-x)~dx &
+f_{X-Y}(t)\defeq\hspace{-1pt}\int_{-\infty}^{\infty} \hspace{-3pt}f_X(x)f_Y(x-t)~dx\nonumber \\
+&f_{X\times Y}(t)\defeq\hspace{-1pt}\int_{-\infty}^{\infty}\hspace{-1pt} \frac{1}{\absv{x}}f_X(x)f_Y\hspace{-2pt}\left(\frac{t}{x}\right)dx &
+f_{X\div Y}(t)\defeq\hspace{-1pt}\int_{-\infty}^{\infty} \hspace{-3pt}\absv{x}f_X(x)f_Y(tx)dx\label{eq:pdfarithm}
+\end{align}
+It is important to note that these formulas are only valid if $X$ and $Y$ are assumed to be independent.
+When an arithmetic expression containing variable repetitions is given a random variable interpretation, this independence can no longer be assumed.  In the expression $(X+Y)\div Y$ the sub-term $(X+Y)$ can be interpreted by using Eqs.  \eqref{eq:pdfarithm} if $X,Y$ are independent. However, the sub-terms $X+Y$ and $Y$ clearly cannot be interpreted as independent random variables, and the division operation can therefore not be evaluated using Eqs.  \eqref{eq:pdfarithm}. 
+
+\noindent\textbf{Soundly Bounding Probabilities.} %\label{subsec:probbound}}
+The constraint that the distribution of a random variable must integrate to 1 makes it impossible to order random variables in the `natural' way: if $\Pro{X\in A}\leq \Pro{Y\in A}$, then $\Pro{Y\in A^c}\leq \Pro{X\in A^c}$, \ie we cannot say that $X\leq Y$ if $\Pro{X\in A}\leq \Pro{Y\in A}$.
+%This `natural' order is important and is meaningful on measures \cite{guide2006infinite}, but it makes any two probability measures incomparable.  
+This means that we cannot 
+quantify our probabilistic uncertainty about a random variable by sandwiching it between two other random variables as one would do with reals or real-valued functions.
+
+One solution is to restrict the sets used in the comparison,  \ie declare that $X\leq Y$ iff $\Pro{X\in A}\leq \Pro{Y\in A}$ for $A$ ranging over a given set of `test subsets'.  Such an order can be defined by taking the `test subsets' to be all the intervals $(-\infty, x]$~\cite{rothschild1970increasing}. This order is now known as the \emph{stochastic order}. 
+%(see \cite{saheb1980cpo} for another order in the field of program semantics). 
+It follows from the definition of the CDF that this order can most elegantly be defined by saying that $X\leq Y$ iff $c_X\leq c_Y$, where $c_X$ and $c_Y$ are the CDFs of $X$ and $Y$, respectively.  If it is possible to sandwich an unknown random variable $X$ between known lower and upper bounds $X_{lower}\leq X\leq X_{upper}$ using the stochastic order then it becomes possible to give sound bounds to the quantities $\Pro{X\in[a,b]}$ via
+\begin{align*}
+\Pro{X\in[a,b]} = c_X(b) - c_X(a)\leq c_{X_{upper}}(b) - c_{X_{lower}}(a)
+\end{align*}
+\noindent\textbf{P-Boxes and DS-Structures.} As mentioned above, giving a random variable interpretation to an arithmetic expression containing variable repetitions cannot be done using Eqs. \eqref{eq:pdfarithm}. In fact, these interpretations are in general analytically intractable. Hence, a common approach is to give up on soundness and approximate such distributions using Monte-Carlo simulations.  We use this approach in our experiments to assess the quality of our sound results.
+However,  we will also provide sound under- and over-approximations of the distribution of arithmetic expressions over random variables using the stochastic order discussed above.  Since $X_{lower}\leq X\leq X_{upper}$ is equivalent to saying that $c_{X_{lower}}(x)\leq c_X(x)\leq c_{X_{upper}}(x)$, the fundamental approximating structure will be a pair of CDFs satisfying $c_1(x)\leq c_2(x)$.  Such a structure is known in the literature as a \emph{p-box}~\cite{ferson2015constructing}, and has already been used in the context of probabilistic roundoff errors in related work~\cite{bouissou2012generalization,probdaisy}.  
+The data of a p-box is equivalent to a pair of sandwiching distributions for the stochastic order.
+
+A \emph{Dempster-Shafer structure} (DS-structure) of size $N$ is a set of interval-probability pairs \{$([x_{0}, y_{0}], p_{0}), ([x_{1}, y_{2}], p_{1}),.., ([x_{N}, y_{N}], p_{N})$\} where $\sum_{i=0}^{N}p_{i}=1$.  The intervals in the collection might overlap. One can always convert a DS-structure to a p-box and back again~\cite{ferson2015constructing},  but arithmetic operations are much easier to perform on DS-structures than on p-boxes (\cite{bouissou2012generalization}),
+which is why we will use DS-structures in the algorithm described in \cref{sec:model}.
+

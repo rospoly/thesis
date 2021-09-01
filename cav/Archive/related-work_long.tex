@@ -1,0 +1,107 @@
+\section{Related Work}
+\label{sec:related-work}
+
+Our work draws inspiration from the seminal probabilistic affine arithmetic
+approach of Bouissou et al.~\cite{bouissou2012generalization}.
+%
+The fundamental object in this approach is the \emph{probabilistic affine
+form}, which is an affine form whose error symbols are associated with p-boxes
+(see \cref{subsec:prob}).
+%
+The authors propose an innovative technique to perform dependent operations
+between random variables based on affine arithmetic. 
+%
+However, their approach can only detect affine dependencies between the
+operands.
+%
+%On the other hand, in \Tool, we create proper augment the purely affine forms with SMT solver
+%invocations.
+%
+On the other hand, in \Tool, we detect dependencies between operands using an SMT solver. 
+%
+Our approach allows us to handle not only polynomial dependencies, but also any non-linearities the solver supports.
+%
+%In case the operations are independent, \Tool uses the same approach described by the authors.
+%
+%
+%This improvement allows us to handle not only polynomial dependencies, but also any non-linearity the solver supports.
+%
+Finally, their approach only computes output ranges, while we went a step
+further and can compute roundoff error bounds as well, which is a non-trivial
+extension.
+
+
+The most similar approach to our work is the recent static probabilistic
+roundoff error analysis called PrAn~\cite{probdaisy}; to the best of our
+knowledge, this is also the only work apart from this paper that presents a
+rigorous and general probabilistic roundoff error analysis.
+%
+PrAn builds on the probabilistic affine arithmetic of Bouissou et
+al.~\cite{bouissou2012generalization}, and inherits the same limitations in
+dealing with dependent operations we described above. 
+%
+%Like us, PrAn combines it with random inputs described as random variables.
+%
+Like us, their method hinges on a discretization scheme that builds
+p-boxes for both the input and error distributions and propagates them through
+the computation.
+%
+The question of how these p-boxes are chosen
+is left open.  In contrast,  we take the input variables to be
+random variables that the user specifies and show how the distribution of
+each error terms can be computed directly and exactly from the random variable
+generating it (see \cref{sec:errordist}).
+%
+%However, PrAn uses p-boxes indiscriminately and does not distinguish between
+%dependent and independent operations.
+%
+%\Tool, on the other hand, distinguishes between dependent and independent
+%operations --- it uses p-boxes only to compute arithmetic operations on
+%dependent variables, while it computes the operations on independent variables
+%using a more precise analytical approach.
+%
+%Furthermore, unlike PrAn, \Tool leverages an SMT solver to prune away
+%infeasible combinations of p-boxes, which leads to improved over-approximations
+%of arithmetic operations between dependent random variables.
+%
+Furthermore, unlike PrAn, \Tool leverages the noncorrelation between random variables and the corresponding error distribution we described in \cref{subsec:covar}.
+%
+The immediate consequence is that \Tool performs the rounding in \cref{eq:probabilistic} as an \emph{independent} operation, thus without any uncertainty.
+%
+%Moreover, unlike PrAn, \Tool uses the un-correlation between random variables and the corresponding error distributions (see~\cref{subsec:covar}) to reliably perform the rounding in~\cref{eq:probabilistic} as an \emph{independent} operation.
+%
+Putting these together leads to \Tool computing tighter probabilistic roundoff
+error bounds than PrAn, as our experimental results show (see
+\cref{sec:evaluation}).
+
+%
+The idea of using a probabilistic model of rounding errors to analyze \emph{deterministic} computations can be traced back to \cite{von1947numerical}.  Parker's so-called `Monte Carlo arithmetic' \cite{parker2000monte} is probably the most detailed description of this approach.  We, however,  consider \emph{probabilistic} computations,  and are therefore able to derive the error distribution from first principles.
+For this reason, the famous critique of the probabilistic approach to roundoff errors \cite{kahan1996improbability} does not apply to this work, since it only considers deterministic computations.  When dealing with probabilistic computations however, everything -- including rounding errors -- has a probabilistic behavior and the probabilistic approach is therefore a  necessity.  
+%Our probabilistic approach is formally not new, it can be traced back to \cite{von1947numerical} and is similar to the Monte Carlo arithmetic of \cite{parker2000monte},  but our derivation of the error distribution and our theoretical justification of the model is.
+%\zvon{Fred, please check the previous sentences.}
+%The famous critique of the probabilistic approach to roundoff errors by Kahan~\cite{kahan1996improbability} does not apply to our work because we consider programs with probabilistic inputs. Everything about the behaviour of such a programs is probabilistic, including roundoff errors, and a probabilistic approach is just a necessity.  
+%\cite{kahan1996improbability} on the other hand, critiques the probabilistic modelling of rounding errors in \emph{deterministic programs}.  
+%We show in \cref{subsec:LPerror_dist,} and \cref{subsec:HPerror_dist} that rounding error distributions  do not need to be \emph{modelled}, rather they can be \emph{evaluated} exactly. This contrasts with the methodological issues raised by~\cite{kahan1996improbability}.
+
+
+
+More recently, probabilistic roundoff error models have been investigated by Higham and Mary~\cite{higham2019new} as well as Ipsen and Zhou~\cite{ipsen2019probabilistic}. Interestingly, because these authors are interested in large-dimensional problems, neither approach needs to explicitly specify the distribution of errors.  However, this means that these approaches are only applicable to large-dimensional problems, and are completely unsuited for the domains (e.g., control systems, filters, cyber-physical systems)  captured by the FPBench benchmark suite. Finally, unlike us, neither approach is sound since they rely on concentration of measure inequalities.
+
+%Instead, Higham and Mary require that each sample from $dist$ be independent and that $\Exp{\delta}=0$, whilst Ipsen and Zhou require only $\Exp{\delta}=0$. By using concentration of measure inequalities the authors then obtain probabilistic bounds which are independent of any particular choice of distribution. 
+%These bounds, however, are only applied to a small class of problems (inner product, matrix multiplication, and matrix factorisation algorithms) with very large inputs. We, on the other hand, explicitly construct the error distribution $dist$ for a given input distribution, and use this construction to give a probabilistic model of IEEE floating-point arithmetic that can be applied to small and medium-sized programs in a compositional way. 
+%
+
+
+Unlike probabilistic roundoff error analysis, worst-case analysis of roundoff errors has been an active research area
+with numerous published approaches~\cite{gappa,gappapp,smartfloat,fluctuat,rangelab,precisa,darulova2018daisy,2015_fm_sjrg,solovyev2018rigorous,rosa,magron2017certified,pldi16-bit-level-fp-verification,zhendong2015,satire}. As expected, none of them can deal with probabilistic inputs.  Affine arithmetic~\cite{affineoriginal} is a well-known technique that extends interval arithmetic~\cite{intervalarithmetic} with information about linear correlations between operands~\cite{affinebook}.
+%
+Rigorous affine arithmetic~\cite{rigorousaffine} takes into consideration numerical errors stemming from the use of floating-point arithmetic when computing with affine forms, and it has been implemented in Rosa~\cite{rosa} to perform rigorous worst-case roundoff error analysis.
+%
+Our symbolic affine arithmetic (see \cref{sec:symbolicaffine}) used in \Tool evolved from rigorous affine arithmetic by keeping the coefficients of the noise terms symbolic, which often leads to improved precision.
+%
+These symbolic terms are very similar to the first-order Taylor approximations
+of the roundoff error expressions used in
+FPTaylor~\cite{2015_fm_sjrg,solovyev2018rigorous}; our experimental results
+also support this since the bounds generated by \Tool for the 100\% confidence
+interval are almost always equal to the worst-case bounds computed by FPTaylor.
+

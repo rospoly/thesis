@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2021)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main_long.aux
+The style file: plain.bst
+Database file #1: refs.bib
+Warning--empty publisher in fluctuat
+Warning--empty institution in lepage1980vegas
+You've used 48 entries,
+            2118 wiz_defined-function locations,
+            723 strings with 10485 characters,
+and the built_in function-call counts, 13153 in all, are:
+= -- 1151
+> -- 741
+< -- 0
++ -- 303
+- -- 246
+* -- 753
+:= -- 2294
+add.period$ -- 139
+call.type$ -- 48
+change.case$ -- 264
+chr.to.int$ -- 0
+cite$ -- 50
+duplicate$ -- 550
+empty$ -- 1109
+format.name$ -- 246
+if$ -- 2711
+int.to.chr$ -- 0
+int.to.str$ -- 48
+missing$ -- 46
+newline$ -- 236
+num.names$ -- 92
+pop$ -- 392
+preamble$ -- 1
+purify$ -- 221
+quote$ -- 0
+skip$ -- 343
+stack$ -- 0
+substring$ -- 308
+swap$ -- 64
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 178
+warning$ -- 2
+while$ -- 96
+width$ -- 50
+write$ -- 471
+(There were 2 warnings)
