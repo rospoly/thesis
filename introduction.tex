@@ -17,7 +17,51 @@ The gap between the ideal and the finite-precision computation is called roundof
 It is then critical, not only to be aware of the existence of this gap, but also to bound the difference between the two programs.
 %Numerical analysis is the branch of rigorous mathematics concerning the analysis of numerical algorithms used to implement the solutions to mathematical problems~\cite{higham2002accuracy}. 
 %
+\section{Finite-precision Computation}
+%
+Finite-precision arithmetics, like floating-point~\cite{}, makes mathematic feasible in the machine. 
+%
+While, as humans, we typically reason in base 10, numbers in computers are represented in base 2.
+%
+Regardless of the base used for the representation, not every number can exactly be represented in finite-precision, and base 2 is no exception.
+%
+Periodic numbers, like $0.1_{10}$, or irrational numbers, like $\pi$ cannot be exactly represented in a finite number of bits.
+%
+Thus they have to be rounded to fit the format of the representation. 
+%
+The wider the format used for the representation, the smaller the gap between the real value and the value stored in the machine.
+%
+In this thesis, we represent computed quantities with a hat (e.g., $\widehat{x}$) to distinguish from the real counter-part (e.g., $x$).
+\subsection{Relative error and Absolute error}
+%
+The typical measures of roundoff errors are the absolute error, which is the absolute arithmetic difference between the finite-precision computation and the real counter-part
+%
+
+\begin{align}
+\cov(X,\erel(X)) = \Exp{X.\erel(X)}-\Exp{X}\Exp{\erel(X)}
+\end{align}
+
+%
+and the relative-error
+%
+\begin{align}
+\cov(X,\erel(X)) = \Exp{X.\erel(X)}-\Exp{X}\Exp{\erel(X)}
+\end{align}
+%
+
+\subsection{Backward and Forward Error}
+backward and forward errors
+accumulation of rounding errors
+\section{Floating-Point Arithmetic}
+floating point numbers
+model of arithmetic IEEE arithmetic
+Here you also show the floating-point line and big numbers in magnitude lead to big absolute error. While relative errors should mitigate this issue, most of the time the denominator do not include zero which is a limitation.
 \section{Roundoff Error Analysis}
+\subsection{Bounding Roundoff Errors}
+%
+Interval arithmetic 
+Affine Arithmetic
+
 %
 The gap between an ideal computation and the floating-point counterpart is called roundoff error, because the result of every ideal computation gets rounded to fit the finite precision format.
 %
@@ -114,7 +158,10 @@ On the other hand, in Section \ref{sec:prob} we discuss how \emph{ignoring} the 
 %
 
 Finally, a strict requirement of worst-case analysis is the input variables must be bounded  in a finite range. This is because, in the worst-case, unbounded variables lead to unbounded roundoff errors, which in practice, are of little use from an implementation prospective.
-\subsection{Control-flow Analysis and Roundoff Errors}
+\subsubsection{Application to Controller Syntesis}
+bla bla
+
+\subsection{Control-flow Analysis}
 %
 While roundoff error analysis has been successfully used to bound straight-line expressions, less attention has been given to other common programming constructs, like conditionals~\cite{precisa, fluctuat}.
 %
