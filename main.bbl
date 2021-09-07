@@ -13,6 +13,11 @@ Eva Darulova, Anastasiia Izycheva, Fariha Nasir, Fabian Ritter, Heiko Becker,
   programs.
 \newblock In {\em TACAS}, 2018.
 
+\bibitem{smartfloat}
+Eva Darulova and Viktor Kuncak.
+\newblock Trustworthy numerical computation in {Scala}.
+\newblock In {\em OOPSLA}, 2011.
+
 \bibitem{rosa}
 Eva Darulova and Viktor Kuncak.
 \newblock Sound compilation of reals.
@@ -24,6 +29,11 @@ Arnab Das, Ian Briggs, Ganesh Gopalakrishnan, Sriram Krishnamoorthy, and Pavel
 \newblock Scalable yet rigorous floating-point error analysis.
 \newblock In {\em SC}, 2020.
 
+\bibitem{gappa}
+Marc Daumas and Guillaume Melquiond.
+\newblock Certification of bounds on expressions involving rounded operators.
+\newblock {\em ACM Transactions on Mathematical Software}, 2010.
+
 \bibitem{fluctuat}
 David Delmas, Eric Goubault, Sylvie Putot, Jean Souyris, Karim Tekkal, and
   Franck V{\'e}drine.
@@ -31,9 +41,29 @@ David Delmas, Eric Goubault, Sylvie Putot, Jean Souyris, Karim Tekkal, and
   software.
 \newblock In {\em FMICS}, 2009.
 
+\bibitem{glasserman2013monte}
+Paul Glasserman.
+\newblock {\em Monte Carlo Methods in Financial Engineering}.
+\newblock Springer, 2013.
+
+\bibitem{kahan1996improbability}
+William Kahan.
+\newblock The improbability of probabilistic error analyses for numerical
+  computations, 1996.
+
+\bibitem{landau2014guide}
+David~P Landau and Kurt Binder.
+\newblock {\em A Guide to Monte Carlo Simulations in Statistical Physics}.
+\newblock Cambridge University Press, 2014.
+
 \bibitem{ieee754}
 {Microprocessor Standards Committee of the IEEE Computer Society}.
 \newblock {IEEE Standard for Floating-Point Arithmetic.}, 2019.
+
+\bibitem{parker2000monte}
+D~Stott Parker, Brad Pierce, and Paul~R Eggert.
+\newblock Monte {C}arlo arithmetic: how to gamble with floating point and win.
+\newblock {\em Computing in Science \& Engineering}, 2000.
 
 \bibitem{patriot}
 The patriot missile failure.

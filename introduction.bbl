@@ -7,6 +7,14 @@
 Bornholt J., Mytkowicz T., McKinley K.S.: {Uncertain\textless T\textgreater:
   a first-order type for uncertain data}. In: ASPLOS (2014)
 
+\bibitem{suardi}
+A. Suardi, S. Longo, E.C. Kerrigan, and G.A. Constantinides. : {Explicit MPC: Hard constraint satisfaction under low precision arithmetic.}.
+In: Control Engineering Practice (2016)
+
+\bibitem{fppower}
+Giuseppe T., Stefan M., Davide R., Andrea M. and Luca B.: {A Transprecision Floating-Point Platform for Ultra-Low Power Computing}.
+In: CoRR (2018)
+
 \bibitem{atomic}
 Zou D., Zeng M., Xiong Y., Fu Z., Zhang L. and Su Z.: {Detecting Floating-Point Errors via Atomic Conditions}. In: POPL (2020)
 
