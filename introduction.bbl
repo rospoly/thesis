@@ -11,6 +11,33 @@ Bornholt J., Mytkowicz T., McKinley K.S.: {Uncertain\textless T\textgreater:
 A. Suardi, S. Longo, E.C. Kerrigan, and G.A. Constantinides. : {Explicit MPC: Hard constraint satisfaction under low precision arithmetic.}.
 In: Control Engineering Practice (2016)
 
+\bibitem{climate}
+Dawson A. and Duben D. : {rpe v5: an emulator for reduced floating-point precision in large numerical simulations}.
+Geoscientific Model Development (2017)
+
+\bibitem{termodynamics}
+Faux A., Godolphin D. : {The floating point: tales of the unexpected}.
+American Journal of Physics (2021)
+
+\bibitem{differentialequations}
+A.H.-D. Cheng : {Multiquadric and its shape parameter—A numerical investigation of error estimate, condition number, and round-off error by arbitrary precision computation}
+In: Engineering Analysis with Boundary Elements (2012)
+
+\bibitem{fluiddynamics}
+David B., Robert K., Richard P. : {Multiple Precision, Multiple Processor Vortex Sheet Roll-Up Computation}.
+NASA Ames Research Center (1992)
+
+\bibitem{statsfluiddynamics}
+David L., and Kurt B. : {A guide to Monte Carlo simulations in statistical physics}.
+Cambridge University Press (2014)
+
+\bibitem{javaerror}
+William K. and Joseph D.: {How Java’s Floating-Point Hurts Everyone Everywhere} \url{http://www.cs.berkeley.edu/~wkahan/JAVAhurt.pdf}
+
+\bibitem{futurescience}
+Ewa D., Tom P., Ilkay A., Christopher C., Kerstin K., Kenneth M., Manish P., Lavanya R., Michela T., and Jeffrey V. : {The future of scientific workflows}
+In: HPC (2017)
+
 \bibitem{fppower}
 Giuseppe T., Stefan M., Davide R., Andrea M. and Luca B.: {A Transprecision Floating-Point Platform for Ultra-Low Power Computing}.
 In: CoRR (2018)
@@ -171,6 +198,9 @@ Martel, M.: {RangeLab}: A static-analyzer to bound the accuracy of
 \bibitem{ieee754}
 {Microprocessor Standards Committee of the IEEE Computer Society}: {IEEE
   Standard for Floating-Point Arithmetic.} (2019)
+
+\bibitem{every}
+{David G.}: {What Every Computer Scientist Should Know about Floating-Point Arithmetic. ACM Comput. Surv. (1991)}
 
 \bibitem{parker2000monte}
 Parker, D.S., Pierce, B., Eggert, P.R.: Monte {C}arlo arithmetic: how to gamble

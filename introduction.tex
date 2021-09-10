@@ -3,16 +3,63 @@
 \chapter{Introduction}
 
 \setupuuchapterbib
-
-Arithmetics in computers is finite and thus imprecise.
+Digital computing is ubiquitous in any field of science.
 %
-The precision format (often called \emph{bit width} in the literature) is the length of the word used to represent real numbers in machines.
+The natural way of thinking, when implementing the solution to a mathematical problem in a computer machine, consists in simply encoding our (ideal) algorithm, written on paper, to the computer, using one of the many available programming languages.
+%
+This transcription is straight-forward for any individual with a basic knowledge in software engineering and computer programming.
+%
+
+Unfortunately, the machine computes in finite-precision arithmetic, rather than infinite-precision (ideal) arithmetic. Moreover, the \emph{double-precision} floating-point format, nowadays a standard-de-facto for what concern arithmetic in computers, is not accurate enough for many applications which, among the others, include climate modeling~\cite{climate}, thermodynamic simulation~\cite{termodynamics}, fluid dynamics~\cite{fluiddynamics, statsfluiddynamics}, computational geometry applications~\cite{javaerror}, computational number theory~\cite{futurescience} and differential equations~\cite{differentialequations}.
+
+%
+Computers store numbers in the form of a sequence of binary digits which unavoidably result in inaccurate computations.
+%
+The precision format (often called \emph{bit width} in the literature) is the length of the sequence (or word) used to represent real numbers in machines.
 %
 As a general rule of thumb, the wider the precision format the more accurate are the computations.
 %
-Finite-precision arithmetics, like floating-point~\cite{ieee754}, with single or double precision formats, does not respect the rules of ideal arithmetic done with 'pen and paper'. 
+Finite-precision arithmetics, like floating-point, does not respect the rules of ideal arithmetic done with 'pen and paper'. 
 %
-The gap between the ideal and the finite-precision computation is called roundoff error, and can have catastrophic consequences on the correct execution of a program.
+
+For example, consider the program reported in Figure~\ref{fig:while}.
+%
+\begin{figure}[h!]
+	\begin{lstlisting}[frame=single, language=Python]
+  n=0
+  t=0
+  while True:
+    t = t + 1
+    n = n + 0.1
+	\end{lstlisting}
+	\caption{A simple while loop with an imprecise accumulator showing the effect of roundoff errors.}\label{fig:while}
+\end{figure}
+%
+After executing the program for 10 seconds, the value of the variable t is 231047636, while the value of the variable n is roughly 23104763.55.
+%
+Ideally, the value of n should be 23104763.6.
+%
+There is an absolute roundoff error of 0.45 in this program.
+%
+The reason behind such error is the constant 0.1 is not exactly representable in binary. 
+%
+At every iteration of the while loop, there is a roundoff error of approximately 5.55e-18, stemming from the 64bits representation of 0.1. 
+%
+
+From an implementation perspective, a very similar issue was the cause of the Patriot Missile Failure~\cite{patriot}.
+%
+In more details, during the Gulf War in 1991, an American Patriot Missile Defense battery failed to intercept an incoming missile.
+%
+The cause of the failure was the internal clock, in the Patriot battery, used to measure time in tenths of second.
+%
+This number was then multiplied by the constant 0.1 to produce the time in seconds.
+%
+The Patriot battery had been up and running for about 100 hours, and follow-up investigations shown the accumulated error corresponded to a travel time of 0.34 seconds for an incoming missile. 
+%
+In this amount of time, the incoming missile could travel for about half a mile.
+
+%
+The gap between the ideal and the finite-precision computations is called roundoff error, and can have catastrophic consequences on the correct execution of a program.
 %
 It is then critical, not only to be aware of the existence of this gap, but also to bound the arithmetic difference between the two programs.
 %Numerical analysis is the branch of rigorous mathematics concerning the analysis of numerical algorithms used to implement the solutions to mathematical problems~\cite{higham2002accuracy}. 
@@ -37,44 +84,72 @@ The most common measures of roundoff errors are (i) the absolute error and (ii) 
 Let $\widehat{x}$ be the finite precision representation of $x$, the absolute error consists in the arithmetic difference between the finite-precision computation and the real counter-part
 %
 \begin{align}
-Err_{abs}=|x-\widehat{x}|\nonumber
+Err_{abs}=|x-\widehat{x}|\label{absolute}
 \end{align}
 %
 
 while the relative-error is 
 %
 \begin{align}
-Err_{rel}=\frac{|x-\widehat{x}|}{x}\nonumber
+Err_{rel}=\frac{|x-\widehat{x}|}{x}\label{relative}
 \end{align}
 %
 The magnitude of the absolute error depends on the magnitude of the computation.
 %
-In floating-point arithmetic, where numbers are equally spaced only within the same exponent range (between perfect powers of the base), the relative-error is more of interest because it is scale independent.
+In floating-point arithmetic, where numbers are equally spaced only within the same exponent range (between perfect powers of two), the relative-error is more of interest because it is scale independent.
 %
+In other words, as opposed to the absolute error, the magnitude of the relative error is independent from the magnitude of the computation itself.
+%
+
 On the other hand, anytime the real computation involves zero the relative error is undefined.
 %
-\subsection{Backward and Forward Errors}
-\begin{figure}[h!]
-	\centering
-	\begin{tabular}{l}
-		\includegraphics[width=1.0\textwidth]{pic/forwback.png}
-	\end{tabular}
-	\caption{Backward and forward errors for $y=f(x)$ Solid line = exact; dotted line= computed.}
-	\label{fig:backwardforward}
-\end{figure}
+In other words, when the denominator in Equation (\ref{relative}) includes the value 0, the fraction is undefined and thus it is a non-sense to talk about relative error.
+%
+Investigating the roundoff error in a neighborhood of 0 is of special importance in numerical analysis, mainly because of underflow or cancellation phenomena, thus in many practical applications we do want to study the roundoff error when the real computation does involve the value 0, which leave us with only the absolute error measure.
+%
 \section{Floating-Point Arithmetic}
+%
+\begin{table}[t]
+	\centering
+	\newcommand{\mydashline}{\hdashline[1pt/1pt]}
+	\scriptsize
+	\caption{say rock say rock}
+	\label{fpformat}
+	\renewcommand{\arraystretch}{1.5}
+	%\setlength{\tabcolsep}{0.3em} % for the horizontal padding
+	%		Benchmark & \Tool & Sampling & Golden & PrAn& \Tool & Sampling & Golden & FpTaylor\\
+	\begin{tabular}{@{\extracolsep{2.3pt}}p{1.5cm}L{1.2cm}L{1.2cm}L{1.3cm}@{}}
+		\toprule
+		%\multirow{4}{*}{Benchmark} & \multicolumn{2}{c}{uniform} & \multicolumn{2}{c}{normal} & \multicolumn{1}{c}{exp} &\multirow{4}{1.2cm}{FpTaylor}\\
+		%\cmidrule{2-3} \cmidrule{4-5} \cmidrule{6-6}
+		\multicolumn{1}{c}{Format (bits)}& \multicolumn{1}{c}{Mantissa} & \multicolumn{1}{c}{Exponent} & \multicolumn{1}{c}{$\epsilon$}\\
+		\midrule
+		half (16) & 10 & 5 & 4.88e-4 \\
+		\mydashline{}
+		single (32) & 23 & 8 & 5.96e-8 \\
+		\mydashline{}
+		double (64) & 52 & 11 & 1.11e-16 \\
+		\mydashline{}
+		quad (128) & 112 & 15 & 9.63e-35 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 %
 The floating-point system is a subset of the reals.
 %
 A floating-point number consists in the triple \emph{sign}, \emph{mantissa} and \emph{exponent}.
 %
-
-The value of the triple is then: $-1^{sign}*mantissa*2^{exponent}$.
+The sign takes always one bit, with value 0 (positive) or 1 (negative), while the mantissa and the exponent are format dependent.
 %
-
-The IEEE-754 floating-point standard~\cite{} defines, among the others, the widely used single and double floating-point data-types, with 32 and 64 bits formats, and five rounding modes.
+The value of the triple is then computed using $-1^{sign}*mantissa*2^{exponent}$.
 %
-From the point of view of numerical analysis, it is important to understand floating-point numbers are not equally distributed in the real line (see Figure~\ref{fig:line}).
+In Table \ref{fpformat}, we report the format for the most common binary data-types in the IEEE-754 standard~\cite{ieee754}.
+%
+The standard defines, among the others, the widely used single and double floating-point data-types, with 32 and 64 bits formats, and several rounding modes.
+%
+From the point of view of numerical analysis, it is important to understand floating-point numbers are not equally distributed in the real line~\cite{every}.
+%
+There are the same number of floating-point numbers within two consecutive powers of two (see Figure~\ref{fig:line}).
 %
 \begin{figure}[h!]
 	\centering
@@ -84,6 +159,16 @@ From the point of view of numerical analysis, it is important to understand floa
 	\caption{The spacing between floating-point numbers (black), plotted on the top of the real line (red), is uniform only within consecutive powers of two.}
 	\label{fig:line}
 \end{figure}
+%
+\begin{figure}[h!]
+	\centering
+	\begin{tabular}{l}
+		\includegraphics[width=1.0\textwidth]{pic/examplenumber.png}
+	\end{tabular}
+	\caption{Single-precision floating-point representation of the decimal value 0.1 using the default rounding mode round-to-nearest.}
+	\label{fig:line}
+\end{figure}
+%
 Assuming the computation does not overflow or underflow, the standard model of arithmetic states
 %
 \begin{align}
@@ -94,38 +179,16 @@ fp(x)=x(1+\delta)\;\;\;\text{where}\;\;\;|\delta|\leq\epsilon
 
 where $fp(x)$ is the floating-point counter-part of the real computation $x$, and the error $\delta$ is bounded by the so-called \emph{machine epsilon} that is the upper-bound on the relative error. Thus, \emph{machine epsilon} depends on the format, or \emph{precision}, used in the floating-point arithmetic. For example, for single-precision $\epsilon=2^{-24}$, while for double-precision $\epsilon=2^{-53}$.
 %
+
+SHOW AN EXAMPLE WITH NUMBER. WHAT ARE THE VALUE OF EXPONENT, MANTISSA, ECT. HOW THE ROUNDING WORKS. VERY EASY.
+
+%
 \section{Roundoff Error Analysis}
 %
 The goal of roundoff error analysis is to measure the approximation errors stemming from the floating-point implementation of a program.
 %
-While, in general, roundoff errors are very small, they propagate through computations and they rapidly accumulate.
+While, in general, roundoff errors are very small, they propagate through computations and they CAN rapidly accumulate.
 %
-
-For example, consider the program reported in Figure~\ref{fig:while}.
-
-%
-\begin{figure}[h!]
-	\begin{lstlisting}[frame=single, language=Python]
-n=0
-t=0
-while True:
-	t = t + 1
-	n = n + 0.1
-	\end{lstlisting}
-	\caption{A simple while loop with an imprecise accumulator showing the effect of roundoff errors.}\label{fig:while}
-\end{figure}
-%
-After 10 seconds, the value of the variable t is 231047636, while the value of the variable n is roughly 23104763.55.
-%
-Ideally, the value of n should be 23104763.6.
-%
-There is an absolute roundoff error of 0.45 in this program.
-%
-Thanks to this small example, we can see how rapidly roundoff errors accumulate in loops. 
-%
-From an implementation perspective, a similar issue was the cause of the Patriot Missile Failure~\cite{patriot}.
-%
-
 %The goal of roundoff error analysis is to measure the approximation errors stemming from the floating-point implementation of a program.
 %
 %In this thesis, we focus on a so called rigorous (i.e. sound) roundoff error analysis. 
@@ -148,11 +211,15 @@ The idea is to execute both the implementation and the oracle with the same inpu
 This is going to be the forward roundoff error of the program. 
 %
 
-While the oracle based approach has been used in several tools~\cite{landau2014guide, kahan1996improbability, atomic, blame, herbie}, it suffers from two main limitations.
+While the oracle based approach has been used in several tools~\cite{landau2014guide, kahan1996improbability, atomic, blame, herbie}, it suffers from several limitations.
 %
-First, implementing a high quality high-precision oracle requires much expertise, and thus is expensive in terms of development cost~\cite{atomic}.
+First, when we use a finite number of bits to compute, we commit a roundoff error \emph{regardless} of the bit-width of the format.
 %
-Second, using Monte Carlo sampling to exhaustively search the input space results in non-rigorous (i.e. unsound) error bounds~\cite{glasserman2013monte, parker2000monte}.
+In other words, using arbitrary wide precision formats, like (e.g., 1000bits), do not match exactly real arithmetic.
+%
+Second, implementing a high quality high-precision oracle requires much expertise, and thus is expensive in terms of development cost~\cite{atomic}.
+%
+Finally, using Monte Carlo sampling to exhaustively search the input space results in non-rigorous (i.e. unsound) error bounds~\cite{glasserman2013monte, parker2000monte}.
 %
 
 In this thesis, we focus on rigorous (i.e. sound) roundoff error analysis.
@@ -172,10 +239,9 @@ For example, when we say 95\% of the computations obey a certain roundoff error 
 %
 A special case of rigorous roundoff error analysis is the so called \emph{worst-case} error analysis, which implies the roundoff error bound holds for any input value.
 %
-
-Intuitively, in worst-case analysis we assume the error $\delta$, in Equation (\ref{standard}), has the worst magnitude possible. In other words, in worst-case analysis we make a conservative choice by setting $\delta=\epsilon$.
+Intuitively, in worst-case analysis we assume the error $\delta$, in Equation (\ref{standard}), has the worst magnitude possible. In other words, we make a conservative decision by setting $\delta=\epsilon$.
 %
-Clearly, this conservative choice makes our analysis rigorous in the sense there cannot be any outliers.
+Clearly, this conservativeness makes our analysis rigorous in the sense there cannot be any outliers.
 %
 
 In the last decade, many successful techniques have been used to implement worst-case error analysis~\cite{darulova2018daisy,2015_fm_sjrg,solovyev2018rigorous,rosa,fptuner,smartfloat,satire,gappa,fluctuat}.
@@ -205,7 +271,7 @@ Floating-point numerical algorithms are essential to many applications and it is
 %
 Control system designers using commercial toolboxes, for example in MATLAB, consider the well-known floating-point formats, single and double precision, as a proxy for real (ideal) arithmetic. 
 %
-At this stage, design time, the main concerns are closed-loop performance and the stability of the system.
+At design time, the main concerns are closed-loop performance and stability of the system.
 %
 
 %In the design of controller applications for embedded systems there is the need to take particular care for roundoff errors stemming from finite precision computations.
@@ -219,11 +285,25 @@ Moreover, in the last decade, there has been massive usage of low precision floa
 The main drawback is that low precision arithmetics imply a greater tolerance towards implementation errors.
 %
 
-The natural question would be whether we can \emph{implement} the \emph{ideal} controller (from MATLAB), using low-precision formats but still guarantee the stability of our system.
+The natural question then would be whether we can \emph{implement} (on chip) the \emph{ideal} controller (from MATLAB), using low-precision formats while still guarantee the stability of our system.
 %
 In other words, in case we implement a controller using low-precision formats, would the controller still be able to govern the system for which it has been designed for.
 
-\subsection{Control-flow Analysis}
+%
+
+WORST-CASE ANALYSIS HAS NOT BEEN EMBEDDED IN REAL WORLD APPLICATIONS (LIKE WHAT YOU DID IN EMSOFT).
+
+WE WANT TO HELP DEVELOPERS.
+
+LIMITATIONS OF WORST CASE ANALYSIS IN CASE OF DISTRIBUTION.
+
+%
+
+\subsection{Handling Conditionals}
+%
+
+CALL THIS SECTION HANDLING CONDITIONALS.
+
 %
 While roundoff error analysis has been successfully used to bound straight-line expressions, less attention has been given to other common programming constructs, like conditionals~\cite{precisa, fluctuat}.
 %
@@ -339,7 +419,7 @@ With this setting, not only the program terminates correctly (return 0), but our
 
 In general, by studying the \emph{average} execution of a computer program we can prune away very rare corner cases and provide meaningful directions for an implementation prospective.
 %
-\section{Dissertation Statement}
+\section{Thesis Statement}
 %
 Our thesis statement is the following: 
 
@@ -348,6 +428,14 @@ Our thesis statement is the following:
 %
 Moreover, in case a developer is willing to trade the accuracy of a computer program for the sake of the efficiency, we can quantify very precisely the idea of probabilistic reliability of the low-precision program.}
 
+%
+
+the usability of wc error tools in practise is minimal, no conditionals, no probability distributions, no etc. very few established uses scenarios. 
+.. my thesis tackle these problems by combining worst-case analysis with smt (CHAPTER 1 AND 3) solving and probabilistic reasoning as well as applying it in realistic novel uses scenario like the EMSOFT IS THE PRIMARY EXAMPLE OF APPLICATION, OR THE GPS, NASA AIRTRAFFIC CONTROL.
+SMT IS EVERYWHERE. 
+%
+In the next section I describe my contributions.
+%
 \section{Contributions}
 %
 In Chapter \ref{sec:fprock}, we describe FPRoCK (Floating-Point Real Checker), a prototype of an SMT solver we developed to reason about the mix of floating-point and real arithmetics, which is critical to spot instability jumps in computer programs.

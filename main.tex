@@ -49,7 +49,7 @@
 \let \proof    = \relax
 \let \endproof = \relax
 \usepackage {amsthm}
-
+\usepackage{caption}
 %%% ====================================================================
 %%% Choose an alternate font family for the document if the TeX default
 %%% of Computer Modern is not wanted:
@@ -72,6 +72,13 @@
 %%% University of Utah Thesis Office requirements.  Therefore, minimize
 %%% the number of packages that you include!
 
+
+\usepackage{caption}
+\usepackage {adjustbox}
+\usepackage {booktabs}
+\usepackage {multirow}
+\usepackage {array}
+\usepackage {xcolor}
 \usepackage {amsmath}
 \usepackage {amssymb}
 \usepackage {bm}
@@ -86,6 +93,13 @@
 \usetikzlibrary {decorations.markings}
 \usepackage {varioref}
 \usepackage{listings}
+\usepackage{arydshln}
+
+% For tables
+
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 \lstset{
 	language=Python,
@@ -174,6 +188,7 @@
 %%% definitions.
 
 \usepackage {mythesis}
+
 
 %%% ====================================================================
 %%% The student-specific front matter fields are defined here:

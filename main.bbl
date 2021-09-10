@@ -46,6 +46,11 @@ Paul Glasserman.
 \newblock {\em Monte Carlo Methods in Financial Engineering}.
 \newblock Springer, 2013.
 
+\bibitem{higham2002accuracy}
+Nicholas~J Higham.
+\newblock {\em Accuracy and Stability of Numerical Algorithms}.
+\newblock SIAM, 2002.
+
 \bibitem{kahan1996improbability}
 William Kahan.
 \newblock The improbability of probabilistic error analyses for numerical
