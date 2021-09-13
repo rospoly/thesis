@@ -187,7 +187,7 @@ SHOW AN EXAMPLE WITH NUMBER. WHAT ARE THE VALUE OF EXPONENT, MANTISSA, ECT. HOW 
 %
 The goal of roundoff error analysis is to measure the approximation errors stemming from the floating-point implementation of a program.
 %
-While, in general, roundoff errors are very small, they propagate through computations and they CAN rapidly accumulate.
+While, in general, roundoff errors are very small, they propagate through computations and they can rapidly accumulate.
 %
 %The goal of roundoff error analysis is to measure the approximation errors stemming from the floating-point implementation of a program.
 %
@@ -239,7 +239,7 @@ For example, when we say 95\% of the computations obey a certain roundoff error 
 %
 A special case of rigorous roundoff error analysis is the so called \emph{worst-case} error analysis, which implies the roundoff error bound holds for any input value.
 %
-Intuitively, in worst-case analysis we assume the error $\delta$, in Equation (\ref{standard}), has the worst magnitude possible. In other words, we make a conservative decision by setting $\delta=\epsilon$.
+Intuitively, in worst-case analysis we assume the error $\delta$, in Equation (\ref{standard}), has the worst magnitude possible. In other words, we make a conservative decision by choosing $\delta=\epsilon$.
 %
 Clearly, this conservativeness makes our analysis rigorous in the sense there cannot be any outliers.
 %
@@ -269,7 +269,7 @@ Finally, a strict requirement of worst-case analysis is the input variables must
 \subsubsection{Application to Controller Synthesis}
 Floating-point numerical algorithms are essential to many applications and it is often desirable to compute their results as accurately as possible.
 %
-Control system designers using commercial toolboxes, for example in MATLAB, consider the well-known floating-point formats, single and double precision, as a proxy for real (ideal) arithmetic. 
+Control system designers using existing toolboxes, for example in MATLAB, use the well-known floating-point formats, single and double, as a proxy for real (ideal) arithmetic. 
 %
 At design time, the main concerns are closed-loop performance and stability of the system.
 %
@@ -278,32 +278,54 @@ At design time, the main concerns are closed-loop performance and stability of t
 %
 %Finite-precision numbers induce roundoff errors, and knowledge of the range of these roundoff errors is required to fulfill safety criteria of critical programs, as typically arising in modern embedded systems such as aircraft controllers.
 %
-On the other hand, from an implementation prospecting, when is time to deploy the controller on the chip, other factors such as execution time, hardware dimensions, and energy consumptions become primary concerns~\cite{suardi}.
+On the other hand, from an implementation prospective, when is time to deploy the controller on the chip, other factors such as performances, hardware dimensions, and energy consumptions become primary concerns~\cite{suardi}.
 %
-Moreover, in the last decade, there has been massive usage of low precision floating-point formats, for example in artificial intelligence (AI), with the aim of conserve resources~\cite{fppower}.
+In the last decade, there has been massive usage of low precision floating-point formats, for example in artificial intelligence (AI), with the aim of conserve resources~\cite{fppower}.
+%
+Hence, leveraging lower precisions can lead to significant savings, and the impact of low-cost floating-point precisions on machine learning predictors is an active research area.
 %
 The main drawback is that low precision arithmetics imply a greater tolerance towards implementation errors.
 %
 
-The natural question then would be whether we can \emph{implement} (on chip) the \emph{ideal} controller (from MATLAB), using low-precision formats while still guarantee the stability of our system.
+The natural question then would be whether we can \emph{implement} (on chip) the \emph{ideal} controller (from MATLAB) using low-precision formats, while still guarantee the stability of the system.
 %
 In other words, in case we implement a controller using low-precision formats, would the controller still be able to govern the system for which it has been designed for.
-
 %
 
-WORST-CASE ANALYSIS HAS NOT BEEN EMBEDDED IN REAL WORLD APPLICATIONS (LIKE WHAT YOU DID IN EMSOFT).
+In our framework, we embed the state-of-the-art for worst-case error analysis in the design of linear time invariant controllers.
+%
+Our, is a refutation-based approach, where the roundoff error stemming from the finite-precision implementation of the controller is measured using static-analysis, and then included in the set of all the disturbances affecting the system.
+%
+In general, a controller is designed to be robust to various sources of external disturbances, like for example, friction or wind resistance.
+%
+At design time, we can glue together all these disturbances in a value delta, that is the total amount of disturbance the controller can tolerate.
+%
+Delta is also called the "disturbance budget".
+%
+Our idea consists in including the roundoff error stemming from the finite-precision implementation of the controller as an additional disturbance affecting the system.
+%
+Thus, our approach consists in reducing the bit-width for the arithmetic, and the memory foot-print of the controller until the roundoff error exceeds the budget delta.
+%
+We do this by using linear search.
+%
+This is going to be the optima of our linear search, and it gives us the lowest-cost controller which does not violate the budget delta. 
+%
+Furthermore, we use the so called mixed-precision tuning to further reduce the precision of the, using the assumption that there might be only certain area that have to be computed precisely and not all of them.
 
-WE WANT TO HELP DEVELOPERS.
-
-LIMITATIONS OF WORST CASE ANALYSIS IN CASE OF DISTRIBUTION.
-
+%WORST-CASE ANALYSIS HAS NOT BEEN EMBEDDED IN REAL WORLD %APPLICATIONS (LIKE WHAT YOU DID IN EMSOFT).
+%
+%  
+%  
+%
+%WE WANT TO HELP DEVELOPERS.
+%
+%LIMITATIONS OF WORST CASE ANALYSIS IN CASE OF DISTRIBUTION.
+%
 %
 
 \subsection{Handling Conditionals}
 %
-
-CALL THIS SECTION HANDLING CONDITIONALS.
-
+%CALL THIS SECTION HANDLING CONDITIONALS.
 %
 While roundoff error analysis has been successfully used to bound straight-line expressions, less attention has been given to other common programming constructs, like conditionals~\cite{precisa, fluctuat}.
 %
@@ -363,7 +385,7 @@ This shows how critical it is to precisely reason about roundoff errors in condi
 \subsection{Probabilistic Error Analysis}
 \label{sec:prob}
 %
-In this section, we describe how we tackle the conservativeness of worst-case analysis, by introducing our framework to compute probabilistic (or conditional) error bounds.
+In this section we describe how we tackle the conservativeness of worst-case analysis, by introducing our framework to compute probabilistic (or conditional) roundoff error bounds.
 %
 As we mentioned in the introduction, worst-case analysis could provide conservative error bounds in case we know \emph{a priori} the distribution of the inputs. 
 %
@@ -376,7 +398,7 @@ Note, in the worst-case approach, there is an implicit 100\% confidence interval
 %
 
 %
-Consider the program reported in Figure~\ref{fig:prob}.
+Let's discuss the advantages of the probabilistic approach on the program reported in Figure~\ref{fig:prob}.
 %
 \begin{figure}[h!]
 	\begin{lstlisting}[frame=single, language=Python]
@@ -389,32 +411,34 @@ else:
 	\label{fig:prob}
 \end{figure}
 %
-We set \lstinline{c(x)=x}, and we assume the variable $x\sim Normal(0,1)$ is distributed accordingly to a standard normal with parameters $\mu = 0$ and $\sigma = 1$.
+
+We consider \lstinline{c(x)=x}, and we assume the variable $x\sim Normal(0,1)$ is distributed accordingly to a standard normal with parameters $\mu = 0$ and $\sigma = 1$.
 %
 
 At line 1, we compare c(x) with a constant value.
 %
 In case the comparison evaluates to true, the \emph{then} branch leads to an error (division by zero), otherwise, the \emph{else} branch returns correctly.
 %
-\emph{Regardless} of the value of the constant, \emph{any} rigorous (i.e. sound) worst-case range analysis is going to signal a potential division by-zero error at line 2.
+
+\emph{Regardless} of the value of the constant used for the comparison, \emph{any} rigorous (i.e. sound) worst-case range analysis is going to signal a potential division-by-zero error at line 2.
 %
-In simple words, the analysis is going to terminate as soon as the error is detected.
+In other words, the range analysis is going to terminate as soon as a potential division by zero is detected.
 %
-This is because, in case the error at line 2 is triggered the program would crash, and thus, in this situation, it would not make sense to propagate ranges or, in particular, to talk about roundoff errors.
+This is because, in case the error at line 2 is triggered the program would crash, and thus, it would not make sense to reason about ranges or roundoff errors.
 
 %
-A developer using such analysis has no information about \emph{how rare} might be the condition leading to such crash. 
+A developer using such worst case range analysis has no information about \emph{how rare} might be the condition leading to such crash. 
 %
 
 In our probabilistic framework, we know the standard normal distribution concentrates more than 99\% of probability mass in the interval $[−3, 3]$, and less than 0.5\% of mass spreads in the interval $[3, \infty]$.
 %
-For example, in case we set constant to 1000, a developer using our combined analysis, might not be interested in the very rare outliers triggering the error at line 2.
+If we go back to our example, in case we set the constant at line 1 equal to 1000, a developer using our combined analysis, might not be interested in the very rare outliers triggering the error at line 2.
 %
-Thus, if we go back to our example, we can use our probabilistic analysis with a \emph{confidence interval} set, for example, to 99\%.
+Thus, we can run our probabilistic analysis with a \emph{confidence interval} set, for example, to 99\%.
 %
 %Clearly, other confidence intervals of interest could be used. 
 %
-With this setting, not only the program terminates correctly (return 0), but our probabilistic analysis bounds the roundoff error of $c(x)=x$ by $\epsilon = 3*(2^{-p})$.
+With this setting, not only the program terminates correctly (return 0), but our conditional error bound for $c(x)=x$ is $\epsilon = 3*(2^{-p})$.
 %
 
 In general, by studying the \emph{average} execution of a computer program we can prune away very rare corner cases and provide meaningful directions for an implementation prospective.
