@@ -12,9 +12,10 @@ As opposed to the state-of-the-art, where the size of the instability region, fr
 In other words, in case the instability exists we get a model triggering the instability.
 %
 
-We integrated FPRoCk on the top of PRECiSA, a static analyzer of floating-point programs, to improve its accuracy for what concern the analysis on safety-critical applications with conditional statements.
+We integrated FPRoCk on the top of PRECiSA, a static analyzer for roundoff errors in floating-point expressions.
 %
-
+Our results showed the combined approach works better than the state-of-the-art in terms of accuracy for what concern the analysis on safety-critical applications with conditional statements.
+%
 Due to its modularity, FPRoCK could be use as a back-end for any existing static-analyzers to verify instabilities in conditionals, or alternatively, as a stand-alone tool to mix real and floating-point theories in the same SMT query.
 %
 

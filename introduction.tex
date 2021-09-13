@@ -35,15 +35,15 @@ For example, consider the program reported in Figure~\ref{fig:while}.
 	\caption{A simple while loop with an imprecise accumulator showing the effect of roundoff errors.}\label{fig:while}
 \end{figure}
 %
-After executing the program for 10 seconds, the value of the variable t is 231047636, while the value of the variable n is roughly 23104763.55.
+After an execution time of 10 seconds, the value of the variable t is 231047636, while the value of the variable n is roughly 23104763.55.
 %
 Ideally, the value of n should be 23104763.6.
 %
 There is an absolute roundoff error of 0.45 in this program.
 %
-The reason behind such error is the constant 0.1 is not exactly representable in binary. 
+The reason behind such error is the constant 0.1 is not exactly representable in binary (see Figure~\ref{fig:zeropointone}). 
 %
-At every iteration of the while loop, there is a roundoff error of approximately 5.55e-18, stemming from the 64bits representation of 0.1. 
+At every iteration of the while loop, there is a roundoff error of approximately 5.55e-18, stemming from the 64bits floating-point representation of 0.1. 
 %
 
 From an implementation perspective, a very similar issue was the cause of the Patriot Missile Failure~\cite{patriot}.
@@ -52,9 +52,9 @@ In more details, during the Gulf War in 1991, an American Patriot Missile Defens
 %
 The cause of the failure was the internal clock, in the Patriot battery, used to measure time in tenths of second.
 %
-This number was then multiplied by the constant 0.1 to produce the time in seconds.
+This number was then multiplied by the constant 0.1, which we know is not exactly representable, to produce the time in seconds.
 %
-The Patriot battery had been up and running for about 100 hours, and follow-up investigations shown the accumulated error corresponded to a travel time of 0.34 seconds for an incoming missile. 
+The Patriot battery had been up and running for about 100 hours, and follow-up investigations showed the accumulated roundoff error corresponded to a travel time of 0.34 seconds for an incoming missile. 
 %
 In this amount of time, the incoming missile could travel for about half a mile.
 
@@ -113,7 +113,7 @@ Investigating the roundoff error in a neighborhood of 0 is of special importance
 	\centering
 	\newcommand{\mydashline}{\hdashline[1pt/1pt]}
 	\scriptsize
-	\caption{say rock say rock}
+	\caption{IEEE-754 floating-point formats. We report the name of the format (Format) and the bit-width for the mantissa (Mantissa) and the exponent (Exp) representations. The column $\epsilon$ reports the value of machine epsilon.}
 	\label{fpformat}
 	\renewcommand{\arraystretch}{1.5}
 	%\setlength{\tabcolsep}{0.3em} % for the horizontal padding
@@ -122,7 +122,7 @@ Investigating the roundoff error in a neighborhood of 0 is of special importance
 		\toprule
 		%\multirow{4}{*}{Benchmark} & \multicolumn{2}{c}{uniform} & \multicolumn{2}{c}{normal} & \multicolumn{1}{c}{exp} &\multirow{4}{1.2cm}{FpTaylor}\\
 		%\cmidrule{2-3} \cmidrule{4-5} \cmidrule{6-6}
-		\multicolumn{1}{c}{Format (bits)}& \multicolumn{1}{c}{Mantissa} & \multicolumn{1}{c}{Exponent} & \multicolumn{1}{c}{$\epsilon$}\\
+		\multicolumn{1}{c}{Format (bits)}& \multicolumn{1}{c}{Mantissa} & \multicolumn{1}{c}{Exp} & \multicolumn{1}{c}{$\epsilon$}\\
 		\midrule
 		half (16) & 10 & 5 & 4.88e-4 \\
 		\mydashline{}
@@ -143,20 +143,23 @@ The sign takes always one bit, with value 0 (positive) or 1 (negative), while th
 %
 The value of the triple is then computed using $-1^{sign}*mantissa*2^{exponent}$.
 %
-In Table \ref{fpformat}, we report the format for the most common binary data-types in the IEEE-754 standard~\cite{ieee754}.
+
+In Table \ref{fpformat}, we report the formats for the most common binary data-types in the IEEE-754 standard~\cite{ieee754}.
 %
 The standard defines, among the others, the widely used single and double floating-point data-types, with 32 and 64 bits formats, and several rounding modes.
 %
 From the point of view of numerical analysis, it is important to understand floating-point numbers are not equally distributed in the real line~\cite{every}.
 %
-There are the same number of floating-point numbers within two consecutive powers of two (see Figure~\ref{fig:line}).
+%There are the same number of floating-point numbers within two consecutive powers of two (see Figure~\ref{fig:line}).
+%
+Floating-point numbers are equally spaced within consecutive powers of two (see Figure~\ref{fig:line}).
 %
 \begin{figure}[h!]
 	\centering
 	\begin{tabular}{l}
 		\includegraphics[width=1.0\textwidth]{pic/fpnumbers.png}
 	\end{tabular}
-	\caption{The spacing between floating-point numbers (black), plotted on the top of the real line (red), is uniform only within consecutive powers of two.}
+	\caption{The spacing between floating-point numbers (black marks), plotted on the top of the real line (red), is uniform only within consecutive powers of two.}
 	\label{fig:line}
 \end{figure}
 %
@@ -166,7 +169,7 @@ There are the same number of floating-point numbers within two consecutive power
 		\includegraphics[width=1.0\textwidth]{pic/examplenumber.png}
 	\end{tabular}
 	\caption{Single-precision floating-point representation of the decimal value 0.1 using the default rounding mode round-to-nearest.}
-	\label{fig:line}
+	\label{fig:zeropointone}
 \end{figure}
 %
 Assuming the computation does not overflow or underflow, the standard model of arithmetic states
@@ -177,12 +180,30 @@ fp(x)=x(1+\delta)\;\;\;\text{where}\;\;\;|\delta|\leq\epsilon
 \end{align}
 %
 
-where $fp(x)$ is the floating-point counter-part of the real computation $x$, and the error $\delta$ is bounded by the so-called \emph{machine epsilon} that is the upper-bound on the relative error. Thus, \emph{machine epsilon} depends on the format, or \emph{precision}, used in the floating-point arithmetic. For example, for single-precision $\epsilon=2^{-24}$, while for double-precision $\epsilon=2^{-53}$.
+where $fp(x)$ is the floating-point counter-part of the real computation $x$, and the error $\delta$ is bounded by the so-called \emph{machine epsilon}, that is the upper-bound on the relative error.
+%
+Thus, the value of \emph{machine epsilon} is format dependent.
+%
+For example, for single-precision $\epsilon=2^{-24}$, while for double-precision $\epsilon=2^{-53}$.
 %
 
-SHOW AN EXAMPLE WITH NUMBER. WHAT ARE THE VALUE OF EXPONENT, MANTISSA, ECT. HOW THE ROUNDING WORKS. VERY EASY.
-
+In Figure\ref{fig:line}, we report the format representation when the decimal value 0.1 is stored in a single precision (32bits) floating-point variable.
 %
+The decimal $0.1_{10}$ in binary becomes $0.0\overline{0011}$.
+%
+The number is periodic thus it is not exactly representable.
+%
+The sign is zero because the number is positive.
+%
+The value of the exponent is 123 which is biased with respect to the correct value -4.
+%
+This is because the exponent is stored as unsigned number, which makes comparison easier.
+%
+The bias is computed as $2^{e-1}-1$ where $e$ is the number of bits in the exponent.
+%
+Finally, the last part of the format is the mantissa representation, using round-to-nearest mode.
+%
+The value actually stored in single precision is $0.100000001490116119384765625$.
 \section{Roundoff Error Analysis}
 %
 The goal of roundoff error analysis is to measure the approximation errors stemming from the floating-point implementation of a program.
@@ -471,11 +492,9 @@ In Chapter \ref{sec:fprock}, we describe FPRoCK (Floating-Point Real Checker), a
 %
 %Thus, the need to sacrifice the accuracy of computations in favor of the efficiency.
 %
-In Chapter \ref{sec:emsoft}, we describe our framework to design low precision micro-controllers.
+In Chapter \ref{sec:emsoft}, we describe our framework to design low precision micro-controllers, and we show how we can use static analysis to guarantee the stability of the micro-controller is not affected by the low-precision format.
 %
-We show how we can use static analysis to guarantee the stability of the micro-controller is not affected by the low-precision format.
-%
-Indeed, our goal is to guarantee the usage of low-precision formats does not impact the reliability of the system.
+Indeed, our goal is to guarantee the use of low-precision arithmetic does not impact the reliability of the system.
 
 %
 %InWe can use a similar argument to describe the nature of worst-case analysis. 
