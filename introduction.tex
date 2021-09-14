@@ -5,9 +5,9 @@
 \setupuuchapterbib
 Digital computing is ubiquitous in any field of science.
 %
-The natural way of thinking, when implementing the solution to a mathematical problem in a computer machine, consists in simply encoding our (ideal) algorithm, written on paper, to the computer, using one of the many available programming languages.
+The natural way of thinking, when implementing the solution to a mathematical problem in a computer machine, consists in simply encoding our (ideal) algorithm, from the paper to the computer, using one of the many available programming languages.
 %
-This transcription is straight-forward for any individual with a basic knowledge in software engineering and computer programming.
+This transcription is straight-forward for any individual with a basic knowledge of software engineering and computer programming.
 %
 
 Unfortunately, the machine computes in finite-precision arithmetic, rather than infinite-precision (ideal) arithmetic. Moreover, the \emph{double-precision} floating-point format, nowadays a standard-de-facto for what concern arithmetic in computers, is not accurate enough for many applications which, among the others, include climate modeling~\cite{climate}, thermodynamic simulation~\cite{termodynamics}, fluid dynamics~\cite{fluiddynamics, statsfluiddynamics}, computational geometry applications~\cite{javaerror}, computational number theory~\cite{futurescience} and differential equations~\cite{differentialequations}.
@@ -22,7 +22,7 @@ As a general rule of thumb, the wider the precision format the more accurate are
 Finite-precision arithmetics, like floating-point, does not respect the rules of ideal arithmetic done with 'pen and paper'. 
 %
 
-For example, consider the program reported in Figure~\ref{fig:while}.
+For example, consider the program in Figure~\ref{fig:while}.
 %
 \begin{figure}[h!]
 	\begin{lstlisting}[frame=single, language=Python]
@@ -34,6 +34,7 @@ For example, consider the program reported in Figure~\ref{fig:while}.
 	\end{lstlisting}
 	\caption{A simple while loop with an imprecise accumulator showing the effect of roundoff errors.}\label{fig:while}
 \end{figure}
+
 %
 After an execution time of 10 seconds, the value of the variable t is 231047636, while the value of the variable n is roughly 23104763.55.
 %
@@ -43,7 +44,7 @@ There is an absolute roundoff error of 0.45 in this program.
 %
 The reason behind such error is the constant 0.1 is not exactly representable in binary (see Figure~\ref{fig:zeropointone}). 
 %
-At every iteration of the while loop, there is a roundoff error of approximately 5.55e-18, stemming from the 64bits floating-point representation of 0.1. 
+At every iteration of the while loop, there is a roundoff error of approximately 5.55e-18, stemming from the double (64bits) floating-point representation of 0.1. 
 %
 
 From an implementation perspective, a very similar issue was the cause of the Patriot Missile Failure~\cite{patriot}.
@@ -139,7 +140,7 @@ The floating-point system is a subset of the reals.
 %
 A floating-point number consists in the triple \emph{sign}, \emph{mantissa} and \emph{exponent}.
 %
-The sign takes always one bit, with value 0 (positive) or 1 (negative), while the mantissa and the exponent are format dependent.
+The sign takes always one bit, with value 0 (positive) or 1 (negative), while the bit-width of the mantissa and the exponent are format dependent.
 %
 The value of the triple is then computed using $-1^{sign}*mantissa*2^{exponent}$.
 %
@@ -168,11 +169,11 @@ Floating-point numbers are equally spaced within consecutive powers of two (see 
 	\begin{tabular}{l}
 		\includegraphics[width=1.0\textwidth]{pic/examplenumber.png}
 	\end{tabular}
-	\caption{Single-precision floating-point representation of the decimal value 0.1 using the default rounding mode round-to-nearest.}
+	\caption{Single precision floating-point representation of the decimal value 0.1 using the default rounding mode round-to-nearest.}
 	\label{fig:zeropointone}
 \end{figure}
 %
-Assuming the computation does not overflow or underflow, the standard model of arithmetic states
+Assuming the computation does not overflow or underflow, the standard model of arithmetic~\cite{every} states
 %
 \begin{align}
 fp(x)=x(1+\delta)\;\;\;\text{where}\;\;\;|\delta|\leq\epsilon
@@ -180,7 +181,7 @@ fp(x)=x(1+\delta)\;\;\;\text{where}\;\;\;|\delta|\leq\epsilon
 \end{align}
 %
 
-where $fp(x)$ is the floating-point counter-part of the real computation $x$, and the error $\delta$ is bounded by the so-called \emph{machine epsilon}, that is the upper-bound on the relative error.
+where $fp(x)$ is the floating-point value of the real computation $x$, and the error $\delta$ is bounded by the so-called \emph{machine epsilon}, that is the upper-bound on the relative error.
 %
 Thus, the value of \emph{machine epsilon} is format dependent.
 %
@@ -193,17 +194,19 @@ The decimal $0.1_{10}$ in binary becomes $0.0\overline{0011}$.
 %
 The number is periodic thus it is not exactly representable.
 %
+Let's see the details of the format representation.
+%
 The sign is zero because the number is positive.
 %
 The value of the exponent is 123 which is biased with respect to the correct value -4.
 %
-This is because the exponent is stored as unsigned number, which makes comparison easier.
+This is because the exponent is stored as unsigned number, which makes easier the comparison between numbers.
 %
 The bias is computed as $2^{e-1}-1$ where $e$ is the number of bits in the exponent.
 %
 Finally, the last part of the format is the mantissa representation, using round-to-nearest mode.
 %
-The value actually stored in single precision is $0.100000001490116119384765625$.
+Thus, the value actually stored in single precision is $0.100000001490116119384765625$.
 \section{Roundoff Error Analysis}
 %
 The goal of roundoff error analysis is to measure the approximation errors stemming from the floating-point implementation of a program.
@@ -215,15 +218,15 @@ While, in general, roundoff errors are very small, they propagate through comput
 %In this thesis, we focus on a so called rigorous (i.e. sound) roundoff error analysis. 
 %
 
-The approach we used to measure errors in our example, assumes we have a reference implementation to compare with, in the literature often called the \emph{oracle}~\cite{blame}, holding the ideal value of the computation.
+The approach we used to measure the rounding error for the program in Figure~\ref{fig:while}, assumes we have a reference implementation to compare with, in the literature often called the \emph{oracle}~\cite{blame}, holding the ideal value of the computation.
 %
-In our example, the oracle is the integer variable t.
+%In the program, the oracle is the integer variable t.
 % 
 %In our small example, regardless of its simplicity, shows a critical (and limiting) assumption we are making here, to 
 
 In real-world applications, the oracle typically consists of a clone of the original program, where all the floating-point variables (e.g., single or double) have been replace by custom multiple-precision floating-point variables~\cite{mpfr}.
 %
-In the latter, the user can specify the bit width of the format for each variable (e.g., 1000bits) and use this high-precision program as a proxy for the ideal (infinite precision) implementation.
+In the latter, the user can specify the bit-width of the format for each variable (e.g., 1000bits) and use this high-precision program as a proxy for the ideal (infinite precision) implementation.
 %
 At this point, we have two copies of the same program, one is the implementation, and the other one is the oracle. 
 %
@@ -236,7 +239,7 @@ While the oracle based approach has been used in several tools~\cite{landau2014g
 %
 First, when we use a finite number of bits to compute, we commit a roundoff error \emph{regardless} of the bit-width of the format.
 %
-In other words, using arbitrary wide precision formats, like (e.g., 1000bits), do not match exactly real arithmetic.
+In other words, using arbitrary wide precision formats (e.g., 1000bits), do not match exactly real arithmetic.
 %
 Second, implementing a high quality high-precision oracle requires much expertise, and thus is expensive in terms of development cost~\cite{atomic}.
 %
@@ -292,7 +295,7 @@ Floating-point numerical algorithms are essential to many applications and it is
 %
 Control system designers using existing toolboxes, for example in MATLAB, use the well-known floating-point formats, single and double, as a proxy for real (ideal) arithmetic. 
 %
-At design time, the main concerns are closed-loop performance and stability of the system.
+At design time, the main concerns are closed-loop performance and the stability of the system.
 %
 
 %In the design of controller applications for embedded systems there is the need to take particular care for roundoff errors stemming from finite precision computations.
@@ -303,7 +306,7 @@ On the other hand, from an implementation prospective, when is time to deploy th
 %
 In the last decade, there has been massive usage of low precision floating-point formats, for example in artificial intelligence (AI), with the aim of conserve resources~\cite{fppower}.
 %
-Hence, leveraging lower precisions can lead to significant savings, and the impact of low-cost floating-point precisions on machine learning predictors is an active research area.
+Hence, leveraging low precisions can lead to significant savings, and the impact of low-cost floating-point precisions on machine learning predictors is an active research area.
 %
 The main drawback is that low precision arithmetics imply a greater tolerance towards implementation errors.
 %
@@ -313,25 +316,23 @@ The natural question then would be whether we can \emph{implement} (on chip) the
 In other words, in case we implement a controller using low-precision formats, would the controller still be able to govern the system for which it has been designed for.
 %
 
-In our framework, we embed the state-of-the-art for worst-case error analysis in the design of linear time invariant controllers.
+In our framework, we embed the state-of-the-art for worst-case error analysis in the design of linear time invariant Model Predictive Controllers (MPC).
 %
-Our, is a refutation-based approach, where the roundoff error stemming from the finite-precision implementation of the controller is measured using static-analysis, and then included in the set of all the disturbances affecting the system.
+Our, is a refutation-based approach, where the roundoff error stemming from the finite-precision implementation of the controller is measured using static-analysis, and then this error is embedded in the set of all the disturbances affecting the system.
 %
-In general, a controller is designed to be robust to various sources of external disturbances, like for example, friction or wind resistance.
+Typically, a controller is designed to be robust to various sources of external disturbances, like for example, friction or wind resistance.
 %
-At design time, we can glue together all these disturbances in a value delta, that is the total amount of disturbance the controller can tolerate.
+At design time, the designer of the controller estimates the total disturbance $\Delta$ the controller can tolerate.
 %
-Delta is also called the "disturbance budget".
+Since $\Delta$ accounts for any source of disturbance affecting the system, it is also called the "disturbance budget".
 %
 Our idea consists in including the roundoff error stemming from the finite-precision implementation of the controller as an additional disturbance affecting the system.
 %
-Thus, our approach consists in reducing the bit-width for the arithmetic, and the memory foot-print of the controller until the roundoff error exceeds the budget delta.
+Thus, our is an iterative based approach, where we reduce the bit-width for the arithmetic and the memory foot-print of the controller, until the roundoff error exceeds the budget delta.
 %
-We do this by using linear search.
+This is going to be the minimal lowest-cost controller which does not violate the budget delta. 
 %
-This is going to be the optima of our linear search, and it gives us the lowest-cost controller which does not violate the budget delta. 
-%
-Furthermore, we use the so called mixed-precision tuning to further reduce the precision of the, using the assumption that there might be only certain area that have to be computed precisely and not all of them.
+%Furthermore, we use the so called mixed-precision tuning to further reduce the precision of the co, using the assumption that there might be only certain area that have to be computed precisely and not all of them.
 
 %WORST-CASE ANALYSIS HAS NOT BEEN EMBEDDED IN REAL WORLD %APPLICATIONS (LIKE WHAT YOU DID IN EMSOFT).
 %
@@ -377,7 +378,7 @@ Consider the if-statement reported in Figure~\ref{fig:ifstatement}.
 
 We set \lstinline{c(x)=x}, \lstinline{f(x)=1} and \lstinline{g(x)=-1}.
 %
-Moreover, we assume the variable \lstinline{x} is bounded by the closed interval $[0,10]$.
+Moreover, we assume the variable \lstinline{x} is bounded in the closed interval $[0,10]$.
 
 \begin{figure}[h!]
 	\centering
@@ -386,15 +387,15 @@ Moreover, we assume the variable \lstinline{x} is bounded by the closed interval
 		&
 		\includegraphics[width=0.5\textwidth]{pic/iffp.png}
 	\end{tabular}
-	\caption{A simple if-statement in case of real arithmetic (left) and the floating-point counterpart (right). In red you can see the instability region, where $\epsilon$ is the roundoff error accumulated in the variable X.}
+	\caption{The evaluation of a simple if-statement in case of real arithmetic (left) and the floating-point counterpart (right). In red you can see the instability region, where $\epsilon$ is the roundoff error accumulated by the variable X.}
 	\label{fig:ifreal}
 \end{figure}
 
-In Figure \ref{fig:ifreal}, we plot the instability region for our small benchmark. Clearly, when we compute in real arithmetic we do not have instabilities. On the other hand, in the floating-point computations, we can identify the \emph{instability region} as that part of the input domain from where instabilities might be triggered.
+In Figure \ref{fig:ifreal}, we plot the instability region for our if-statement. Clearly, when we compute in real arithmetic we do not have instabilities. On the other hand, in the floating-point computations, we can identify the \emph{instability region} as that part of the input domain from where instabilities might be triggered.
 %
 The width of the instability region is determined by the roundoff error $\epsilon$.
 %
-In our small example, $\epsilon$ is the roundoff error for the variable $x$ which is proportional to $x*(2^{-p})$ where p is the bit-width of the floating-point format, and assumes maximal magnitude when $x=10$.  
+In our example, $\epsilon$ is the roundoff error for the variable $x$ which is proportional to $x*(2^{-p})$ where p is the bit-width of the floating-point format, and assumes maximal magnitude when $x=10$.  
 %
 In double precision arithmetic (64-bits), $\epsilon$ equals $1.1e^{-17}$.
 %
@@ -408,7 +409,7 @@ This shows how critical it is to precisely reason about roundoff errors in condi
 %
 In this section we describe how we tackle the conservativeness of worst-case analysis, by introducing our framework to compute probabilistic (or conditional) roundoff error bounds.
 %
-As we mentioned in the introduction, worst-case analysis could provide conservative error bounds in case we know \emph{a priori} the distribution of the inputs. 
+As we mentioned earlier, worst-case analysis could provide conservative error bounds in case we know \emph{a priori} the distribution of the inputs. 
 %
 %Furthermore, we must bound the input variables to prevent overflow and thus unbounded roundoff errors.
 %
@@ -419,7 +420,7 @@ Note, in the worst-case approach, there is an implicit 100\% confidence interval
 %
 
 %
-Let's discuss the advantages of the probabilistic approach on the program reported in Figure~\ref{fig:prob}.
+Let's discuss the advantages of our probabilistic approach on the program reported in Figure~\ref{fig:prob}.
 %
 \begin{figure}[h!]
 	\begin{lstlisting}[frame=single, language=Python]
@@ -443,7 +444,7 @@ In case the comparison evaluates to true, the \emph{then} branch leads to an err
 
 \emph{Regardless} of the value of the constant used for the comparison, \emph{any} rigorous (i.e. sound) worst-case range analysis is going to signal a potential division-by-zero error at line 2.
 %
-In other words, the range analysis is going to terminate as soon as a potential division by zero is detected.
+In other words, the worst-case analysis is going to terminate as soon as a potential division by zero is detected.
 %
 This is because, in case the error at line 2 is triggered the program would crash, and thus, it would not make sense to reason about ranges or roundoff errors.
 
@@ -469,17 +470,30 @@ In general, by studying the \emph{average} execution of a computer program we ca
 Our thesis statement is the following: 
 
 %
-\emph{We show how to improve the stability of computer programs by encoding the mix of real and floating-point formulas in SMT solvers.
+\emph{The usability of rigorous roundoff error analysis is minimal in real-world scenarios.
+%in practise
 %
-Moreover, in case a developer is willing to trade the accuracy of a computer program for the sake of the efficiency, we can quantify very precisely the idea of probabilistic reliability of the low-precision program.}
-
+Out of the many existing analyzers, only few of them have minimal support for common programming constructs, like conditional statements, while none of them can deal with unbounded input variables nor probability distributions.
+%	
+In this thesis, we combine rigorous error analysis with symbolic execution, which allows us to precisely reason about control-flow instabilities in computer programs.
 %
-
-the usability of wc error tools in practise is minimal, no conditionals, no probability distributions, no etc. very few established uses scenarios. 
-.. my thesis tackle these problems by combining worst-case analysis with smt (CHAPTER 1 AND 3) solving and probabilistic reasoning as well as applying it in realistic novel uses scenario like the EMSOFT IS THE PRIMARY EXAMPLE OF APPLICATION, OR THE GPS, NASA AIRTRAFFIC CONTROL.
-SMT IS EVERYWHERE. 
+We use this resulting prototype to verify real-word applications, specifically micro-controllers and safety-critical software in self-flying aircrafts. 
+%
+Moreover, my thesis tackles the limitations of worst-case error analysis, that is to say, dealing with probability distributions with infinite support, by introducing our probabilistic framework to compute conditional roundoff errors, thus transitioning from worst-case roundoff errors to average roundoff errors.
+%
+%This allows us to quantify very precisely the idea of probabilistic reliability of the low-precision program.
 %
 In the next section I describe my contributions.
+}
+
+%\emph{\\\\In this thesis we show how to improve the stability of computer programs by encoding the mix of real and floating-point formulas in SMT solvers.
+%
+%Moreover, in case a developer is willing to trade the accuracy of a computer program for the sake of the efficiency, we can quantify very precisely the idea of probabilistic reliability of the low-precision program.}
+%
+%the usability of wc error tools in practise is minimal, no conditionals, no probability distributions, no etc. very few established uses scenarios. 
+%.. my thesis tackle these problems by combining worst-case analysis with smt (CHAPTER 1 AND 3) solving and probabilistic reasoning as well as applying it in realistic novel uses scenario like the EMSOFT IS THE PRIMARY EXAMPLE OF APPLICATION, OR THE GPS, NASA AIRTRAFFIC CONTROL.
+%
+
 %
 \section{Contributions}
 %

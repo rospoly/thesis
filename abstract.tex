@@ -15,7 +15,7 @@ Arithmetic in machines unavoidably introduce roundoff errors stemming from the u
 It is critical, in particular in safety-critical systems, not only to be aware of these errors but also to \emph{measure} them.
 %
 
-In \emph{numerical analysis} we study how to bound roundoff errors and how they propagate through arithmetic expressions.
+In \emph{numerical analysis} we study how to bound roundoff errors, and how they propagate through arithmetic expressions.
 %
 
 There are several challenges in roundoff error analysis. 
@@ -27,6 +27,8 @@ Moreover, it is not trivial to study how errors propagate in arbitrary expressio
 Furthermore, extending roundoff error analysis to computer programs, rather than straight-line expressions, comes with the burden of dealing with programming constructs like conditionals and loops. 
 %
 Indeed, roundoff errors can alter the ideal control-flow of a program, thus an if-statement might evaluate to true in ideal arithmetic (in reals), but because of roundoff errors, the same if-statement evaluates to false in the machine. 
+%
+This phenomenon is called instability jump.
 %
 %In other words, all the computations obey the worst-case error bound.
 %
