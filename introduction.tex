@@ -12,11 +12,11 @@ Unfortunately, the developer cannot simply transcribe one-to-one the algorithm '
 %
 %(e.g., Java, Python).
 %
-The main reason is the machine computes with finite resources, on the other hand, in our ideal algorithm we compute in real arithmetic, thus with infinite resources.
+The main reason is the machine computes with finite resources, while in our ideal algorithm, we compute in real arithmetic, thus with infinite resources.
 %
-In mathematics, there are quantities, like for example $\pi$ or $\sqrt{2}$ or any other irrational number, with an infinite number of digits, and thus cannot be represented \emph{exactly} using a finite representation.
+In mathematics, there are quantities, like for example $\pi$ or $\sqrt{2}$ or any other irrational number, with an infinite number of digits, and thus they cannot be represented \emph{exactly} using a finite representation.
 %
-These numbers have to be \emph{rounded} to fit the finite representation, and the gap between the real number and the rounded counter-part is named \emph{roundoff error}.
+These numbers have to be \emph{rounded} to fit the finite representation, and the gap between the real number and the rounded counterpart is named \emph{roundoff error}.
 
 %
 Computers store numbers in the form of a finite sequence of binary digits, which \emph{unavoidably} result in inaccurate computations.
@@ -53,6 +53,7 @@ We have to live with the fact the arithmetic in computers is imprecise.
 %
 On the other hand, we cannot simply ignore the the roundoff error stemming from the use of finite-precision arithmetic, because it can have catastrophic consequences on the correct execution of the program.
 %
+
 For example, consider the program in Figure~\ref{fig:while}.
 %
 \begin{figure}[tb!]
@@ -65,7 +66,6 @@ For example, consider the program in Figure~\ref{fig:while}.
 	\end{lstlisting}
 	\caption{A simple while loop with an imprecise accumulator showing the effect of roundoff errors.}\label{fig:while}
 \end{figure}
-
 %
 After an execution time of 10 seconds, the value of the variable t is 231047636, while the value of the variable n is roughly 23104763.55.
 %
