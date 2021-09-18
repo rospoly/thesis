@@ -1,3 +1,4 @@
+% !TeX root=./main.tex
 %%% -*-LaTeX-*-
 %%% This is the abstract for the thesis.
 %%% It is included in the top-level LaTeX file with
@@ -10,25 +11,24 @@
 %%%
 %%% The text of this file should be about 350 words or less.
 %
-Arithmetic in machines unavoidably introduce roundoff errors stemming from the use of finite-precision formats as a proxy for real (ideal) arithmetic. 
-%
-It is critical, in particular in safety-critical systems, not only to be aware of these errors but also to \emph{measure} them.
-%
 
-In \emph{numerical analysis} we study how to bound roundoff errors, and how they propagate through arithmetic expressions.
+Arithmetic in computers unavoidably introduces roundoff errors stemming from the use of finite-precision formats to represent real numbers.
 %
+It is essential, for example, in safety-critical applications, to not only be aware of the existence of these errors, but also to bound them using rigorous analysis techniques.
+%
+%which comes with several challenges. 
+%
+% The aim of this thesis is the rigorous analysis of roundoff errors in floating-point programs.
+% With which comes several challenges.
 
-There are several challenges in roundoff error analysis. 
 %
-First, the magnitude of the roundoff errors depends on the range of the input variables. 
+The magnitude of roundoff errors depends on the range of the input variables involved in the computations.
 %
-Moreover, it is not trivial to study how errors propagate in arbitrary expressions, in particular, those containing non-linearities or transcendental functions.
+Moreover, it is not trivial to study how errors propagate through computations, in particular, when dealing with non-linearities or transcendental functions.
 %
-Furthermore, extending roundoff error analysis to computer programs, rather than straight-line expressions, comes with the burden of dealing with programming constructs like conditionals and loops. 
+Furthermore, extending roundoff error analysis to computer programs, rather than straight-line expressions, comes with the burden of dealing with common programming constructs, like conditionals, where roundoff errors can alter the ideal execution of a program. 
 %
-Indeed, roundoff errors can alter the ideal control-flow of a program, thus an if-statement might evaluate to true in ideal arithmetic (in reals), but because of roundoff errors, the same if-statement evaluates to false in the machine. 
-%
-This phenomenon is called instability jump.
+Hence, an if-statement conditional might evaluate to true in reals, but because of roundoff errors, the same conditional may evaluate to false in the computer. 
 %
 %In other words, all the computations obey the worst-case error bound.
 %
@@ -39,12 +39,27 @@ This phenomenon is called instability jump.
 %At the same time, worst-case analysis could be very conservative, and it might overestimate the average (or typical) error by many orders of magnitude. 
 %
 
-In this thesis, we study how to bound roundoff errors in computer programs.
-
-First, we show how to use symbolic execution to reason about the mix of floating-point and real arithmetics, and we use the resulting prototype to detect instability jumps (control-flow instabilities) in computer programs.
+The contributions of this thesis are in the subject matter of the rigorous analysis of roundoff errors in floating-point programs, numbered in the following.
+%
+%In this thesis, we study how to bound roundoff errors in computer programs.
+First, we show how to combine automated theorem provers and error analysis techniques, to reason about the mix of floating-point and real arithmetics.
+%
+Then, we implemented these ideas and use the resulting prototype, to detect control-flow instabilities in computer programs.
 %
 
-Second, we show how to use rigorous worst-case error analysis to design robust micro-controllers, where we include roundoff errors in the set of all the disturbances affecting the system.
+%1  What we do?
+Second, we show how to embed rigorous worst-case error analysis techniques in the design of micro-controllers.
+%
+%2  Why?
+This allows us to sensibly reduce the memory foot-print of the controller, and address the roundoff error stemming from the low-cost floating-point precision format as a disturbance affecting the system, without impacting the stability of the system.
 %
 
-Finally, we show how to tackle the conservativeness of worst-case error analysis, by introducing our framework to compute average roundoff errors, rather than worst-case errors.
+%1-Limitations
+%2-What we did
+%3-Benefits
+%
+Finally, we show the limitations of worst-case error analysis when dealing with probabilistic computations. 
+%
+Hence, we introduce our rigorous probability-framework to compute average roundoff errors.
+%
+From an implementation perspective, we can provide to the user much more useful error bounds compared to the state-of-the-art worst-case errors.
