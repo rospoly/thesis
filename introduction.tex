@@ -3,81 +3,93 @@
 \chapter{Introduction}
 
 \setupuuchapterbib
-%Digital computing is ubiquitous in any field of science.
 %
-In many domains of science where computers are used, a software developer needs to implement the solution to a mathematical problem, or to develop a mathematical algorithm in the machine.
+In many domains of science and engineering where computers are used, a software developer needs to implement a real-valued mathematical formula or algorithm on a computer.
 %
-Unfortunately, the developer cannot simply transcribe one-to-one the algorithm 'from the paper' to the computer.
-%, using one of the many available programming languages.
+Unfortunately, the developer cannot simply transcribe the formula or algorithm \textquotesingle\textquotesingle from the paper\textquotesingle\textquotesingle \space into the computer using their programming language of choice.
 %
-%(e.g., Java, Python).
+The main reason is that computers calculate with finite resources, while in our ideal formula or algorithm, we compute in real arithmetic, and thus with a potentially infinite number of digits.
 %
-The main reason is the machine computes with finite resources, while in our ideal algorithm, we compute in real arithmetic, thus with infinite resources.
+In mathematics, there are quantities, like for example $\pi$ or $\sqrt{2}$ or any other irrational number, with an infinite number of digits, and thus they cannot be represented \emph{exactly} using a finite machine representation.
 %
-In mathematics, there are quantities, like for example $\pi$ or $\sqrt{2}$ or any other irrational number, with an infinite number of digits, and thus they cannot be represented \emph{exactly} using a finite representation.
+Similar argument holds for rational numbers with a large number of digits. I DONT LIKE USING LARGE.
 %
-These numbers have to be \emph{rounded} to fit the finite representation, and the gap between the real number and the rounded counterpart is named \emph{roundoff error}.
-
-%
-Computers store numbers in the form of a finite sequence of binary digits, which \emph{unavoidably} result in inaccurate computations.
-%
-The precision format (often called \emph{bit width} in the literature) is the length of the sequence used to represent numbers in the machine.
-%
-As a rule of thumb, the wider the precision format the more accurate are the computations.
-%
-At this point, a naive software developer might want to use a very wide bit width format to mimic real arithmetic. 
-%
-In other words, the inexperienced developer might decide to use a high-cost format, like for example 10000bits, as a proxy for real arithmetic.
+Such numbers have to be \emph{rounded} to fit the finite representation, and the gap between the real number and the rounded counterpart is called \emph{roundoff error}.
 %
 
-There are several reasons why this approach does not solve our problem in practice.
+%
+Computers store numbers in the form of a finite sequence of binary digits, which \emph{unavoidably} result in inaccurate real-valued computations.
+%
+The precision format (often called \emph{bit width} in the literature) is the length of the sequence used to represent numbers in computers.
+%
+As a rule of thumb, the wider the precision format the more accurate the computations are.
+%
+Hence, a naive software developer might want to use a high-bit-width format, like for example 10000 bits, to mimic real arithmetic as best as possible. 
+%
+However, this is typically not a viable option in practice.
 %
 
 First, computing using a finite precision format results in roundoff errors regardless of the bit width being used.
 %
-To put it simple, computing with 10000bits is not the same as computing with infinite bits.
+To put it simple, computing with 10000 bits is not the same as computing with infinite bits.
 %
-Indeed, finite-precision arithmetics does not respect the rules of real arithmetic done with 'pen and paper'.
+Indeed, finite-precision arithmetic does not respect the rules of real arithmetic done with \textquotesingle \textquotesingle pen and paper\textquotesingle\textquotesingle.
 %
-For example, the associativity law from real arithmetic fails in finite-precision where $(a*b)*c \ne a*(b*c)$.
+For example, the associativity law from real arithmetic fails in finite-precision where it is often the case that $(a*b)*c \ne a*(b*c)$.
 
-Second, high-cost formats are very expensive in terms of resources which include, among the others, energy-consumption, execution time, and hardware dimensions~\cite{fppower, lutnet}. 
+Second, high-bit-width formats are very expensive in terms of compute resources which include, among others, energy-consumption, execution time, and hardware dimensions~\cite{fppower, lutnet}. 
 %
-The usage of resources is critical on portable devices, like smart-phones or smart-watches, where the battery consumption is a primary concern.
+The usage of resources is critical on portable devices, like smart-phones or smart-watches, where the battery consumption is a primary concern, as well as supercomputers which consume large amounts of electrical power.
 %
+Moreover, when dealing with chips with size in the order of square millimeter, like micro-controllers, or where the available memory is very limited, in the order of a kilobyte, it is impossible to compute using high-bit-width formats.
 
-Moreover, when dealing with chips with size in the order of $mm^{2}$, like micro-controllers, or where the available memory is very limited, in the order of the KB, it is unimaginable to compute using high-cost formats.
 %
-
 We have to live with the fact the arithmetic in computers is imprecise.
 %
-On the other hand, we cannot simply ignore the the roundoff error stemming from the use of finite-precision arithmetic, because it can have catastrophic consequences on the correct execution of the program.
+On the other hand, we cannot simply ignore the roundoff error stemming from the use of finite-precision arithmetic, because it can have catastrophic consequences on the correct execution of the program.
 %
 
-For example, consider the program in Figure~\ref{fig:while}.
+For example, consider the C program in Figure~\ref{fig:while}.
 %
 \begin{figure}[tb!]
-	\begin{lstlisting}[frame=single, language=Python]
-  n=0
-  t=0
-  while True:
-    t = t + 1
-    n = n + 0.1
+	\begin{lstlisting}[frame=single, language=c]
+  float    f = 0;
+  double   d = 0;
+  int      n = 0;
+  int      limit=0;
+  scanf("%d", &limit);
+  for (int i = 0; i < limit; i++){
+    f = f + 0.1;
+    d = d + 0.1;
+    n = n + 1.0;
+  }
+  printf("%.50f\n", f);
+  printf("%.50f\n", d);
+  printf("%d\n", n);
 	\end{lstlisting}
-	\caption{A simple while loop with an imprecise accumulator showing the effect of roundoff errors.}\label{fig:while}
+	\caption{A simple C program with an imprecise accumulator showing the effect of roundoff errors.}\label{fig:while}
 \end{figure}
 %
-After an execution time of 10 seconds, the value of the variable t is 231047636, while the value of the variable n is roughly 23104763.55.
+The program consists of a float, a double, and an integer variables, together with an accumulator loop.
 %
-Ideally, the value of n should be 23104763.6.
+The number of iterations of the for loop is defined by the user through the variable limit.
 %
-There is an absolute roundoff error of 0.45 in this program.
-%
-The reason behind such error is the decimal constant 0.1 is not exactly representable in binary (see Figure~\ref{fig:zeropointone} for a detailed explanation). 
-%
-At every iteration of the while loop, there is an absolute roundoff error of approximately 5.55e-18, stemming from the double-precision floating-point representation of the decimal 0.1. 
+In the body of the loop, the float and double variables get incremented by the constant value 0.1, while the integer variable gets incremented by the integer value 1.
 %
 
+When we run our program with limit set to $10^6$, the value of the variable f after the for loop is 100958.34, and the value of d is 100000.0000013. The value of n matches exactly $10^6$.
+%
+Ideally, both the value of f and d should be $10^5$, thus there is an absolute error of 958.34 in float and 0.0000013 in double.
+%
+We run our program a second time with limit set to $10^8$. 
+%
+After the loop, the value of f and d is 2097152.0 and 9999999.98, thus there is an absolute error of 7902848.0 and 0.02, respectively. 
+%
+Again, the value of n matches exactly the limit.
+%
+The reason behind such errors is the decimal constant 0.1 is not exactly representable in binary (see Figure~\ref{fig:zeropointone} for a detailed explanation). 
+
+%
 From an implementation perspective, a similar issue was the cause of the Patriot Missile Failure~\cite{patriot}.
 %
 In more details, during the Gulf War in 1991, an American Patriot Missile Defense battery failed to intercept an incoming missile.
@@ -89,29 +101,20 @@ This number was then multiplied by the decimal constant 0.1, which we know is no
 The Patriot battery had been up and running for about 100 hours, and follow-up investigations showed the accumulated roundoff error corresponded to a travel time of 0.34 seconds for an incoming missile. 
 %
 In this amount of time, the incoming missile could travel for about half a mile.
-
-In numerical analysis, the branch of rigorous mathematics concerning the analysis of numerical algorithms to implement the solutions to mathematical problems, we study how roundoff errors propagate through computations and what is their effect on the correct execution of a computer program. 
-
 %
 
-%Moreover, the \emph{single} and \emph{double} floating-point formats, nowadays a standard-de-facto for what concern arithmetic in computers, are not accurate enough for many applications which, among the others, include climate modeling~\cite{climate}, thermodynamic simulation~\cite{termodynamics}, fluid dynamics~\cite{fluiddynamics, statsfluiddynamics}, computational geometry applications~\cite{javaerror}, computational number theory~\cite{futurescience} and differential equations~\cite{differentialequations}.
+Roundoff errors are everywhere, and they can have catastrophic consequences on the correct execution of a program.
 %
-%EXPAND ONE SENTENCE PER PAPER. KEEP ONLY 3. mATRIX MULTIPLICATION. POINT IN POLYGON (nasa PAPER). 
-%cONTROLLERS.
-%
-%The gap between the ideal and the finite-precision computations is called roundoff error, and can have catastrophic consequences on the correct execution of a program.
-%
-%It is then critical, not only to be aware of the existence of this gap, but also to bound the arithmetic difference between the two programs.
-%Numerical analysis is the branch of rigorous mathematics concerning the analysis of numerical algorithms used to implement the solutions to mathematical problems~\cite{higham2002accuracy}. 
+Therefore, this thesis aims to address the problem of the analysis of roundoff errors in floating-point computations.
 %
 \section{Computation Errors}
 %
 
-Finite-precision arithmetics, like floating-point, makes mathematic feasible in computer machines. 
+Finite-precision arithmetics, like floating-point, make mathematic feasible on computers. 
 %
-Regardless of the base used for the representation (usually base 2 in the machine), not all the numbers can be exactly represented using a finite number of bits.
+Regardless of the base used for the representation (base 2 nowadays), not all real numbers can be exactly represented using a finite number of bits.
 %
-For example, periodic and irrational numbers, like $0.1$ or $\pi$, have to be rounded to fit the format of the representation. 
+For example, periodic and irrational numbers, like $\frac{1}{3}$ and $\pi$, have to be rounded to fit the format of the representation. 
 %
 %The wider the format used for the representation, the smaller the gap between the real value and the value stored in the machine.
 %
@@ -120,14 +123,14 @@ For example, periodic and irrational numbers, like $0.1$ or $\pi$, have to be ro
 The most common ways to express roundoff errors in computers are the absolute error and the relative error~\cite{higham2002accuracy}.
 %
 
-Let $\widehat{x}$ be the finite precision representation of $x$, the absolute error consists in the arithmetic difference between the real computation and the finite-precision counterpart
+Let $\widehat{x}$ be the finite precision representation of $x$. Then, we define the absolute error as
 %
 \begin{align}
 Err_{abs}=|x-\widehat{x}|\label{absolute}
 \end{align}
 %
 
-while the relative-error is 
+while the relative error is
 %
 \begin{align}
 Err_{rel}=\frac{|x-\widehat{x}|}{x}\label{relative}
@@ -135,16 +138,16 @@ Err_{rel}=\frac{|x-\widehat{x}|}{x}\label{relative}
 %
 The magnitude of the absolute error depends on the magnitude of the computation.
 %
-In floating-point arithmetic, where numbers are equally spaced only within the same exponent range (between perfect powers of two), the relative-error is more of interest because it is scale independent.
+In floating-point arithmetic, where numbers are equally spaced only within the same exponent range (between perfect powers of two), the relative error is more of interest because it is scale independent.
 %
 In other words, as opposed to the absolute error, the magnitude of the relative error is independent from the magnitude of the computation itself.
 %
 
-On the other hand, anytime the real computation involves the value zero the relative error is undefined.
+%On the other hand, anytime the real computation involves the value zero the relative error is undefined.
 %
-In other words, when the denominator in Equation (\ref{relative}) includes the value zero, the fraction is undefined and thus it is a non-sense to talk about relative error.
+When the denominator in Equation (\ref{relative}) is zero, the fraction is undefined and thus the concept of the relative error is not applicable.
 %
-Investigating the roundoff error in a neighborhood of zero is of special importance in numerical analysis, mainly because of underflow or cancellation phenomena, thus in many practical applications we do want to study the roundoff error when the real computation does involve the value zero, which leave us with only the absolute error measure.
+Investigating the roundoff error in a neighborhood of zero is of special importance in numerical analysis, mainly because of underflow or cancellation phenomena. Thus, in many practical applications we do want to study the roundoff error when the real computation does involve the value zero, which leaves us with only the absolute error measure.
 %
 \section{Floating-Point Arithmetic}
 %
@@ -174,15 +177,16 @@ Investigating the roundoff error in a neighborhood of zero is of special importa
 	\label{fpformat}
 \end{table}
 %
-The floating-point system is a subset of the reals.
+The floating-point system, specified in the IEEE standard~\cite{ieee754}, is a subset of the reals.
 %
-A floating-point number consists in the triple \emph{sign}, \emph{mantissa} and \emph{exponent}.
+A floating-point number consists of the triple \emph{sign}, \emph{mantissa}, and \emph{exponent}.
 %
-The value of the triple is then computed using $-1^{sign}*mantissa*2^{exponent}$.
-The sign takes always one bit, with value 0 (positive) or 1 (negative), while the bit-width of the mantissa and the exponent are format dependent.
+We compute the value of the triple as $\;\text{-}1^{sign}*mantissa*2^{exponent}$.
+The sign is always one bit, with value 0 for positive or 1 for negative numbers, while the bit width of the mantissa and the exponent are format-dependent.
 %
 
-In Table \ref{fpformat}, we report the formats of the most common binary data-types in the IEEE-754 standard~\cite{ieee754}.
+%
+Table~\ref{fpformat}, reports the formats of the most common binary data-types in the IEEE-754 standard~\cite{ieee754}.
 %
 The standard defines, among the others, the widely used single and double data-types, with 32 and 64 bits formats, and several rounding modes.
 %
@@ -192,11 +196,11 @@ The default rounding mode in the standard, round-to-nearest, rounds the ideal re
 %
 In case of a tie, the floating-point value ending with zero is chosen.
 %
-From the point of view of numerical analysis, it is important to understand floating-point numbers are not equally distributed in the real line~\cite{every}.
+From the point of view of numerical analysis, it is important to understand that floating-point numbers are not evenly distributed in the real line~\cite{every}.
 %
 %There are the same number of floating-point numbers within two consecutive powers of two (see Figure~\ref{fig:line}).
 %
-Indeed, they are equally spaced only within two consecutive powers of two (see Figure~\ref{fig:line}).
+Indeed, they are evenly spaced only within two consecutive powers of two, as Figure~\ref{fig:line} illustrates.
 
 %
 \begin{figure}[tb!]
@@ -218,28 +222,33 @@ Indeed, they are equally spaced only within two consecutive powers of two (see F
 \end{figure}
 %
 
-Assuming the computation does not overflow or underflow, the standard model of arithmetic~\cite{every} states
+Assuming the computation does not overflow or underflow, the standard model of floating-point arithmetic~\cite{every} states
 %
 \begin{align}
-fp(x)=x(1+\delta)\;\;\;\text{where}\;\;\;|\delta|\leq\epsilon
+rnd(x)=x(1+e)\;\;\;\text{where}\;\;\;|e|\leq\epsilon
 \label{standard}
 \end{align}
 %
 
-where $fp(x)$ is the floating-point value of the real computation $x$, and the error $\delta$ is bounded by the so-called \emph{machine epsilon}, that is the upper-bound on the relative error.
+where $rnd(x)$ is the floating-point value of the real computation $x$, and the error $e$ is bounded by the so-called \emph{machine epsilon}, that is the upper-bound on the relative error.
 %
 The value of \emph{machine epsilon} is format dependent.
+%
+Table~\ref{fpformat}, reports the value of epsilon for each format in the standard.
 %
 For example, for single-precision $\epsilon=2^{-24}$, while for double-precision $\epsilon=2^{-53}$.
 %
 The standard model holds for normal numbers, which are the focus of this thesis.
 %
-
-In Figure~\ref{fig:zeropointone}, we report the format representation when the decimal value 0.1 is stored in a single precision (32bits) floating-point variable.
+Note that the model is slightly more complex in case we include also subnormals.
+%
+We omitted here since we do not support subnormals in the contributions of this thesis.
+%
+In Figure~\ref{fig:zeropointone}, we report the format representation when the decimal value 0.1 is stored in a single precision (32 bits) floating-point variable.
 %
 The decimal value $0.1$ becomes $0.0\overline{0011}$ in binary, which in normalized form is $1.1\overline{0011}*2^{\text{-}4}$.
 %
-This number is periodic, and thus it is not exactly representable in single - or any other finite - precision format.
+This number is periodic, and thus it is not exactly representable in single --- or any other finite --- precision format.
 %
 
 Let us discuss the details of the format representation.
@@ -250,13 +259,12 @@ The stored value for the exponent corresponds to the decimal 123, on the other h
 %
 This is because the stored exponent is shifted, with respect to the actual value, by the exponent bias. 
 %
-Thanks to the bias, the exponent is stored as unsigned number, as opposed to signed number, which makes easier an eventual comparison with other floating-point numbers in the future.
+Thanks to the bias, the exponent is stored as unsigned number, as opposed to signed number, which makes an eventual comparison with other floating-point numbers in the future easier.
 %
-The bias is computed as $2^{e\text{-}1}\text{-}1$, where $e$ is the number of bits for the exponent representation, and then, it is added to the actual value of the exponent.
+The bias is computed as $2^{exp\text{-}1}\text{-}1$, where $exp$ is the number of bits for the exponent representation, and then, it is added to the actual value of the exponent.
 %
 Thus, if we go back to our example, we have $\text{-}4+(2^{8\text{-}1})\text{-}1=123$.
 %
-
 Finally, the last part of the format is for the mantissa representation. 
 %
 For normal numbers, like 0.1 in our example, the IEEE standard assumes there is always an implicit leading bit, set to one, which is not actually stored in the representation.
@@ -264,25 +272,23 @@ For normal numbers, like 0.1 in our example, the IEEE standard assumes there is 
 %In other words, the actual value of the mantissa is obtained by placing a leading 1$1.$\emph{mantissa}.
 %
 This is called the hidden or implicit bit.
-
 %
 The actual value stored in single precision is $0.100000001490116119384765625$ which lead to a roundoff error of approximately $1.49e\text{-}9$.
 %
-
 The same number 0.1 evaluated in double precision is stored as \\ $0.1000000000000000055511151231257827021181583404541015625$ with a roundoff error of approximately $5.55e\text{-}18$.
 %
 \section{Roundoff Error Analysis}
 %
-The goal of roundoff error analysis is to measure the roundoff error stemming from the floating-point implementation of a program.
+The goal of roundoff error analysis is to measure the roundoff error stemming from the floating-point implementation of a real-valued program.
 %
-As we saw in the Patriot Missile catastrophe, roundoff errors are very small, but they propagate through computations and they can rapidly accumulate.
+As we saw in the Patriot Missile example, roundoff errors are very small, but they can be amplified through computations and they can rapidly accumulate.
 %
 %The goal of roundoff error analysis is to measure the approximation errors stemming from the floating-point implementation of a program.
 %
 %In this thesis, we focus on a so called rigorous (i.e. sound) roundoff error analysis. 
 %
 
-The approach we used to measure the rounding error in the program in Figure~\ref{fig:while}, assumes we have a reference implementation to compare with, in the literature often called the \emph{oracle}~\cite{blame}, holding the ideal value of the computation.
+The approach we used to measure the roundoff error in the program in Figure~\ref{fig:while}, assumes we have a reference implementation to compare with, in the literature often called the \emph{oracle}~\cite{blame}, holding the ideal value of the computation.
 %
 %In the program, the oracle is the integer variable t.
 % 
@@ -292,7 +298,7 @@ In real-world applications, typically the oracle is not part of the program itse
 %
 Indeed, the oracle is an exact copy of the original program, where all the floating-point variables (e.g., single or double) have been replace by custom multiple-precision floating-point variables~\cite{mpfr}.
 %
-In the latter, the developer can specify the bit width of the format for each variable (e.g., 1000bits) and use this high-precision program as a proxy for the ideal (infinite precision) implementation.
+In the latter, the developer can specify the bit width of the format for each variable (e.g., 1000 bits) and use this high-precision program as a proxy for the ideal (infinite precision) implementation.
 %
 At this point, we have two copies of the same program, one is the implementation, and the other one is the oracle. 
 %
@@ -364,23 +370,23 @@ Our thesis statement is the following:
 
 %
 \emph{
+Precise rigorous error analysis of computer programs with conditionals, probabilistic programs, or controllers, can be achieved bu judiciously combining error analysis, automated theorem proving, and probabilistic reasoning techniques.
 %The usability of rigorous roundoff error analysis is minimal in real-world scenarios.
 %in practise
 %
 %Out of the many existing analyzers, only few of them have primordial support for common programming constructs, like conditional statements, while none of them can deal with unbounded input variables nor probability distributions.
 %	
-In this thesis, we combine rigorous roundoff error analysis and symbolic execution to precisely reason about control-flow instabilities in computer programs.
+%In this thesis, we combine rigorous roundoff error analysis and symbolic execution to precisely reason about control-flow instabilities in computer programs.
 %
 %We use this resulting prototype to verify real-word applications, specifically micro-controllers, and safety-critical software in self-flying aircrafts. 
 %
-Moreover, we tackle the limitations of worst-case roundoff error analysis, that is to say dealing with probability distributions and unbounded input variables, by introducing our probabilistic framework to compute average roundoff errors as opposed to the state-of-the-art worst-case roundoff errors.
+%Moreover, we tackle the limitations of worst-case roundoff error analysis, that is to say dealing with probability distributions and unbounded input variables, by introducing our probabilistic framework to compute average roundoff errors as opposed to the state-of-the-art worst-case roundoff errors.
 %
 %, thus transitioning from worst-case roundoff errors to average roundoff errors.
 %
 %This allows us to quantify very precisely the idea of probabilistic reliability of the low-precision program.
 %
-\\
-In the next section, I describe what my contributions are.
+%In the next section, I describe what my contributions are.
 }
 
 %\emph{\\\\In this thesis we show how to improve the stability of computer programs by encoding the mix of real and floating-point formulas in SMT solvers.
@@ -513,7 +519,7 @@ In Figure \ref{fig:ifreal}, we plot the instability region for our if-statement.
 %
 The width of the instability region is determined by the roundoff error $\epsilon$, and in our example, $\epsilon$ is the roundoff error accumulated by $x$. From Equation (\ref{standard}), we know the roundoff error is proportional to $x*(2^{-p})$ where p is the bit-width of the floating-point format, and assumes maximal magnitude when $x=10$.  
 %
-In double precision floating-point arithmetic (64-bits), $\epsilon$ equals $1.11e^{-15}$.
+In double precision floating-point arithmetic (64 bits), $\epsilon$ equals $1.11e^{-15}$.
 %
 By using $\epsilon$ we can modify our program and make it \emph{robust} to roundoff error.
 %
