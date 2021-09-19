@@ -9,12 +9,12 @@ In many applications, floating-point arithmetic is perfectly adequate, we use it
 %
 On the other hand, we cannot simply ignore roundoff errors stemming from floating-point computations, regardless of how rare or small they might be.
 %
-Hence, not only we have to be aware of these errors, but also, in applications like for example self-driving vehicles, there is the need to use rigorous --- that is to say sound --- techniques to bound roundoff errors, where we have an analytical model for the computation, thus we can provide guarantees about the error bounds.
+Hence, not only we have to be aware of these errors, but also, in applications like for example self-driving vehicles, there is the need to use rigorous techniques to bound roundoff errors, that is to say we have an analytical model of the computation, and thus we can provide guarantees about the error bounds.
 %
 
 In this thesis, we described several contributions to the rigorous roundoff error analysis of floating-point programs.
 %
-Moreover, we tested our tools on several case-studies from real-world applications.
+All the tools described in this thesis have been tested on several case-studies from real-world applications.
 %
 
 First, we introduced FPRoCK a prototype of an SMT solver able to precisely reason about control-flow instabilities stemming from the use of floating-point arithmetic in computers.
@@ -32,21 +32,21 @@ Due to its modularity, FPRoCK can be used as a back-end solver in any existing s
 
 Second, we introduce our framework for the design of robust micro-controllers, where we show how to embed the state-of-the-art for worst-case roundoff error analysis in the design process of micro-controllers.
 %
-Indeed, at design time, we can include the roundoff error stemming from the finite-precision implementation of the controller in the set of all the disturbances affecting the system (e.g. friction, wind).
+Indeed, at design time, we include the roundoff error stemming from the finite-precision implementation of the controller, in the set of all the disturbances affecting the system (e.g. friction, wind).
 %
 Using our framework, the designer can precisely quantify the trade-off between the tolerance of the controller towards external disturbance which, among the others, includes roundoff errors, and the memory footprint of the micro-controller, in a context where typically the available memory is very limited (e.g. 32KB or 64KB).
 %
-Clearly, an high-precision implementation of the controller minimizes the roundoff error, while dramatically increase the memory requirements. 
+Clearly, an high-precision implementation of the controller minimizes the roundoff error, while dramatically increases the memory requirements. 
 %
 
-Finally, we introduced our framework for computing rigorous probabilistic roundoff errors where, as opposed to the state-of-the-art, the roundoff error bounds hold for the \emph{average} computation rather than the \emph{worst-case} computation.
+Finally, we introduced our framework for computing rigorous probabilistic roundoff errors where, as opposed to the state-of-the-art, the roundoff error bound holds for the \emph{average} computation rather than the \emph{worst-case} one.
 %
 The intuition behind our approach is roundoff errors do not always achieve the worst-case magnitude. 
 %
 
-The main advantage in using average roundoff errors, as opposed to the worst-case counterparts, is we can trade some accuracy in the computations in favor of resource savings, like energy consumption and execution time.
+The main advantage in using average roundoff errors, as opposed to the worst-case counterpart, is we can trade some accuracy in the computations in favor of resource savings, like energy consumption and execution time.
 %
 This is precious not only on devices where the usage of the battery, and the dimension of the hardware, are primary concerns, like smart-phones and smart-watches, but also on all the applications where the worst-case approach is prohibitive from an implementation prospective, because it requires the use of very high-bit-width formats. 
 %
-In our framework we can precisely quantify which precision format is best suited for the average computation, thus we can ignore very rare corner-cases (aka outliers) and ultimately save resources.
+In our framework we can precisely quantify which precision format is best suited for the average computation, thus we can ignore very rare corner-cases (aka outliers), and ultimately save resources.
 %
