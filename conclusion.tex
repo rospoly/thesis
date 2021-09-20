@@ -30,11 +30,11 @@ Moreover, in case the instability exists, we can get a model triggering the inst
 Due to its modularity, FPRoCK can be used as a back-end solver in any existing static analyzers to verify instabilities in conditionals, or alternatively, as a stand-alone tool to mix real and floating-point formulas in the same query.
 %
 
-Second, we introduce our framework for the design of robust micro-controllers, where we show how to embed the state-of-the-art for worst-case roundoff error analysis in the design process of micro-controllers.
+Second, we introduced our framework for the design of robust micro-controllers, where we show how to embed the state-of-the-art for worst-case roundoff error analysis in the design process of micro-controllers.
 %
-Indeed, at design time, we include the roundoff error stemming from the finite-precision implementation of the controller, in the set of all the disturbances affecting the system (e.g. friction, wind).
+Indeed, at design time, we can include the roundoff error stemming from the finite-precision implementation of the controller, in the set of all the disturbances affecting the system (e.g. friction, wind).
 %
-Using our framework, the designer can precisely quantify the trade-off between the tolerance of the controller towards external disturbance which, among the others, includes roundoff errors, and the memory footprint of the micro-controller, in a context where typically the available memory is very limited (e.g. 32KB or 64KB).
+Using our framework, a designer can precisely quantify the trade-off between the tolerance of the controller towards external disturbance which, among the others, includes roundoff errors, and the memory footprint of the micro-controller, in a context where typically the available memory is very limited (e.g. 32KB or 64KB).
 %
 Clearly, an high-precision implementation of the controller minimizes the roundoff error, while dramatically increases the memory requirements. 
 %

@@ -281,14 +281,14 @@ The same number 0.1 evaluated in double precision is stored as \\ $0.10000000000
 %
 The goal of roundoff error analysis is to measure the roundoff error stemming from the floating-point implementation of a real-valued program.
 %
-As we saw in the Patriot Missile example, roundoff errors are very small, but they can be amplified through computations and they can rapidly accumulate.
+As we saw in the Patriot Missile example, roundoff errors are very small, but they propagate through computations and they can accumulate rapidly.
 %
 %The goal of roundoff error analysis is to measure the approximation errors stemming from the floating-point implementation of a program.
 %
 %In this thesis, we focus on a so called rigorous (i.e. sound) roundoff error analysis. 
 %
 
-The approach we used to measure the roundoff error in the program in Figure~\ref{fig:while}, assumes we have a reference implementation to compare with, in the literature often called the \emph{oracle}~\cite{blame}, holding the ideal value of the computation.
+The approach we used to measure the roundoff error for the program in Figure~\ref{fig:while}, assumes we have a reference implementation, or ground truth, to compare with, in the literature often called the \emph{oracle}~\cite{blame}, holding the correct value of the computation.
 %
 %In the program, the oracle is the integer variable t.
 % 
@@ -296,15 +296,15 @@ The approach we used to measure the roundoff error in the program in Figure~\ref
 
 In real-world applications, typically the oracle is not part of the program itself, but rather, it has to be created by the developer as a separate entity.
 %
-Indeed, the oracle is an exact copy of the original program, where all the floating-point variables (e.g., single or double) have been replace by custom multiple-precision floating-point variables~\cite{mpfr}.
+Indeed, the oracle consists in an exact copy of the original program, where all the floating-point variables have been replaced by custom multiple-precision floating-point variables~\cite{mpfr}.
 %
 In the latter, the developer can specify the bit width of the format for each variable (e.g., 1000 bits) and use this high-precision program as a proxy for the ideal (infinite precision) implementation.
 %
-At this point, we have two copies of the same program, one is the implementation, and the other one is the oracle. 
+At this point, we have two copies of the same program, one is the implementation, and the other is the oracle. 
 %
 The idea is to run both the implementation and the oracle with the same input values, and ultimately compute the arithmetic difference between the two outputs. 
 %
-This is going to be the forward roundoff error of the program. 
+This is going to be the forward absolute roundoff error for the program. 
 %
 
 While the oracle based approach has been used in several tools~\cite{landau2014guide, kahan1996improbability, atomic, blame, herbie}, it suffers from several limitations.
@@ -313,7 +313,7 @@ As we already mentioned, when we use a finite number of bits to perform arithmet
 %
 %In other words, using arbitrary wide precision formats (e.g., 1000bits), do not match exactly real arithmetic.
 %
-Moreover, implementing a high quality high-precision oracle requires much expertise, and thus is expensive in terms of development cost~\cite{atomic}.
+Moreover, implementing a high quality high-bit-width oracle requires much expertise, and thus is expensive in terms of development cost~\cite{atomic}.
 %
 Finally, using Monte Carlo sampling to exhaustively search the input space results in non-rigorous (i.e. unsound) error bounds~\cite{glasserman2013monte, parker2000monte}.
 %
@@ -335,8 +335,7 @@ For example, when we say 95\% of the computations obey a certain roundoff error 
 %
 A special case of rigorous roundoff error analysis is the so called \emph{worst-case} error analysis, which implies the roundoff error bound holds for any input value.
 %
-
-Intuitively, in worst-case analysis we assume the error $\delta$ in Equation (\ref{standard}) has the worst magnitude possible. In other words, we make a conservative choice by setting $\delta=\epsilon$.
+Intuitively, in worst-case analysis we assume the error $e$ in Equation (\ref{standard}) has the worst magnitude possible. In other words, we make a conservative choice by setting $e=\epsilon$.
 %
 Clearly, this conservativeness makes our analysis rigorous in the sense there cannot be any outliers.
 %
@@ -345,23 +344,21 @@ In the last decade, many successful techniques have been used to implement worst
 %
 %Here, the keyword \emph{worst-case} stands for the property of the error bound to hold for \emph{any} input value.
 %
-The soundness of worst-case error bounds is precious for all those applications, like safety-critical ones~\cite{guardstable, cpralg}, where from the context, we can sense the need to bound the error of any possible computation, included corner-cases or very rare outliers.
+The soundness of worst-case error bounds is precious for all those applications, like safety-critical ones~\cite{guardstable, cpralg}, where from the context, we can sense the need to bound the roundoff error for any possible computation, included corner-cases or very rare outliers.
 %
 Intuitively, no one would feel comfortable traveling with autonomous flying aircrafts which are safe \emph{on average}.
 
 %
-From an implementation perspective, the main advantage of worst-case analysis is we only need to know the range of the inputs, rather than how the inputs are distributed in such ranges. 
+From an implementation perspective, the main advantage of worst-case analysis is we only need to know the range of the input variables, rather than how they are distributed in such ranges. 
 %
-Indeed, the resulting error bounds hold for any input value, regardless of the distribution.
+Indeed, the worst-case error bound holds for any input value, regardless of the distribution.
 %
 %This is why the state-of-the-art refers to this non-deterministic model as \emph{worst-case}, because it does not account for the distribution of the inputs.
 %
 This property is priceless, in particular, when the input distributions are unknown.
 %
-
 On the other hand, in Section \ref{sec:prob}, we discuss how \emph{ignoring} the distribution of the inputs becomes a limitation when \emph{we do know} how the inputs are distributed.
 %
-
 Finally, a strict requirement of worst-case analysis is the input variables must be bounded  in a finite range. This is because, in the worst-case, unbounded variables lead to unbounded roundoff errors, which in practice, are of little use from an implementation perspective.
 %
 \section{Thesis Statement}
@@ -370,7 +367,7 @@ Our thesis statement is the following:
 
 %
 \emph{
-Precise rigorous error analysis of computer programs with conditionals, probabilistic programs, or controllers, can be achieved bu judiciously combining error analysis, automated theorem proving, and probabilistic reasoning techniques.
+Precise rigorous roundoff error analysis of computer programs with conditionals, probabilistic programs, or micro-controllers, can be achieved by judiciously combining error analysis, automated theorem proving, and probabilistic reasoning techniques.
 %The usability of rigorous roundoff error analysis is minimal in real-world scenarios.
 %in practise
 %
@@ -405,16 +402,16 @@ This thesis present techniques for rigorous numerical analysis of computer progr
 %
 %Out of the many existing techniques , only few of them have primordial support for common programming constructs, like conditional statements, while none of them can deal with unbounded input variables nor probability distributions.
 %
-In the next sections, we introduce one-by-one each of the contributions included in this dissertation.
+In the following sections, we introduce one-by-one each of the contributions included in this dissertation.
 %
 
 In particular, in the next Section~\ref{conditionals} we show, with the help of an example, the need to precisely reason about roundoff errors in conditional statements, as opposed to the conservative approach used in the state-of-the-art.
 %
 
-In Section~\ref{controllers}, we discuss how we embedded roundoff error analysis in the design process of Model Predictive Controllers (MPC).
+In Section~\ref{controllers}, we discuss how to embed rigorous roundoff error analysis in the design process of Model Predictive Controllers (MPC).
 %
 
-Finally, in Section~\ref{sec:prob} we show, with the help of a small example, the limitations of worst-case error analysis and we discuss the need for average roundoff errors as opposed to the state-of-the-art worst-case roundoff errors.
+Finally, in Section~\ref{sec:prob} we discuss, with the help of a small example, the limitations of worst-case error analysis and we show the need for average roundoff errors as opposed to the state-of-the-art worst-case roundoff errors.
 %
 %in practise
 %
@@ -471,23 +468,23 @@ Finally, in Section~\ref{sec:prob} we show, with the help of a small example, th
 \subsection{Handling Conditionals}
 \label{conditionals}
 %
-While roundoff error analysis has been successfully used to bound straight-line expressions, less attention has been given to other common programming constructs, like conditionals.
+While roundoff error analysis has been successfully used to bound roundoff errors in straight-line expressions, less attention has been given to common programming constructs, like conditionals.
 %
-In this section we describe how the state-of-the-art for rigorous roundoff error analysis handle conditional statements~\cite{precisa, fluctuat} and what are the limitations of their approach.
+In this section, we describe how the state-of-the-art for rigorous roundoff error analysis handles conditional statements~\cite{precisa, fluctuat} and what are the limitations of their approaches.
 %
 
-In numerical analysis, it is critical to deal with conditionals because the control-flow of a computer program evaluated in floating-point arithmetic might differ from the ideal flow in real arithmetic.
+In error analysis, it is critical to deal with conditionals because the control-flow of a computer program evaluated in floating-point arithmetic might diverge from the ideal-flow, in the real-value program.
 %
 %For example, the condition of an if-statements evaluates to true in real arithmetic, but because of finite-precision arithmetic, the same condition evaluates to false.
 %
 This is a so called \emph{instability jump}~\cite{satire} or \emph{control-flow instability}~\cite{unstable}.
 %
-The absolute error stemming from instabilities can be measured as the arithmetic difference between the expressions in the \emph{then} and the \emph{else} branches.
+The absolute error stemming from instability jumps is computed as the arithmetic difference between the expressions in the \emph{then} and the \emph{else} branches.
 %
 %In general, while the roundoff error of straight line expressions is in the order of \emph{machine epsilon}, an instability jump can be in the order of the units, which typically is many orders of magnitude wider than the former.
 %
 
-Consider the if-statement reported in Figure~\ref{fig:ifstatement}, 
+Consider the Python program reported in Figure~\ref{fig:ifstatement}.
 %
 \begin{figure}[tb!]
 	\begin{lstlisting}[frame=single, language=Python, escapeinside={(*}{*)}]
@@ -500,7 +497,7 @@ Consider the if-statement reported in Figure~\ref{fig:ifstatement},
 	\caption{A simple if-statement we use to study instabilities.}\label{fig:ifstatement}
 \end{figure}
 %
-where we have the variable \emph{x}, bounded in the interval [0, 10], flowing into the condition of an if-statement.
+We have the variable \emph{x}, bounded in the interval [0, 10], flowing into the conditional of an if-statement.
 %The \emph{then} branch returns $10$, while the else branch returns $-10$.
 %
 
@@ -511,17 +508,18 @@ where we have the variable \emph{x}, bounded in the interval [0, 10], flowing in
 		&
 		\includegraphics[width=0.5\textwidth]{pic/iffp.png}
 	\end{tabular}
-	\caption{The evaluation of a simple if-statement in case of real arithmetic (left) and the floating-point counterpart (right). In red you can see the instability region, where $\epsilon$ is the roundoff error accumulated by the variable X.}
+	\caption{The evaluation of a simple if-statement in case of real arithmetic (left) and the floating-point counterpart (right). You can see the instability region (in red), where $\epsilon$ is the roundoff error accumulated by the variable X.}
 	\label{fig:ifreal}
 \end{figure}
 
-In Figure \ref{fig:ifreal}, we plot the instability region for our if-statement. Clearly, when we compute in real arithmetic we do not have instabilities. On the other hand, in floating-point computations, we can identify the \emph{instability region} as that part of the input domain from where instabilities might be triggered.
+In Figure \ref{fig:ifreal}, we plot the instability region for our program. Clearly, when we compute in real arithmetic we do not have instabilities. On the other hand, in floating-point computations, we can identify the \emph{instability region} as that part of the input domain from where instabilities might be triggered.
 %
-The width of the instability region is determined by the roundoff error $\epsilon$, and in our example, $\epsilon$ is the roundoff error accumulated by $x$. From Equation (\ref{standard}), we know the roundoff error is proportional to $x*(2^{-p})$ where p is the bit-width of the floating-point format, and assumes maximal magnitude when $x=10$.  
+The width of the instability region is determined by the roundoff error $\epsilon$ and, in our example, $\epsilon$ is the roundoff error accumulated by $x$. From Equation (\ref{standard}), we know the roundoff error is proportional to $x*e$, hence in the worst-case formulation we have $max(x*e) = x*\epsilon = x*(2^{-p})$, where p is the bit width of the floating-point format, and assumes maximal magnitude when $x=10$.  
 %
-In double precision floating-point arithmetic (64 bits), $\epsilon$ equals $1.11e^{-15}$.
+In double precision floating-point arithmetic (64 bits), we get $\epsilon$ equals $1.11e^{-15}$.
 %
-By using $\epsilon$ we can modify our program and make it \emph{robust} to roundoff error.
+
+We can use $\epsilon$ to make our program \emph{robust} to roundoff error.
 %
 \begin{figure}[tb!]
 	\begin{lstlisting}[frame=single, language=Python, escapeinside={(*}{*)}]
@@ -536,10 +534,9 @@ By using $\epsilon$ we can modify our program and make it \emph{robust} to round
 	\caption{A \emph{robust} if-statement where the real execution and the floating-point counterpart always coincide.}\label{fig:ifrobust}
 \end{figure}
 %
-
-In Figure~\ref{fig:ifrobust} we report the robust program, where the ideal and the floating-point executions always coincide. 
+In Figure~\ref{fig:ifrobust}, we report the robust program, where the real-valued program and the floating-point counterpart always coincide. 
 %
-In other words, when the real execution returns the value 10 also the floating-point counterpart returns 10. Similar argument holds for the return value -10.
+In other words, when the real program returns the value 10 also the floating-point counterpart returns 10. Similar argument holds for the return value -10.
 %
 Clearly, in the robust program, we need to consider the case we land in the instability region. Thus, we make the arbitrary decision to return the value $0$ to handle this situation.
 
@@ -548,10 +545,10 @@ Clearly, in the robust program, we need to consider the case we land in the inst
 
 Let us now slightly modify the range of the input variable x in our example. 
 %
-In particular, we set the range of x to the closed interval $[0, 10^{300}]$, and with the same reasoning used so far, we compute the new width of the instability region and we get $\epsilon=7.43e^{283}$.
+In particular, we set the range of x to the interval $[0, 10^{300}]$, and with the same reasoning used so far, we compute the width of the instability region and we get $\epsilon=7.43e^{283}$.
 %
 
-This new size for the instability region is almost as wide as the max-representable value in double-precision, and of little use from an implementation perspective. 
+The width of the instability region is almost as wide as the max-representable value in double-precision, and of little use from an implementation perspective. 
 %
 Clearly, with this new value for $\epsilon$, the approach used so far to make the program \emph{robust} to roundoff errors, is extremely conservative from an implementation perspective, because almost all the computations, both the stable and the unstable ones, are going to land in the instability region.
 %
@@ -560,14 +557,14 @@ Moreover, the return value -10 becomes unreachable, meaning the robust program i
 %Assuming \emph{any} computation landing in the instability region leads to an instability jump is of little use from an implementation perspective.
 %
 
-This shows how critical it is to precisely reason about roundoff errors in conditionals.
+This shows the need to \emph{precisely} reason about roundoff errors in conditionals, rather than using conservative techniques.
 %
 \subsection{Application to Controller Synthesis}
 \label{controllers}
 %
 Floating-point numerical algorithms are essential to many applications and it is often desirable to compute their results as accurately as possible.
 %
-Control system designers using existing toolboxes, for example in MATLAB, use the well-known floating-point formats, single and double, as a proxy for real (ideal) arithmetic. 
+Control-system designers using existing toolboxes, for example in MATLAB, use the well-known floating-point formats, single or double, as a proxy for real arithmetic. 
 %
 Indeed, at design time, the main concerns are closed-loop performance and the stability of the system.
 %
@@ -587,24 +584,24 @@ The main drawback is that low precision arithmetics imply a greater tolerance to
 
 The natural question then would be whether we can \emph{implement} the \emph{ideal} controller (from MATLAB) using low-precision formats, while still guarantee the stability of the system.
 %
-In other words, in case we implement a controller using low-precision formats, would the controller still be able to govern the system for which it has been designed for.
+In other words, in case we implement the controller using low-precision formats, would the controller still be able to govern the system for which it has been designed for.
 %
 
-In our framework, we embed the state-of-the-art for worst-case error analysis in the design of linear time invariant Model Predictive Controllers (MPC).
+In our framework, we embed the state-of-the-art for worst-case roundoff error analysis in the design of linear time invariant(LTI) Model Predictive Controllers (MPC)~\cite{mpc}.
 %
-In our approach, the roundoff error stemming from the finite-precision implementation of the controller is measured using static-analysis, and then embedded in the set of all the disturbances affecting the system.
+In our approach, the roundoff error stemming from the finite-precision implementation of the controller is first measured using static-analysis, and then embedded in the set of all the disturbances affecting the system.
 %
-Typically, a controller is designed to handle various sources of external disturbances, like for example, friction or wind resistance.
+Typically, a controller is designed to govern a system which is subject to various sources of external disturbances, like for example, friction, wind resistance, and noisy sensors.
 %
-At design time, the designer of the controller estimates the total disturbance $\Delta$ the controller has to tolerate.
+At design time, the designer of the controller, estimates the total disturbance $\Delta$ the controller has to manage.
 %
-Since $\Delta$ accounts for any source of disturbance affecting the system, it is also called the "disturbance budget".
+Since $\Delta$ accounts for various sources of disturbance affecting the system, it is also called the "disturbance budget".
 %
-Our idea consists in including the roundoff error stemming from the finite-precision implementation of the controller as an additional disturbance affecting the system.
+%Our idea consists in including the roundoff error stemming from the finite-precision implementation of the controller as an additional disturbance affecting the system.
 %
-Thus, our is an iterative based approach, where we reduce the bit-width for the arithmetic and the memory foot-print of the controller, until the roundoff error violates the budget delta.
+Our is an iterative based approach, where we reduce the bit-width for both the arithmetic and the memory foot-print of the controller, until the roundoff error violates the budget delta.
 %
-This is going to be the minimal lowest-cost controller which does not violate the budget delta, and thus the stability of the system is not affected.
+This is going to be the minimal lowest-cost controller which obey to the budget delta, and thus the stability of the system is not affected.
 %
 %Furthermore, we use the so called mixed-precision tuning to further reduce the precision of the co, using the assumption that there might be only certain area that have to be computed precisely and not all of them.
 
@@ -621,14 +618,13 @@ This is going to be the minimal lowest-cost controller which does not violate th
 \subsection{Probabilistic Error Analysis}
 \label{sec:prob}
 %
-In this section, we describe what are the limitations of worst-case roundoff error analysis, and we introduce our framework to compute probabilistic (or conditional) roundoff error bounds.
+In this section, we describe what the limitations of worst-case roundoff error analysis are, and we introduce our framework to compute probabilistic (or conditional) roundoff error bounds.
 %
-As we mentioned earlier, worst-case analysis could provide conservative error bounds in case we know \emph{a priori} the distribution of the inputs. 
+As we mentioned previously, worst-case analysis could provide conservative error bounds in case we know \emph{a priori} the distribution of the input variables. 
 %
 %Furthermore, we must bound the input variables to prevent overflow and thus unbounded roundoff errors.
 %
-
-In our probabilistic framework, we use probabilistic range analysis to compute conditional roundoff errors where, as opposed to the worst-case approach, the roundoff error is computed with respect to the computation landing in a given confidence interval of interest (e.g., 85\%,99\%, 99.9999\%).
+In our probabilistic framework, we use probabilistic range analysis to compute conditional roundoff errors where, as opposed to the worst-case approach, the roundoff error is estimated with respect to the computation landing in a given confidence interval of interest (e.g., 85\%,99\%, 99.9999\%).
 %
 Note, in the worst-case approach, there is an implicit 100\% confidence interval, thus worst-case analysis and 100\% confidence interval are synonyms.
 %
@@ -638,18 +634,18 @@ Let us discuss the limitations of worst-case analysis on the program reported in
 %
 \begin{figure}[tb!]
 	\begin{lstlisting}[frame=single, language=Python]
-	if c(x)>constant:
+	if x>constant:
 	  return 1/0 #ERROR
 	else:
 	  return 0 #OK
 	\end{lstlisting}
-	\caption{A simple if-statement we use to study the conservativeness of worst-case analysis. The \emph{then} branch leads to an error while the \emph{else} branch returns correctly.}
+	\caption{A simple if-statement we use to study the conservativeness of worst-case analysis. The \emph{then} branch leads to an error, while the \emph{else} branch returns correctly.}
 	\label{fig:prob}
 \end{figure}
 %
-We consider \lstinline{c(x)=x}, and we assume the variable $x\sim Normal(0,1)$ is distributed accordingly to a standard normal with parameters $\mu = 0$ and $\sigma = 1$.
+We assume the variable $x\sim Normal(0,1)$ is distributed accordingly to a standard normal with parameters $\mu = 0$ and $\sigma = 1$.
 %
-At line 1, we compare c(x) with a constant value.
+At line 1, we compare $x$ with a constant value.
 %
 In case the comparison evaluates to true, the \emph{then} branch leads to an error (division by zero), otherwise, the \emph{else} branch returns correctly.
 %
@@ -658,23 +654,19 @@ In case the comparison evaluates to true, the \emph{then} branch leads to an err
 %
 In other words, the worst-case analysis is going to terminate as soon as a potential division by zero is detected.
 %
-This is because, in case the error at line 2 is triggered the program would crash, and thus, it would not make sense to reason about ranges or roundoff errors.
-
+This is because, in case the error at line 2 is triggered at runtime, the program would crash, and thus, it would not make sense to reason about ranges or roundoff errors.
 %
-A developer using such worst-case tools has no information about \emph{how rare} might be the condition leading to such crash. 
+A developer using such worst-case tools do not get any information about \emph{how rare} might be the condition leading to such crash.
 %
 
 In our probabilistic framework, we know the standard normal distribution concentrates more than 99\% of probability mass in the interval $[−3, 3]$, and less than 0.5\% of mass spreads in the interval $[3, \infty]$.
 %
-If we go back to our example, in case we set the constant at line 1 equal to 1000, a developer using our combined analysis, might not be interested in the very rare outliers triggering the error at line 2.
+If we go back to our example, in case we set the constant at line 1 equal to 1000, a developer using our combined analysis, might not be interested in the very rare outliers leading to the error at line 2.
 %
-Thus, we can run our probabilistic analysis with a \emph{confidence interval} set, for example, to 99\%.
+Thus, we can run our probabilistic analysis with a \emph{confidence interval} set, for example, to 99\%, and not only the program terminates correctly (return 0), but our conditional error bound is $\epsilon = x*(2^{-p}) = 3*(2^{-p})$ which in double precision leads to $\epsilon = 3.33e^{-16}$.
 %
-%Clearly, other confidence intervals of interest could be used. 
+Note how, in case we run worst-case analysis, thus without bounding the variable $x$, we would get an infinite error bound, which is of little use from an implementation perspective. 
 %
-With this setting, not only the program terminates correctly (return 0), but our conditional error bound for $c(x)=x$ is $\epsilon = 3*(2^{-p})$.
-%
-
 In general, by studying the \emph{average} execution of a computer program we can prune away very rare corner cases and provide meaningful directions to the developer.
 %
 \newpage
