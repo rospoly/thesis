@@ -14,7 +14,10 @@
 
 Arithmetic in computers unavoidably introduces roundoff errors stemming from the use of finite-precision formats to represent real numbers.
 %
-It is essential, for example in safety-critical applications, not only to be aware of the existence of these errors, but also to bound them using rigorous analysis techniques.
+It is essential, for example in safety-critical applications, not only to be aware of the existence of these errors, but also to be able to analyze them.
+
+%
+%bound them using rigorous analysis techniques.
 %
 %which comes with several challenges. 
 %
@@ -39,26 +42,19 @@ Hence, an if-statement conditional might evaluate to true in reals, but because 
 %At the same time, worst-case analysis could be very conservative, and it might overestimate the average (or typical) error by many orders of magnitude. 
 %
 
-The contributions of this thesis are in the subject matter of the rigorous analysis of roundoff errors in floating-point programs.
-%, numbered in the following.
+The main contributions of this thesis improve the state-of-the-art in the area of rigorous analysis of roundoff errors in floating-point programs.
 %
-%In this thesis, we study how to bound roundoff errors in computer programs.
-First, we show how to combine automated theorem provers and error analysis techniques, to reason about the mix of floating-point and real arithmetics.
+First, we show how to combine automated theorem provers and error analysis techniques to reason about the mix of floating-point and real arithmetics.
 %
-Then, we implemented these ideas and use the resulting prototype to detect control-flow instabilities in computer programs.
+We use the resulting prototype to detect control-flow instabilities in floating-point programs.
 %
 %1  What we do?
 Second, we show how to embed rigorous worst-case error analysis techniques in the design of micro-controllers.
 %
-%2  Why?
-This allows us to sensibly reduce the memory foot-print of the controller, and address the roundoff error stemming from the low-cost floating-point precision format as a disturbance affecting the system, without impacting the stability of the same.
-%
-%1-Limitations
-%2-What we did
-%3-Benefits
+This allows us to sensibly reduce the memory foot-print of the controller, and address the roundoff error stemming from the low-cost floating-point precision format as a disturbance affecting the system, without impacting the stability of the system.
 %
 Finally, we show the limitations of worst-case error analysis when dealing with probabilistic computations. 
 %
-Hence, we introduce our rigorous probability-framework to compute average roundoff errors.
+We introduce a rigorous probabilistic framework to compute average roundoff errors that addresses the identified limitations.
 %
-From an implementation perspective, we can provide to the user much more useful error bounds compared to the state-of-the-art worst-case errors.
+Our prototype implementation provides to the user much more useful probabilistic error bounds compared to the state-of-the-art worst-case errors.

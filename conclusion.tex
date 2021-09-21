@@ -5,48 +5,84 @@
 %
 Floating-point arithmetic is ubiquitous in computers, and almost every programming language supports several floating-point data-types.
 %
-In many applications, floating-point arithmetic is perfectly adequate, we use it in every-day programs as a proxy for real arithmetic.
+In many applications, floating-point arithmetic is perfectly adequate and we use it in every day programs as a proxy for real arithmetic.
 %
-On the other hand, we cannot simply ignore roundoff errors stemming from floating-point computations, regardless of how rare or small they might be.
+On the other hand, we often cannot simply ignore roundoff errors stemming from floating-point computations, regardless of how rare or small they might be.
 %
-Hence, not only we have to be aware of these errors, but also, in applications like for example self-driving vehicles, there is the need to use rigorous techniques to bound roundoff errors, that is to say we have an analytical model of the computation, and thus we can provide guarantees about the error bounds.
+Hence, not only we have to be aware of these errors, but also, in applications such as self-driving vehicles, there is the need to use rigorous techniques to bound roundoff errors. 
+%
+In rigorous error analysis, we have an analytical model of the computations, thus we can provide formal guarantees about the roundoff error bounds.
 %
 
 In this thesis, we described several contributions to the rigorous roundoff error analysis of floating-point programs.
 %
-All the tools described in this thesis have been tested on several case-studies from real-world applications.
+We developed a prototype implementation for each contribution and we empirically evaluated them on case-studies derived from real-world applications.
 %
 
-First, we introduced FPRoCK a prototype of an SMT solver able to precisely reason about control-flow instabilities stemming from the use of floating-point arithmetic in computers.
+First, we showed the need for a decision procedure to precisely reason about the mix of real and floating-point constraints, which is critical to detect control-flow instabilities in computer programs, that is to say, when the floating-point execution diverges from the ideal execution in real arithmetic.
 %
-We have a control-flow instability when the floating-point execution, diverges from the ideal execution in real arithmetic.
+Unfortunately, the state-of-the-art for automated theorem provers do not support the mix of real and floating-point arithmetics, thus we developed FPRoCK, a prototype of a decision procedure where we transform a mixed formula
+into an equi-satisfiable one over the reals.
 %
-As opposed to the state-of-the-art, where the size of the instability region, from where an instability can be triggered, is over-approximated using conservative static analysis techniques, in FPRoCK we can mix floating-point and real arithmetics formulas together, and discharge the resulting query into the state-of-the-art for automated theorem provers. 
+This transformed formula is then discharged to different off-the-shelf SMT solvers for resolution.
 %
-In this way, we can precisely reason about the exact input values leading to the instability. 
+%Thanks to FPRoCK, not only we can precisely reason about the exact input values leading to the instability, but in case one exists, we get a model triggering the instability. 
 %
-Moreover, in case the instability exists, we can get a model triggering the instability.
+Due to its modularity, FPRoCK can be used as a back-end solver in any existing static analyzers to verify instabilities in conditionals, or alternatively, as a stand-alone tool to mix real and floating-point constraints in the same query.
 %
-Due to its modularity, FPRoCK can be used as a back-end solver in any existing static analyzers to verify instabilities in conditionals, or alternatively, as a stand-alone tool to mix real and floating-point formulas in the same query.
+
+%First, we described the well-known problem of control-flow instabilities in computer programs, that is to say, when the floating-point execution diverges from the ideal execution in real arithmetic, and we showed the limitations of the state-of-the-art, where the size of the instability region, from where an instability may be triggered, is over-approximated using conservative static analysis techniques. 
+%
+%Hence, the need to precisely reason about the exact input values leading to an instability.
+%
+%Unfortunately, the state-of-the-art for automated theorem provers do not support the mix of real and floating-point arithmetic, which is critical to detect instabilities.
+%
+%Hence, we introduced FPRoCK, a prototype of a decision procedure able to reason about real and floating-point constraints.
+%
+%In FPRoCK, a floating-point constrained is represented in reals with additional constraints.
+%
+%We use FPRoCK, to precisely reason about control-flow instabilities stemming from the use of floating-point arithmetic in computers.
+%
+%Due to its modularity, FPRoCK can be used as a back-end solver in any existing static analyzers to verify instabilities in conditionals, or alternatively, as a stand-alone tool to mix real and floating-point constraints in the same query.
+%
+%UNFORTUNATELY AVAILABLE SOLVERS DO NOT SUPPORT THE MIX OF REAL AND FP ARITHMETICS.
+%
+%FPROCK DOES NOT REASON ABOUT INSTABILITY.
+%
+%FPROCK IS A PROTOTYPE OF A DECISION PROCEDURE ABLE TO REASON ABOUT REAL AND FLOATING-POINT CONSTRAINTS.
+%
+%THEN YOU SAY YOU EXTEND PRECISA WITH FPROCK TO REASON ABOUT CONTROL FLOW INSTABILITIES.\\
+%
+%We have a control-flow instability when the floating-point execution diverges from the ideal execution in real arithmetic.
+%
+%As opposed to the state-of-the-art, where the size of the instability region, from where an instability can be triggered, is over-approximated using conservative static analysis techniques, in FPRoCK we can mix floating-point and real arithmetics formulas together, and discharge the resulting query using an SMT solver.
+%
+%In this way, we can precisely reason about the exact input values leading to the instability. 
+%
+%
+%Due to its modularity, FPRoCK can be used as a back-end solver in any existing static analyzers to verify instabilities in conditionals, or alternatively, as a stand-alone tool to mix real and floating-point formulas in the same query.
 %
 
 Second, we introduced our framework for the design of robust micro-controllers, where we show how to embed the state-of-the-art for worst-case roundoff error analysis in the design process of micro-controllers.
 %
-Indeed, at design time, we can include the roundoff error stemming from the finite-precision implementation of the controller, in the set of all the disturbances affecting the system (e.g. friction, wind).
+Indeed, at design time, we can include the roundoff error stemming from the finite-precision implementation of the controller, in the set of all the disturbances affecting the system (e.g., friction, wind).
 %
-Using our framework, a designer can precisely quantify the trade-off between the tolerance of the controller towards external disturbance which, among the others, includes roundoff errors, and the memory footprint of the micro-controller, in a context where typically the available memory is very limited (e.g. 32KB or 64KB).
+Using our framework, a designer can precisely quantify the trade-off between the tolerance of the controller towards external disturbance which, among the others, includes roundoff errors, and the memory footprint of the micro-controller, in a context where typically the available memory is very limited (e.g., 32KB or 64KB).
 %
-Clearly, an high-precision implementation of the controller minimizes the roundoff error, while dramatically increases the memory requirements. 
+By using our framework, the developer can implement the controller using a low-precision format, without affecting the stability of the system.
+%
+%WRITE THE OPPOSITE! LOW MEMORY BUT STILL THE SYSTEM IS STABLE.
+%
+%Clearly, an high-precision implementation of the controller minimizes the roundoff error, while dramatically increases the memory requirements. 
 %
 
 Finally, we introduced our framework for computing rigorous probabilistic roundoff errors where, as opposed to the state-of-the-art, the roundoff error bound holds for the \emph{average} computation rather than the \emph{worst-case} one.
 %
-The intuition behind our approach is roundoff errors do not always achieve the worst-case magnitude. 
+The intuition behind our approach is roundoff errors rarely achieve the worst-case magnitude. 
 %
-
 The main advantage in using average roundoff errors, as opposed to the worst-case counterpart, is we can trade some accuracy in the computations in favor of resource savings, like energy consumption and execution time.
 %
-This is precious not only on devices where the usage of the battery, and the dimension of the hardware, are primary concerns, like smart-phones and smart-watches, but also on all the applications where the worst-case approach is prohibitive from an implementation prospective, because it requires the use of very high-bit-width formats. 
+This is precious not only on devices where the usage of the battery, and the dimension of the hardware, are primary concerns, like smart-phones and smart-watches, but also on all the applications where the worst-case approach is prohibitive from an implementation prospective, because it requires the use of very high bit-width formats. 
 %
-In our framework we can precisely quantify which precision format is best suited for the average computation, thus we can ignore very rare corner-cases (aka outliers), and ultimately save resources.
+In our framework, we can precisely quantify which precision format is best suited for the average computation, thus we can ignore very rare corner cases (aka outliers), and ultimately save resources.
 %
