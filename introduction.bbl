@@ -11,6 +11,10 @@ Bornholt J., Mytkowicz T., McKinley K.S.: {Uncertain\textless T\textgreater:
 A. Suardi, S. Longo, E.C. Kerrigan, and G.A. Constantinides. : {Explicit MPC: Hard constraint satisfaction under low precision arithmetic.}.
 In: Control Engineering Practice (2016)
 
+\bibitem{dynamic}
+Wei-Fan C., Gopalakrishnan G., Rakamaric Z., and Solovyev A.: {Efficient Search for Inputs Causing High Floating-point Errors.}.
+In: PPoPP (2014)
+
 \bibitem{climate}
 Dawson A. and Duben D. : {rpe v5: an emulator for reduced floating-point precision in large numerical simulations}.
 Geoscientific Model Development (2017)

@@ -287,13 +287,13 @@ As we saw in the Patriot Missile example, roundoff errors are very small, but th
 %
 The approach we used to measure the roundoff error for the program in Figure~\ref{fig:while} assumes we have a reference implementation, or ground truth, to compare with.
 %
-In the literature this is often called the \emph{oracle}~\cite{blame} or \emph{shadow copy}~\cite{shadow}, and it holds the ideal value of the computation.
+In the literature this is often called the \emph{oracle}~\cite{blame} or \emph{shadow copy}~\cite{shadow} and it holds the ideal value of the computation.
 %
 %In the program, the oracle is the integer variable t.
 % 
 %In our small example, regardless of its simplicity, shows a critical (and limiting) assumption we are making here, to 
 
-In real-world applications, the oracle is not part of the program itself, but rather, it has to be created by the developer as a separate entity.
+In real-world applications, the oracle is not part of the program itself, but rather it has to be created by the developer as a separate entity.
 %
 In practice, the oracle is an exact copy of the original program, where all the floating-point variables have been replaced by custom multiple-precision floating-point variables~\cite{mpfr}.
 %
@@ -316,9 +316,13 @@ Hence, the oracle is not exactly the same as the real-valued program.
 %
 Moreover, implementing a high quality high bit-width oracle requires significant expertise, and thus is expensive in terms of development cost~\cite{atomic}.
 %
-Finally, all these tools use sampled input points to estimate the accuracy of the candidate programs.
+Finally, all these tools use randomly sampled input points to estimate the roundoff error of the implementation program.
 %
-This approach leads to a poor coverage of the input space, in particular when the inputs are not uniformly distributed.
+Using a sample-based approach leads to a poor coverage of the input space, in particular when the inputs are not uniformly distributed.
+%
+In other words, finding the input values leading to worst-case errors is an hard problem, and existing tools rely on some heuristics to explore the input space~\cite{dynamic}. 
+%
+
 %
 The main consequence is we always under-estimate the roundoff errors, thus we get non-rigorous (i.e. unsound) roundoff error bounds~\cite{glasserman2013monte, parker2000monte, herbie}.
 %
@@ -409,7 +413,7 @@ This thesis presents several contributions for the rigorous error analysis of fl
 %
 %Out of the many existing techniques , only few of them have primordial support for common programming constructs, like conditional statements, while none of them can deal with unbounded input variables nor probability distributions.
 %
-In the following sections, we motivate and introduce each contribution.
+In the following sections, we motivate and briefly introduce each contribution.
 %
 In particular, in Section~\ref{conditionals}, we motivate the need for precise reasoning about roundoff errors in conditional statements, as opposed to the over-conservative approach adopted by the state-of-the-art.
 %
@@ -492,7 +496,7 @@ The absolute error stemming from instability jumps is computed as the arithmetic
 %In general, while the roundoff error of straight line expressions is in the order of \emph{machine epsilon}, an instability jump can be in the order of the units, which typically is many orders of magnitude wider than the former.
 %
 
-In Figure~\ref{fig:ifstatement}, we report the program we use to study instabilities.
+Figure~\ref{fig:ifstatement} shows a simple program with a conditional statement we use to study instabilities.
 %
 \begin{figure}[tb!]
 	\begin{lstlisting}[frame=single, language=Python, escapeinside={(*}{*)}]
@@ -540,11 +544,11 @@ We can use $\epsilon$ to make our program \emph{robust} to roundoff error.
 	\label{fig:ifrobust}
 \end{figure}
 %
-Figure~\ref{fig:ifrobust}, shows the robust program version, where the real-valued program and the floating-point counterpart always coincide. 
+Figure~\ref{fig:ifrobust} shows the robust program version, where the real-valued program and the floating-point counterpart always coincide. 
 %
 In other words, when the real program returns the value 10 also the floating-point counterpart returns 10. Similar argument holds for the return value -10.
 %
-In general, the developer needs to consider the case we land in the instability region, for example, using a special return value or a by raising a warning flag.
+In general, the developer needs to consider the case we land in the instability region, for example, using a special return value or a warning flag.
 %
 For the purpose of this example, we decide to return the value $0$ in case we land in the instability region. 
 
