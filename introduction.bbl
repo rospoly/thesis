@@ -7,6 +7,10 @@
 Bornholt J., Mytkowicz T., McKinley K.S.: {Uncertain\textless T\textgreater:
   a first-order type for uncertain data}. In: ASPLOS (2014)
 
+\bibitem{robotrisk}
+Majumdar A., Pavone M.: {How Should a Robot Assess Risk? Towards an Axiomatic Theory of Risk in Robotics}. 
+In: Springer International Publishing (2020)
+
 \bibitem{suardi}
 A. Suardi, S. Longo, E.C. Kerrigan, and G.A. Constantinides. : {Explicit MPC: Hard constraint satisfaction under low precision arithmetic.}.
 In: Control Engineering Practice (2016)
