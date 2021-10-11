@@ -12,7 +12,7 @@ The main reason is that computers calculate with finite resources, while in our 
 %
 In mathematics, there are quantities, like for example $\pi$ or $\sqrt{2}$ or any other irrational number, with an infinite number of digits, and thus they cannot be represented \emph{exactly} using a finite machine representation.
 %
-Similar argument holds for rational numbers with many digits. 
+%Similar argument holds for rational numbers with many digits. 
 %
 Such numbers have to be \emph{rounded} to fit the finite representation, and the gap between the real number and the rounded counterpart is called \emph{roundoff error}.
 %
@@ -146,7 +146,7 @@ In other words, as opposed to the absolute error, the magnitude of the relative 
 %
 When the denominator in Equation (\ref{relative}) is zero, the fraction is undefined and thus the concept of the relative error is not applicable.
 %
-Investigating the roundoff error in a neighborhood of zero is of special importance in numerical analysis, mainly because of underflow or cancellation phenomena. Thus, in many practical applications we do want to study the roundoff error when the real computation does involve the value zero, which leaves us with only the absolute error measure.
+Investigating the roundoff error in a neighborhood of zero is of special importance in numerical analysis, mainly because of underflow or cancellation phenomena~\cite{every}. Thus, in many practical applications we do want to study the roundoff error when the real computation does involve the value zero, which leaves us with only the absolute error measure.
 %
 \section{Floating-Point Arithmetic}
 %
@@ -185,7 +185,7 @@ The sign is always one bit, with value 0 for positive or 1 for negative numbers,
 %
 
 %
-Table~\ref{fpformat}, reports the formats of the most common binary data-types in the standard.
+Table~\ref{fpformat} reports the formats of the most common binary data-types in the standard.
 %
 The standard defines, among the others, the widely used single and double data-types, with 32 and 64 bits formats, and several rounding modes.
 %
@@ -240,7 +240,7 @@ The standard model in Equation~(\ref{standard}) holds for normal numbers, which 
 Note, the model would be slightly more complex in case we consider also subnormal numbers, which we ignore here, since we do not support subnormals in the contributions of this thesis.
 %
 
-In Figure~\ref{fig:zeropointone}, we report the format representation when the decimal value 0.1 is stored in a single precision (32 bits) floating-point variable.
+In Figure~\ref{fig:zeropointone}, we report the format representation when the decimal real value 0.1 is stored in a single precision (32 bits) floating-point variable.
 %
 The decimal value $0.1$ becomes $0.0\overline{0011}$ in binary, which in normalized form is $1.1\overline{0011}*2^{\text{-}4}$.
 %
@@ -322,7 +322,7 @@ Using a sample-based approach leads to a poor coverage of the input space, in pa
 %
 In other words, finding the input values leading to worst-case errors is an hard problem, and existing tools rely on some heuristics to explore the input space~\cite{dynamic}. 
 %
-The immediate consequence is we always under-estimate the roundoff errors, thus we get non-rigorous (i.e. unsound) roundoff error bounds~\cite{glasserman2013monte, parker2000monte, herbie}.
+The immediate consequence is we frequently under-estimate the roundoff errors, thus we get non-rigorous (i.e. unsound) roundoff error bounds~\cite{glasserman2013monte, parker2000monte, herbie}.
 %
 
 In this thesis, we focus on rigorous (i.e. sound) roundoff error analysis.
@@ -342,7 +342,7 @@ For example, when we say 95\% of the computations obey a certain roundoff error 
 %
 In static analysis of roundoff errors, we rely on the analytical model of floating-point arithmetic described in Equation~\ref{standard}, to study how errors propagate through computations.
 %
-In rigorous analysis of roundoff errors, which is the focus of this thesis, we assume the error $e$ in Equation (\ref{standard}) has the worst magnitude possible. In other words, we make a conservative choice by setting $e=\epsilon$.
+In rigorous roundoff error analysis, which is the focus of this thesis, we assume the error $e$ in Equation (\ref{standard}) has the worst magnitude possible. In other words, we make a conservative choice by setting $e=\epsilon$.
 %
 Clearly, this conservativeness makes the analysis rigorous in the sense there cannot be any outlier.
 %
@@ -526,11 +526,11 @@ In Figure \ref{fig:ifreal}, we plot the instability region for the program. Clea
 The width of the instability region is determined by the roundoff error $\epsilon$ and, in our example, $\epsilon$ is the roundoff error accumulated by $x$. From Equation (\ref{standard}), we know the roundoff error is proportional to $x*e$, hence in the worst-case formulation, we have $\max(x*e) = x*\epsilon = x*(2^{-p})$, where p is the bit-width of the floating-point format. The error $\epsilon$ assumes maximal magnitude when $x=10$ and, in double precision floating-point arithmetic (64 bits), we get $\epsilon=1.11e^{-15}$.
 %
 
-We can use $\epsilon$ to make our program \emph{robust} to roundoff error~\cite{guardstable}.
+We can use $\epsilon$ to make our program \emph{robust} to roundoff errosr~\cite{guardstable}.
 %
 First, we identify the instability region, centered in 5 and with width $2\epsilon$, from where an instability might be triggered.
 %
-Any unstable execution stems from the instability region, on the other hand, this is a conservative estimate because both stable and unstable executions can land in the instability region.
+Any unstable execution stems from the instability region, on the other hand, this is a conservative estimate because also stable executions might land in the instability region.
 %
 \begin{figure}[tb!]
 	\begin{lstlisting}[frame=single, language=Python, escapeinside={(*}{*)}]
@@ -661,7 +661,7 @@ Worst-case analysis can provide very pessimistic error bounds in case we know \e
 %
 %Furthermore, we must bound the input variables to prevent overflow and thus unbounded roundoff errors.
 %
-Let us describe the program reported in Figure~\ref{fig:prob}.
+Figure~\ref{fig:prob} shows a simple program with a conditional statement we use to study the limitations of worst-case analysis.
 %
 \begin{figure}[tb!]
 	\begin{lstlisting}[frame=single, language=Python]
@@ -689,11 +689,13 @@ A developer using such worst-case tools do not get any information about \emph{h
 This is because of the nature of worst-case analysis, where there is no distinction between extremely rares or average computations.
 %
 
-The most similar approach to the work described in this thesis is the roundoff error analysis called PrAn~\cite{probdaisy}; to the best of our knowledge, this is also the only work apart from this paper that presents a rigorous and general probabilistic roundoff error analysis. 
+To tackle these limitations we need a \emph{probabilistic} error analysis.
 %
-PrAn heavily relies on the worst-case error analysis implemented in Daisy~\cite{darulova2018daisy}, thus their approach inherits some of the limitations of worst-case analysis, in particular, the conservativeness of the error bounds.
+The only existing work in the state-of-the-art, apart from the contribution described in this thesis, is the rigorous probabilistic error analysis called PrAn~\cite{probdaisy}.
 %
-The immediate consequence is the probabilistic roundoff errors from PrAn are always in the same order of magnitude of the worst-case errors from Daisy.
+Unfortunately, PrAn heavily relies on the underlying worst-case error analysis implemented in Daisy~\cite{darulova2018daisy}, thus PrAn inherits some of the limitations of worst-case analysis, in particular, the conservativeness of the error bounds.
+%
+The immediate consequence is the probabilistic errors from PrAn are always in the same order of magnitude of the worst-case errors from Daisy.
 %
 
 In our probabilistic framework, we use probabilistic range analysis to compute average roundoff errors where, as opposed to the worst-case approach, the roundoff error is estimated with respect to the computation landing in a given confidence interval of interest (e.g., 85\%, 99\%, 99.9999\%).
