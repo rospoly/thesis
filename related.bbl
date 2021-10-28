@@ -1,0 +1,28 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{precisa}
+Titolo, L., Feli{\'u}, M.A., Moscato, M., Mu{\~{n}}oz, C.A.: An abstract
+  interpretation framework for the round-off error analysis of floating-point
+  programs. In: VMCAI (2018)
+
+\bibitem{seesaw}
+A. Das, T. Tirpankar, G. Gopalakrishnan and S. Krishnamoorthy: 
+Robustness Analysis of Loop-Free Floating-Point Programs via Symbolic Automatic Differentiation. In: CLUSTER (2021)
+
+\bibitem{gelpia}
+Gelpia, \url{https://github.com/soarlab/gelpia}
+
+\bibitem{darulova2018daisy}
+Darulova, E., Izycheva, A., Nasir, F., Ritter, F., Becker, H., Bastian, R.:
+  Daisy --- framework for analysis and optimization of numerical programs. In:
+  TACAS (2018)
+
+\bibitem{fluctuat}
+Delmas, D., Goubault, E., Putot, S., Souyris, J., Tekkal, K., V{\'e}drine, F.:
+  Towards an industrial use of {FLUCTUAT} on safety-critical avionics software.
+  In: FMICS (2009)
+
+\end{thebibliography}

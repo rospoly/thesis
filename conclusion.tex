@@ -1,7 +1,9 @@
 %%% -*-LaTeX-*-
 
-\chapter{Conclusions}
+\chapter{Conclusions and Future Work}
 \label{sec:conclusion}
+%
+\setupuuchapterbib
 %
 Floating-point arithmetic is ubiquitous in computers, and almost every programming language supports several floating-point data-types.
 %
@@ -19,18 +21,35 @@ In this thesis, we described several contributions to the rigorous roundoff erro
 We developed a prototype implementation for each contribution and we empirically evaluated them on case-studies derived from real-world applications.
 %
 
-First, we showed the need for a decision procedure to precisely reason about the mix of real and floating-point constraints, which is critical to detect control-flow instabilities in computer programs, that is to say, when the floating-point execution diverges from the ideal execution in real arithmetic.
+\subsection{Handling Conditionals}
+%
+We showed the need for a decision procedure to precisely reason about the mix of real and floating-point constraints, which is critical to detect control-flow instabilities in computer programs, that is to say, when the floating-point execution diverges from the ideal execution in real arithmetic.
 %
 Unfortunately, the state-of-the-art for automated theorem provers do not support the mix of real and floating-point arithmetics, thus we developed FPRoCK, a prototype of a decision procedure where we transform a mixed formula
 into an equi-satisfiable one over the reals.
 %
 This transformed formula is then discharged to different off-the-shelf SMT solvers for resolution.
 %
-%Thanks to FPRoCK, not only we can precisely reason about the exact input values leading to the instability, but in case one exists, we get a model triggering the instability. 
-%
-Due to its modularity, FPRoCK can be used as a back-end solver in any existing static analyzers to verify instabilities in conditionals, or alternatively, as a stand-alone tool to mix real and floating-point constraints in the same query.
+We used Z3 in our experiments, but any SMT solver with support for non-linear real arithmetic (NLA) theory could be used.
 %
 
+We combined FPRoCK with the static roundoff error analysis implemented in the tool PRECiSA.
+%
+In the case of floating-point programs with conditional statements, PRECiSA discharges to FPRoCK the conditionals to check whether a if-statement is unstable, meaning the same conditional evaluates to true in floating-point and to false in reals (or viceversa).
+%
+We run our experiments with PRECiSA, but any existing static analysis can use FPRoCK to verify instabilities in conditionals, or alternatively, FPRoCK can be used as a stand-alone tool to mix real and floating-point constraints in the same query.
+%
+
+While PRECiSA and FPRoCK have been used to prune away control-flow instabilities in real-world applications, which often resulted in more precise roundoff error bounds, the main bottleneck in our analysis remains the scalability of FPRoCK, limited to only a few variables and operations. 
+%
+The main reason is that the set of constraints we need to force a real variable to be exactly representable in floating-point, dramatically increases the complexity of the query given to the underlying SMT solver.
+%
+Indeed, FPRoCK encodes the rounding operator, needed to round a real variable to a floating-point one, using a mix of real and integer constraints, and this combination of theories in the same query dramatically degradates the performances of any SMT solver.
+%
+Moreover, normalizing a floating-point variable, which is what FPRoCK does to find the exact mantissa of the representation, requires the solver to find the largest power of two smaller than the symbolic variable, which is an hard problem for existing smt solvers, in particular, when the function to optimize contains non-linearities.
+%
+
+%
 %First, we described the well-known problem of control-flow instabilities in computer programs, that is to say, when the floating-point execution diverges from the ideal execution in real arithmetic, and we showed the limitations of the state-of-the-art, where the size of the instability region, from where an instability may be triggered, is over-approximated using conservative static analysis techniques. 
 %
 %Hence, the need to precisely reason about the exact input values leading to an instability.
@@ -62,8 +81,9 @@ Due to its modularity, FPRoCK can be used as a back-end solver in any existing s
 %
 %Due to its modularity, FPRoCK can be used as a back-end solver in any existing static analyzers to verify instabilities in conditionals, or alternatively, as a stand-alone tool to mix real and floating-point formulas in the same query.
 %
-
-Second, we introduced our framework for the design of robust micro-controllers, where we show how to embed the state-of-the-art for worst-case roundoff error analysis in the design process of micro-controllers.
+\subsection{Robust Control Synthesis}
+%
+We introduced our framework for the design of robust micro-controllers, where we show how to embed the state-of-the-art for worst-case roundoff error analysis in the design process of micro-controllers.
 %
 Indeed, at design time, we can include the roundoff error stemming from the finite-precision implementation of the controller, in the set of all the disturbances affecting the system (e.g., friction, wind).
 %
@@ -71,12 +91,28 @@ Using our framework, a designer can precisely quantify the trade-off between the
 %
 By using our framework, the developer can implement the controller using a low-precision format, without affecting the stability of the system.
 %
+
+The design of robust MPC controllers with our framework uses again a worst-case approach.
+%
+The controller is designed to handle up-to $\delta$ disturbance, which means $\delta$ is the maximal disturbance the controller can tolerate,
+%
+The main requirement behind this line of reasoning is the disturbance $\delta$ has to be bounded.
+%
+%stocastic MPC use sampling or concentration inequality.
+%
+However, in many real situations, the disturbance affecting the plant can be stochastic, and when the random variable describing the disturbance has an infinite support (e.g. normally distributed), the worst-case approach is no more applicable, because unbounded variables lead to unbounded errors, and it is impossible to design a controller robust to unbounded disturbance.
+%
+Hence, the need to design the controller with respect to an average disturbance rather than the worst-case. In this scenario, the designer provides the exact confidence interval (e.g. 95\%, 99\%) for the disturbance the controller has to tolerate.
+%
+In this new formulation, known in the literature as stochastic MPC (SMPC), the rigorous probabilistic analysis implemented in our tool PAF can be used to provide formal guarantees about the average error of the controller.
+%
 %WRITE THE OPPOSITE! LOW MEMORY BUT STILL THE SYSTEM IS STABLE.
 %
 %Clearly, an high-precision implementation of the controller minimizes the roundoff error, while dramatically increases the memory requirements. 
 %
-
-Finally, we introduced our framework for computing rigorous probabilistic roundoff errors where, as opposed to the state-of-the-art, the roundoff error bound holds for the \emph{average} computation rather than the \emph{worst-case} one.
+\subsection{Probabilistic Error Analysis}
+%
+We introduced our framework for computing rigorous probabilistic roundoff errors where, as opposed to the state-of-the-art, the roundoff error bound holds for the \emph{average} computation rather than the \emph{worst-case} one.
 %
 The intuition behind our approach is roundoff errors rarely achieve the worst-case magnitude. 
 %
@@ -86,3 +122,32 @@ This is precious not only on devices where the usage of the battery, and the dim
 %
 In our framework, we can precisely quantify which precision format is best suited for the average computation, thus we can ignore very rare corner cases (aka outliers), and ultimately save resources.
 %
+
+As future work, we plan to explore the potential use of our probabilistic range analysis to perform both probabilistic overflow and division-by-zero detection.
+%
+Together with a warning about a potential overflow or a division-by-zero, a user would also get from PAF a rigorous bound on the probability of the corresponding event happening.
+
+Moreover, PAF can be combined with existing rigorous precision tuning routine (such as FPTuner~\cite{fptuner}). 
+%
+In such a setup, the confidence interval becomes a new key parameter in the precision tuning process, thereby allowing for programmers to explore a richer space of trade-offs.
+%
+
+Finally, we plan to combine the conditional error analysis implemented in Seesaw~\cite{seesaw} with the probabilistic error analysis implemented in PAF. 
+%
+This setup would be used to bound the probability of instabilities in conditional statements.
+%
+As we described in this thesis, instability jumps can dramatically affect the correct execution of a program.
+%
+On the other hand, we suspect the probability of instability jumps happening is very low.
+%
+This is because on average landing in the instability region, from where an instability might be triggered, is a rare event.
+%
+In other words, the majority of computations in floating-point programs are stable, meaning the real execution and the floating-point counterpart coincide.
+% 
+Hence, by using our envisioned combined analysis, the user would get a rigorous upper bound to the probability of instabilities in probabilistic floating-point programs.
+%
+This is more useful compared to the existing worst-case analysis, where the user gets only a warning showing the existence of the instability, hence there is no knowledge about how rare might be the instability event.
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{\jobname}

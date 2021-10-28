@@ -1,0 +1,62 @@
+\chapter{Related Work}
+\setupuuchapterbib
+%
+The analysis of roundoff errors in floating-point programs with conditional statements is an active research area.
+%
+While several of the tools in the state-of-the-art~\cite{darulova2018daisy, precisa, fluctuat} suffer from the limitations described in this thesis, the innovative methodology implemented in the tool Seesaw~\cite{seesaw} dramatically improves the scalability and the accuracy of the conditional analysis compared to the existing approaches.
+%
+In Seesaw the authors create a symbolic error expression for a floating-point program, and they use a global optimizer to maximize the error expression conditioning on the output computation landing in the instability region.
+%
+The instability region is the part of the input domain from where instabilities might be triggered.
+%
+Gelpia~\cite{gelpia}, the global optimizer used in Seesaw, is an interval-arithmetic based branch-and-bound solver. 
+%
+Gelpia combines a branch-and-bound routine with the SMT solver reasoning, where the former recursively partitions the input domain in chunks, and it eventually iterates on each chunk independently, while the latter verifies the feasibility of the instability region. 
+%
+
+The query Seesaw provides to the SMT solver through Gelpia checks which part of the input domain might lead to an instability, and it is a much simpler expression compared to the one FPRoCK provides.
+%
+Moreover, the query contains only real constraints, and the SMT solver can use exclusively the non-linear real arithmetic theory (NRA), which results in much better performance compared to the mix of theories used in FPRoCK.
+%
+While the static nature of SeeSaw might result in some over-approximation compared to the symbolic encoding used in FPRoCK, it dramatically improves the scalability of the overall analysis by at least one order of magnitude, which means up to $\sim100$ input variables and operations.
+%
+On the other hand, because of the static nature of Seesaw, the authors do not get a model triggering the instability, which is the main benefit of the symbolic reasoning in FPRoCK.
+%
+%In case the disturbance delta does not have a finite support, it is necessary to 'soften' the contraints in the robust MPC. 
+%
+%This is because hard-constraints would lead to unbounded disturbance, and it is impossible to design a controller for infinite disturbance.
+%
+%In stochastic MPC we know exactly how the disturbance in distributed, or alternatively, we have some meaningfull information about the disturbance (e.g. first and second moments).
+%
+%Several approaches have been used in the literature to handle stochastic MPC.
+%
+%In~\cite{exp} the worst-case disturbance is substituted by the expected value of the disturbance.
+%
+%Clearly, this approach does not give guarantees about the stability of the system.
+%
+%In other words, in case of rare disturbance or outliers, the controller would possibly be unable to govern the system.
+%
+%There is not control over how rare might be this scenario.
+%
+%Similar conseuquences would be for tqniques using Monte Carlo sampling
+%
+
+In the remaining of this chapter, we compare the conditional error analysis implemented in Seesaw~\cite{seesaw} with the probabilistic error analysis implemented in PAF. 
+%
+Apparently, the two tools seems to tackle two orthogonal research questions; on one hand, PAF bounds roundoff errors in probabilistic floating-point computations, while Seesaw computes roundoff errors in floating-point programs with conditional statements.
+%
+Interestingly, and somehow surprisingly, the tools tackle two apparently complementary research problems in the exact same way.
+%
+In PAF, the symbolic error form gets maximized conditioned on the output of a computation landing in a given confidence interval (e.g. 75\%, 85\% or 99\%) of interest.
+%
+Hence, in PAF we introduce the concept of average roundoff error analysis, as opposed to the state-of-the-art worst-case error analysis.
+%
+In Seesaw, the symbolic error form gets maximized conditioned on the computation landing in the instability region, that is the part of the input domain from where instabilities might be triggered, and it is shaped by the control-flow conditions in the program.
+%
+
+In both cases the symbolic error expression gets maximized \emph{conditioning} on the computation landing in a subdomain of the input space.
+%
+This conditioning unavoidably results in more precise roundoff error bounds compared to the worst-case scenario, where the maximization problem is unconstrained over the entire input domain.
+\newpage
+\bibliographystyle{plain}
+\bibliography{\jobname}

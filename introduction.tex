@@ -37,7 +37,7 @@ Indeed, finite-precision arithmetic does not respect the rules of real arithmeti
 %
 For example, the associativity law from real arithmetic fails in finite-precision where it is often the case that $(a*b)*c \ne a*(b*c)$.
 
-Second, high bit-width formats are very expensive in terms of compute resources which include, among others, energy-consumption, execution time, and physical space of the floating-point unit on the board~\cite{fppower, lutnet}. 
+Second, high bit-width formats are very expensive in terms of compute resources which include, among others, energy-consumption, execution time, and the physical space of the floating-point unit on the board~\cite{fppower, lutnet}. 
 %
 The usage of resources is critical on portable devices, like smart-phones or smart-watches, where the battery consumption is a primary concern, as well as supercomputers, which consume large amounts of electrical power.
 %
@@ -478,7 +478,7 @@ Finally, in Section~\ref{sec:prob} we discuss the limitations of worst-case erro
 %
 While roundoff error analysis has been successfully used to bound roundoff errors in straight-line expressions~\cite{darulova2018daisy,2015_fm_sjrg,solovyev2018rigorous,rosa,precisa,gappa,fluctuat}, less attention has been given to common programming constructs, like conditionals.
 %
-In this section, we describe how the state-of-the-art for rigorous roundoff error analysis handles conditional statements~\cite{precisa, fluctuat}, and what the limitations of these approaches are.
+In this section, we describe how the state-of-the-art for rigorous roundoff error analysis handles conditional statements~\cite{precisa, fluctuat, darulova2018daisy}, and what the limitations of these approaches are.
 %
 Then we introduce our decision procedure, implemented in a prototype tool called FPRoCK, for precise reasoning about roundoff errors in conditionals.
 %
@@ -589,7 +589,7 @@ The resulting formula, which contains only real constraints, is discharged to ex
 %
 We integrated FPRoCK on top of the static roundoff error analyzer PRECiSA~\cite{precisa} to reason about control-flow instabilities in floating-point programs.
 %
-FPRoCK works as a back-end solver for PRECiSA, and it is used to identify unfeasible (UNSAT) control-flow instability in conditional statements.
+FPRoCK works as a back-end solver for PRECiSA, and it is used to identify unfeasible (UNSAT) control-flow instabilities in conditional statements.
 %
 Thanks to FPRoCK, not only can we precisely reason about instabilities, but when an instability exists we also get a model triggering the instability.
 

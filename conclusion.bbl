@@ -1,0 +1,15 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{fptuner}
+Chiang, W.F., Baranowski, M., Briggs, I., Solovyev, A., Gopalakrishnan, G.,
+  Rakamari\'c, Z.: Rigorous floating-point mixed-precision tuning. In: POPL
+  (2017)
+
+\bibitem{seesaw}
+A. Das, T. Tirpankar, G. Gopalakrishnan and S. Krishnamoorthy: 
+Robustness Analysis of Loop-Free Floating-Point Programs via Symbolic Automatic Differentiation. In: CLUSTER (2021)
+
+\end{thebibliography}
