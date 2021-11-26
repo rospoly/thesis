@@ -51,7 +51,7 @@ On the other hand, we cannot simply ignore the roundoff error stemming from the 
 
 For example, consider the C program reported in Figure~\ref{fig:while}.
 %
-\begin{figure}[tb!]
+\begin{figure}[b!]
 	\begin{lstlisting}[frame=single, language=c]
   float    f = 0;
   double   d = 0;
@@ -86,7 +86,7 @@ After the loop, the value of \emph{f} and \emph{d} are respectively 2097152.0 an
 %
 Again, the value of \emph{n} matches the limit exactly.
 %
-The reason behind such roundoff errors is that the decimal constant 0.1 is not exactly representable in binary (see Figure~\ref{fig:zeropointone} for a detailed explanation). 
+The reason behind such roundoff errors is that the decimal constant 0.1 is not exactly representable in binary (see Section~\ref{fpsection} for a detailed explanation). 
 
 %
 From an implementation perspective, a similar issue was the cause of the Patriot Missile Failure~\cite{patriot}.
@@ -104,7 +104,7 @@ In this amount of time, the incoming missile could travel for about half a mile.
 
 Roundoff errors are everywhere, and they can have catastrophic consequences on the correct execution of a program.
 %
-Therefore, this thesis aims to address the problem of the analysis of roundoff errors in floating-point computations.
+Therefore, this dissertation aims to address the problem of the analysis of roundoff errors in floating-point computations.
 %
 \section{Computation Errors}
 %
@@ -128,7 +128,6 @@ Let $\widehat{x}$ be the finite precision representation of $x$. Then, we define
 Err_{abs}=|x-\widehat{x}|\label{absolute}
 \end{align}
 %
-
 while the relative error is
 %
 \begin{align}
@@ -149,8 +148,9 @@ When the denominator in Equation (\ref{relative}) is zero, the fraction is undef
 Investigating the roundoff error in a neighborhood of zero is of special importance in numerical analysis, mainly because of underflow or cancellation phenomena~\cite{every}. Thus, in many practical applications we do want to study the roundoff error when the real computation does involve the value zero, which leaves us with only the absolute error measure.
 %
 \section{Floating-Point Arithmetic}
+\label{fpsection}
 %
-\begin{table}[t]
+\begin{table}[b]
 	\centering
 	\newcommand{\mydashline}{\hdashline[1pt/1pt]}
 	\scriptsize
@@ -202,7 +202,7 @@ From the point of view of numerical analysis it is important to understand that 
 Indeed, they are evenly spaced only within two consecutive powers of two, as Figure~\ref{fig:line} illustrates.
 
 %
-\begin{figure}[tb!]
+\begin{figure}[b!]
 	\centering
 	\begin{tabular}{l}
 		\includegraphics[width=1.0\textwidth]{pic/fpnumbers.png}
@@ -211,7 +211,7 @@ Indeed, they are evenly spaced only within two consecutive powers of two, as Fig
 	\label{fig:line}
 \end{figure}
 %
-\begin{figure}[tb!]
+\begin{figure}[b!]
 	\centering
 	\begin{tabular}{l}
 		\includegraphics[width=1.0\textwidth]{pic/examplenumber.png}
@@ -228,16 +228,15 @@ rnd(x)=x(1+e),\;\;\;\text{where}\;\;\;|e|\leq\epsilon
 \label{standard}
 \end{align}
 %
-
 where $rnd(x)$ is the floating-point value of the real computation $x$, and the error $e$ is bounded by the so-called \emph{machine epsilon}, that is the upper-bound on the relative error.
 %
 Table~\ref{fpformat} reports the value of $\epsilon$ for each format in the standard.
 %
 For example, for single-precision $\epsilon=2^{-24}$, while for double-precision $\epsilon=2^{-53}$.
 %
-The standard model in Equation~(\ref{standard}) holds for normal numbers, which are the focus of this thesis.
+The standard model in Equation~(\ref{standard}) holds for normal numbers, which are the focus of this dissertation.
 %
-Note that the model would be slightly more complex if we were to also consider subnormal numbers, but these are ignored here since we do not support subnormals in the contributions of this thesis.
+Note that the model would be slightly more complex if we were to also consider subnormal numbers, but these are ignored here since we do not support subnormals in the contributions of this dissertation.
 %
 
 In Figure~\ref{fig:zeropointone}, we report the format representation when the decimal real value 0.1 is stored in a single precision (32 bits) floating-point variable.
@@ -325,7 +324,7 @@ In other words, finding the input values leading to worst-case errors is a hard 
 The immediate consequence is that we frequently under-estimate the roundoff errors, thus we get non-rigorous (i.e. unsound) roundoff error bounds~\cite{glasserman2013monte, parker2000monte, herbie}.
 %
 
-In this thesis, we focus on rigorous (i.e. sound) roundoff error analysis.
+In this dissertation, we focus on rigorous (i.e. sound) roundoff error analysis.
 %
 We give a rigorous guarantee if there is 100\% certainty about the guarantee.
 %
@@ -342,7 +341,7 @@ For example, when we say 95\% of the computations obey a certain roundoff error 
 %
 In static roundoff errors analysis, we rely on the analytical model of floating-point arithmetic described in Equation~\ref{standard}, to study how errors propagate through computations.
 %
-In rigorous roundoff error analysis, which is the focus of this thesis, we assume the error $e$ in Equation (\ref{standard}) has the worst magnitude possible. In other words, we make a conservative choice by setting $e=\epsilon$.
+In rigorous roundoff error analysis, which is the focus of this dissertation, we assume the error $e$ in Equation (\ref{standard}) has the worst magnitude possible. In other words, we make a conservative choice by setting $e=\epsilon$.
 %
 Clearly, this conservativeness makes the analysis rigorous in the sense there cannot be any outlier.
 %
@@ -366,7 +365,7 @@ Indeed, the worst-case error bound holds for any input value, regardless of the 
 %
 This property is priceless, in particular, when dealing with \emph{uncertain environments} where the exact input distributions are unknown~\cite{robotrisk}.
 %
-On the other hand, in the contributions of this thesis, we discuss how \emph{ignoring} the distribution of the inputs is a limitation when \emph{we do know} how the inputs are distributed.
+On the other hand, in the contributions of this dissertation, we discuss how \emph{ignoring} the distribution of the inputs is a limitation when \emph{we do know} how the inputs are distributed.
 %
 Finally, a strict requirement of worst-case analysis is the input variables must be bounded  in a finite range. This is because, in the worst-case, unbounded variables lead to unbounded roundoff errors, which in practice are of little use from an implementation perspective.
 %
@@ -405,7 +404,7 @@ Precise rigorous roundoff error analysis of floating-point programs with conditi
 %
 \section{Contributions}
 %
-This thesis presents several contributions for the rigorous error analysis of floating-point programs, including several case studies derived from real-world applications.
+This dissertation presents several contributions for the rigorous error analysis of floating-point programs, including several case studies derived from real-world applications.
 %
 %The usability of rigorous roundoff error analysis is minimal in real-world scenarios.
 %
@@ -496,7 +495,7 @@ The absolute error stemming from instability jumps is computed as the arithmetic
 
 Figure~\ref{fig:ifstatement} shows a simple program with a conditional statement we use to study instabilities.
 %
-\begin{figure}[tb!]
+\begin{figure}[b!]
 	\begin{lstlisting}[frame=single, language=Python, escapeinside={(*}{*)}]
 	x(*$\;\in\;$*)[0,10]
 	if x>5:
@@ -532,7 +531,7 @@ First, we identify the instability region, centered at 5 and with width $2\epsil
 %
 Any unstable execution stems from the instability region, but this is a conservative estimate, because also stable executions might land in the instability region.
 %
-\begin{figure}[tb!]
+\begin{figure}[b!]
 	\begin{lstlisting}[frame=single, language=Python, escapeinside={(*}{*)}]
 	x(*$\;\in\;$*)[0,10]
 	if x>5+(*$\epsilon$*):
@@ -666,7 +665,7 @@ Worst-case analysis can provide overly pessimistic error bounds in case we know 
 %
 Figure~\ref{fig:prob} shows a simple program with a conditional statement we use to study the limitations of worst-case analysis.
 %
-\begin{figure}[tb!]
+\begin{figure}[b!]
 	\begin{lstlisting}[frame=single, language=Python]
 	if x>constant:
 	  return 1/0 #ERROR
@@ -694,7 +693,7 @@ This is due to the nature of worst-case analysis, where there is no distinction 
 
 To tackle these limitations we need a \emph{probabilistic} error analysis.
 %
-The only existing work in the state-of-the-art, apart from the contribution described in this thesis, is the rigorous probabilistic error analysis called PrAn~\cite{probdaisy}.
+The only existing work in the state-of-the-art, apart from the contribution described in this dissertation, is the rigorous probabilistic error analysis called PrAn~\cite{probdaisy}.
 %
 Unfortunately, PrAn heavily relies on the underlying worst-case error analysis implemented in Daisy~\cite{darulova2018daisy}, thus PrAn inherits some of the limitations of worst-case analysis, in particular, the conservativeness of the error bounds.
 %
@@ -716,7 +715,7 @@ Note how when we run worst-case analysis without bounding the variable $x$, we w
 In general, by studying the \emph{average} execution of a computer program we can prune away very rare corner cases and provide meaningful directions to the developer.
 %
 \newpage
-\bibliographystyle{plain}
+\bibliographystyle{acm}
 \bibliography{\jobname}
 
 %When we trade the accuracy of a computation for efficiency, what can we say about property of our system like stability or soundness. In alternative, in case we cannot guarantee soundness anymore, can we measure exactly how much unsoundness our application has to be able to tolerate.

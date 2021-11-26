@@ -4,12 +4,15 @@
 \providecommand{\doi}[1]{https://doi.org/#1}
 
 \bibitem{fptuner}
-Chiang, W.F., Baranowski, M., Briggs, I., Solovyev, A., Gopalakrishnan, G.,
-  Rakamari\'c, Z.: Rigorous floating-point mixed-precision tuning. In: POPL
-  (2017)
+Wei-Fan Chiang, Mark Baranowski, Ian Briggs, Alexey Solovyev, Ganesh Gopalakrishnan, and Zvonimir Rakamarić: 
+{\em Rigorous floating-point mixed-precision tuning}. 
+In Proceedings of the 44th ACM SIGPLAN Symposium on Principles of Programming Languages {\em (POPL 2017)}. 
+Association for Computing Machinery, pp. 300-315.
 
 \bibitem{seesaw}
-A. Das, T. Tirpankar, G. Gopalakrishnan and S. Krishnamoorthy: 
-Robustness Analysis of Loop-Free Floating-Point Programs via Symbolic Automatic Differentiation. In: CLUSTER (2021)
+Arnab Das, Tanmay Tirpankar, Ganesh Gopalakrishnan, and Sriram Krishnamoorthy: 
+{\em Robustness Analysis of Loop-Free Floating-Point Programs via Symbolic Automatic Differentiation}. 
+In Proceedings to the 23rd International Conference on Cluster Computing {\em (CLUSTER 2021)}.
+IEEE, pp. 481-491.
 
 \end{thebibliography}
