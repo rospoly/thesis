@@ -21,7 +21,7 @@ Anirudha Majumdar and Marco Pavone:
 Springer Proceedings in Advanced Robotics (2020), pp. 75-84.
 
 \bibitem{suardi}
-Andrea Suardi, Stefano Longo, Eric C. Kerrigan, George A. Constantinides:
+Andrea Suardi, Stefano Longo, Eric C. Kerrigan, and George A. Constantinides:
 {\em Explicit MPC: Hard constraint satisfaction under low precision arithmetic}.
 Control Engineering Practice (2016), pp. 60-69.
 
@@ -71,19 +71,19 @@ Laurent Fousse, Guillaume Hanrot, Vincent Lefèvre, Patrick Pélissier, and Paul
 ACM Transactions on Mathematical Software (2007), pp. 13-47.
 
 \bibitem{guardstable}
-Laura Titolo, Mariano M. Moscato, Marco A. Feli{\'{u}} and C{\'{e}}sar A. Mu{\~{n}}oz: 
+Laura Titolo, Mariano M. Moscato, Marco A. Feli{\'{u}}, and C{\'{e}}sar A. Mu{\~{n}}oz: 
 {\em Automatic Generation of Guard-Stable Floating-Point Code}. 
 Lecture Notes in Computer Science (2020), pp. 141-159, Springer International Publishing.
 
 \bibitem{cpralg}
-Aaron Dutle, Mariano M. Moscato, Laura Titolo, C{\'{e}}sar A. Mu{\~{n}}oz, Gregory Anderson and Fran{\c{c}}ois Bobot: 
+Aaron Dutle, Mariano M. Moscato, Laura Titolo, C{\'{e}}sar A. Mu{\~{n}}oz, Gregory Anderson, and Fran{\c{c}}ois Bobot: 
 {\em Formal analysis of the compact position reporting algorithm}.
 Formal Aspects Computing, pp. 65-86.
 
 \bibitem{unstable}
 Laura Titolo, C{\'{e}}sar A. Mu{\~{n}}oz, Marco A. Feli{\'{u}}, Mariano M. Moscato: 
 {\em Eliminating Unstable Tests in Floating-Point Programs}.
-In Proceedings of the 28th International Symposium of Logic-Based Program Synthesis and Transformation {\em LOPSTR (2018)}.
+In Proceedings of the 28th International Symposium of Logic-Based Program Synthesis and Transformation {\em (LOPSTR 2018)}.
 Springer, pp. 169-183.
 
 \bibitem{fptuner}
@@ -134,7 +134,7 @@ In Proceedings of the 14th International Conference of Formal Methods for Indust
 Lecture Notes in Computer Science, pp. 14-55, Springer.
 
 \bibitem{lutnet}
-Erwei Wang, James J. Davis, Peter Y. K. Cheung and George A. Constantinides:
+Erwei Wang, James J. Davis, Peter Y. K. Cheung, and George A. Constantinides:
 {\em LUTNet: Learning FPGA Configurations for Highly Efficient Neural Network Inference}. 
 IEEE Transactions on Computers (2020), pp. 1795-1808.
 
@@ -205,7 +205,7 @@ In Proceedings of the 20th International Symposium on Formal Methods {\em (FM 20
 Lecture Notes in Computer Science, pp. 532-550, Springer.
 
 \bibitem{precisa}
-Laura Titolo, Marco Feli{\'u}, Mariano Moscato, Cesar Mu{\~{n}}oz: 
+Laura Titolo, Marco Feli{\'u}, Mariano Moscato, and Cesar Mu{\~{n}}oz: 
 {\em An abstract interpretation framework for the round-off error analysis of floating-point programs}. 
 In Proceedings of the 19th International Conference on Verification, Model Checking, and Abstract Interpretation {\em (VMCAI 2018)}.
 Lecture Notes in Computer Science, pp. 516-539, Springer.

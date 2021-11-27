@@ -44,17 +44,19 @@ Hence, an if-statement conditional might evaluate to true in reals, but because 
 
 The main contributions of this dissertation improve the state-of-the-art in the area of rigorous analysis of roundoff errors in floating-point programs.
 %
-First, we show how to combine automated theorem provers and error analysis techniques to reason about the mix of floating-point and real arithmetics.
+First, I show how to combine automated theorem provers and error analysis techniques to reason about the mix of floating-point and real arithmetics.
 %
-We use the resulting prototype to detect control-flow instabilities in floating-point programs.
+I use the resulting prototype to detect control-flow instabilities in floating-point programs.
 %
 %1  What we do?
-Second, we show how to embed rigorous worst-case error analysis techniques in the design of micro-controllers.
+Second, I show how to embed rigorous worst-case error analysis techniques in the design of micro-controllers.
 %
-This allows us to sensibly reduce the memory foot-print of the controller, and address the roundoff error stemming from the low-cost floating-point precision format as a disturbance affecting the system, without impacting the stability of the system.
+%This allows us to sensibly reduce the memory foot-print of the controller, and address the roundoff error stemming from the low-cost floating-point precision format as a disturbance affecting the system, without impacting the stability of the system.
 %
-Finally, we show the limitations of worst-case error analysis when dealing with probabilistic computations. 
+The resulting framework sensibly reduces the memory foot-print of the controller, and it addresses the roundoff error stemming from the low-cost floating-point precision format as a disturbance affecting the system, without impacting the stability of the system.
 %
-We introduce a rigorous probabilistic framework to compute average roundoff errors that addresses the identified limitations.
+Finally, I show the limitations of worst-case error analysis when dealing with probabilistic computations. 
 %
-Our prototype implementation provides to the user much more useful probabilistic error bounds compared to the state-of-the-art worst-case errors.
+I introduce a rigorous probabilistic framework to compute average roundoff errors that addresses the identified limitations.
+%
+My prototype implementation provides to the user much more useful probabilistic error bounds compared to the state-of-the-art worst-case errors.
