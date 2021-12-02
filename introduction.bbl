@@ -4,210 +4,211 @@
 \providecommand{\doi}[1]{https://doi.org/#1}
 
 \bibitem{bornholt2014uncertain}
-James Bornholt, Todd Mytkowicz, and Kathryn S. McKinley:
-{\em Uncertain \textless T\textgreater: a first-order type for uncertain data}. 
-In Proceedings of the 19th international conference on Architectural support for programming languages and operating systems {\em(ASPLOS 2014)}. 
-Association for Computing Machinery, pp. 51-66.
+James Bornholt, Todd Mytkowicz, and Kathryn S. McKinley. 2014.
+Uncertain \textless T\textgreater: A first-order type for uncertain data. 
+{\em In Proceedings of the 19th International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS 2014)}. 
+March 1-5, 2014, Salt Lake City, UT, United States, Association for Computing Machinery, 51-66.
 
 \bibitem{seesaw}
-Arnab Das, Tanmay Tirpankar, Ganesh Gopalakrishnan, and Sriram Krishnamoorthy: 
-{\em Robustness Analysis of Loop-Free Floating-Point Programs via Symbolic Automatic Differentiation}. 
-In Proceedings to the 23rd International Conference on Cluster Computing {\em (CLUSTER 2021)}.
-IEEE, pp. 481-491.
+Arnab Das, Tanmay Tirpankar, Ganesh Gopalakrishnan, and Sriram Krishnamoorthy. 2021.
+Robustness analysis of loop-free floating-point programs via symbolic automatic differentiation. 
+{\em In Proceedings to the 23rd International Conference on Cluster Computing (CLUSTER 2021)}.
+September 7-10, 2021, virtual, IEEE, 481-491.
 
 \bibitem{robotrisk}
-Anirudha Majumdar and Marco Pavone: 
-{\em How Should a Robot Assess Risk? Towards an Axiomatic Theory of Risk in Robotics}. 
-Springer Proceedings in Advanced Robotics (2020), pp. 75-84.
+Anirudha Majumdar and Marco Pavone. 2020.
+How should a robot assess risk? Towards an axiomatic theory of risk in robotics. 
+Springer Proceedings in Advanced Robotics (2020), 75-84.
 
 \bibitem{suardi}
-Andrea Suardi, Stefano Longo, Eric C. Kerrigan, and George A. Constantinides:
-{\em Explicit MPC: Hard constraint satisfaction under low precision arithmetic}.
-Control Engineering Practice (2016), pp. 60-69.
+Andrea Suardi, Stefano Longo, Eric C. Kerrigan, and George A. Constantinides. 2016.
+Explicit MPC: Hard constraint satisfaction under low precision arithmetic.
+Control Eng. Pract. (2016), 60-69.
 
 \bibitem{dynamic}
-Wei-Fan Chiang, Ganesh Gopalakrishnan, Zvonimir Rakamaric, and Alexey Solovyev: 
-{\em Efficient search for inputs causing high floating-point errors}. 
-In Proceedings of the 19th ACM SIGPLAN symposium on Principles and practice of parallel programming {\em (PPoPP 2014)}. 
-Association for Computing Machinery, pp. 43-52.
+Wei-Fan Chiang, Ganesh Gopalakrishnan, Zvonimir Rakamaric, and Alexey Solovyev. 2014.
+Efficient search for inputs causing high floating-point errors. 
+{\em In Proceedings of the 19th ACM SIGPLAN Symposium on Principles and Practice of Parallel Programming (PPoPP 2014)}. 
+February 15-19, 2014, Orlando, FL, United States, Association for Computing Machinery, 43-52.
 
 \bibitem{shadow}
-Florian Benz, Andreas Hildebrandt, and Sebastian Hack: 
-{\em A dynamic program analysis to find floating-point accuracy problems}. 
-In Proceedings of the 33rd ACM SIGPLAN Conference on Programming Language Design and Implementation {\em (PLDI 2012)}. 
-Association for Computing Machinery, pp. 453-462.
+Florian Benz, Andreas Hildebrandt, and Sebastian Hack. 2012.
+A dynamic program analysis to find floating-point accuracy problems.
+{\em In Proceedings of the 33rd ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI 2012)}. 
+June 11-16, 2012, Beijing, China, Association for Computing Machinery, 453-462.
 
 \bibitem{mpc}
-James B. Rawlings, David Q. Mayne, and Moritz Diehl: 
-{\em Model Predictive Control: Theory, Computation, and Design}. 
+James B. Rawlings, David Q. Mayne, and Moritz Diehl. 2017.
+Model Predictive Control: Theory, Computation, and Design. 
 Nob Hill Publishing (2017).
 
 \bibitem{fppower}
-Giuseppe Tagliavini, Stefan Mach, Davide Rossi, Andrea Marongiu, and Luca Benini:
-{\em A transprecision floating-point platform for ultra-low power computing}.
-Design, Automation and Test in Europe Conference and Exhibition (2018), pp. 1051-1056.
+Giuseppe Tagliavini, Stefan Mach, Davide Rossi, Andrea Marongiu, and Luca Benini. 2018.
+A transprecision floating-point platform for ultra-low power computing.
+{\em In Proceedings of the 21th Design, Automation and Test in Europe Conference and Exhibition (DATE 2018)}. 
+March 19-23, 2018, Dresden, Germany, IEEE, 1051-1056.
 
 \bibitem{atomic}
-Daming Zou, Muhan Zeng, Yingfei Xiong, Zhoulai Fu, Lu Zhang, and Zhendong Su: 
-{\em Detecting floating-point errors via atomic conditions}. 
-In Procedings of the 47th ACM SIGPLAN Symposium on Principles of Programming Languages {\em (POPL 2020)}.
-ACM on Programming Languages, pp. 1-27.
+Daming Zou, Muhan Zeng, Yingfei Xiong, Zhoulai Fu, Lu Zhang, and Zhendong Su. 2020.
+Detecting floating-point errors via atomic conditions. 
+{\em In Procedings of the 47th ACM SIGPLAN Symposium on Principles of Programming Languages (POPL 2020)}.
+January 19-25, 2020, New Orleans, LA, United States, Association for Computing Machinery, 1-27.
 
 \bibitem{blame}
-Cindy Rubio-González, Cuong Nguyen, Benjamin Mehne, Koushik Sen, James Demmel, William Kahan, Costin Iancu, Wim Lavrijsen, David H. Bailey, and David Hough:
-{\em Floating-point precision tuning using blame analysis}. 
-In Proceedings of the 38th International Conference on Software Engineering {\em (ICSE 2016)}. 
-Association for Computing Machinery, pp. 1074-1085. 
+Cindy Rubio-González, Cuong Nguyen, Benjamin Mehne, Koushik Sen, James Demmel, William Kahan, Costin Iancu, Wim Lavrijsen, David H. Bailey, and David Hough. 2016.
+Floating-point precision tuning using blame analysis. 
+{\em In Proceedings of the 38th International Conference on Software Engineering (ICSE 2016)}. 
+May 14-22, 2016, Austin, TX, United States, Association for Computing Machinery, 1074-1085.
 
 \bibitem{herbie}
-Pavel Panchekha, Alex Sanchez-Stern, James R. Wilcox, and Zachary Tatlock:
-{\em Automatically improving accuracy for floating point expressions}. 
-In Proceedings of the 36th ACM SIGPLAN Conference on Programming Language Design and Implementation {\em (PLDI 2015)}. 
-Association for Computing Machinery, pp. 1-11.
+Pavel Panchekha, Alex Sanchez-Stern, James R. Wilcox, and Zachary Tatlock. 2015.
+Automatically improving accuracy for floating point expressions. 
+{\em In Proceedings of the 36th ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI 2015)}. 
+June 13-17, 2015, Portland, OR, United States, Association for Computing Machinery, 1-11.
 
 \bibitem{mpfr}
-Laurent Fousse, Guillaume Hanrot, Vincent Lefèvre, Patrick Pélissier, and Paul Zimmermann:
-{\em MPFR: A multiple-precision binary floating-point library with correct rounding}.
-ACM Transactions on Mathematical Software (2007), pp. 13-47.
+Laurent Fousse, Guillaume Hanrot, Vincent Lefèvre, Patrick Pélissier, and Paul Zimmermann. 2007.
+MPFR: A multiple-precision binary floating-point library with correct rounding.
+ACM Trans. Math. Softw. (2007), 13-47.
 
 \bibitem{guardstable}
-Laura Titolo, Mariano M. Moscato, Marco A. Feli{\'{u}}, and C{\'{e}}sar A. Mu{\~{n}}oz: 
-{\em Automatic Generation of Guard-Stable Floating-Point Code}. 
-Lecture Notes in Computer Science (2020), pp. 141-159, Springer International Publishing.
+Laura Titolo, Mariano M. Moscato, Marco A. Feli{\'{u}}, and C{\'{e}}sar A. Mu{\~{n}}oz. 2020.
+Automatic generation of guard-stable floating-point code.
+LNCS (2020), 141-159.
 
 \bibitem{cpralg}
-Aaron Dutle, Mariano M. Moscato, Laura Titolo, C{\'{e}}sar A. Mu{\~{n}}oz, Gregory Anderson, and Fran{\c{c}}ois Bobot: 
-{\em Formal analysis of the compact position reporting algorithm}.
-Formal Aspects Computing, pp. 65-86.
+Aaron Dutle, Mariano M. Moscato, Laura Titolo, C{\'{e}}sar A. Mu{\~{n}}oz, Gregory Anderson, and Fran{\c{c}}ois Bobot. 2021.
+Formal analysis of the compact position reporting algorithm.
+Form. Asp. Comp. (2021), 65-86.
 
 \bibitem{unstable}
-Laura Titolo, C{\'{e}}sar A. Mu{\~{n}}oz, Marco A. Feli{\'{u}}, Mariano M. Moscato: 
-{\em Eliminating Unstable Tests in Floating-Point Programs}.
-In Proceedings of the 28th International Symposium of Logic-Based Program Synthesis and Transformation {\em (LOPSTR 2018)}.
-Springer, pp. 169-183.
+Laura Titolo, C{\'{e}}sar A. Mu{\~{n}}oz, Marco A. Feli{\'{u}}, Mariano M. Moscato. 2018. 
+Eliminating unstable tests in floating-point programs.
+{\em In Proceedings of the 28th International Symposium of Logic-Based Program Synthesis and Transformation (LOPSTR 2018)}.
+September 4-6, 2018, Frankfurt, Germany, Lecture Notes in Computer Science, 169-183.
 
 \bibitem{fptuner}
-Wei-Fan Chiang, Mark Baranowski, Ian Briggs, Alexey Solovyev, Ganesh Gopalakrishnan, and Zvonimir Rakamarić: 
-{\em Rigorous floating-point mixed-precision tuning}. 
-In Proceedings of the 44th ACM SIGPLAN Symposium on Principles of Programming Languages {\em (POPL 2017)}. 
-Association for Computing Machinery, pp. 300-315.
+Wei-Fan Chiang, Mark Baranowski, Ian Briggs, Alexey Solovyev, Ganesh Gopalakrishnan, and Zvonimir Rakamarić. 2017.
+Rigorous floating-point mixed-precision tuning.
+{\em In Proceedings of the 44th ACM SIGPLAN Symposium on Principles of Programming Languages (POPL 2017)}. 
+January 15-21, 2017, Paris, France, Association for Computing Machinery, 300-315.
 
 \bibitem{darulova2018daisy}
-Darulova Eva, Izycheva Anastasiia, Nasir Fariha, Ritter Fabian, Becker Heiko, and Bastian Robert: 
-{\em Daisy - Framework for Analysis and Optimization of Numerical Programs (Tool Paper)}. 
-In Proceedings of the 24th International Conference on Tools and Algorithms for the Construction and Analysis of Systems {\em (TACAS 2018)}.
-Lecture Notes in Computer Science(2018), pp. 270-287, Springer International Publishing.
+Darulova Eva, Izycheva Anastasiia, Nasir Fariha, Ritter Fabian, Becker Heiko, and Bastian Robert. 2018.
+Daisy - framework for analysis and optimization of numerical programs (tool paper). 
+{\em In Proceedings of the 24th International Conference on Tools and Algorithms for the Construction and Analysis of Systems (TACAS 2018)}.
+April 14-20, 2018, Thessaloniki, Greece, Lecture Notes in Computer Science, 270-287.
 
 \bibitem{smartfloat}
-Eva Darulova and Viktor Kuncak:
-{\em Trustworthy numerical computation in Scala}. 
-In Proceedings of the 2011 ACM international conference on Object oriented programming systems languages and applications {\em (OOPSLA 2011)}.
-Association for Computing Machinery, pp. 325-344.
+Eva Darulova and Viktor Kuncak. 2011.
+Trustworthy numerical computation in Scala. 
+{\em In Proceedings of the 2011 ACM International Conference on Object Oriented Programming Systems Languages and Applications (OOPSLA 2011)}.
+October 22-27, 2011, Portland, OR, United States, Association for Computing Machinery, 325-344.
 
 \bibitem{rosa}
-Eva Darulova and Viktor Kuncak:
-{\em Sound compilation of reals}. 
-In Proceedings of the 41st ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages {\em (POPL 2014)}.
-Association for Computing Machinery, pp. 235-248. 
+Eva Darulova and Viktor Kuncak. 2014.
+Sound compilation of reals.
+{\em In Proceedings of the 41st ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages (POPL 2014)}.
+January 22-24, 2014, San Diego, CA, United States, Association for Computing Machinery, 235-248. 
 
 \bibitem{satire}
-Arnab Das, Ian Briggs, Ganesh Gopalakrishnan, Sriram Krishnamoorthy, and Pavel Panchekha:
-{\em Scalable yet rigorous floating-point error analysis}. 
-In Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis {\em (SC 2020)}.
-IEEE Press, pp. 1-14.
+Arnab Das, Ian Briggs, Ganesh Gopalakrishnan, Sriram Krishnamoorthy, and Pavel Panchekha. 2020.
+Scalable yet rigorous floating-point error analysis.
+{\em In Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis (SC 2020)}.
+November 9-19, 2020, virtual, IEEE Press, 1-14.
 
 \bibitem{gappa}
-Marc Daumas and Guillaume Melquiond: 
-{\em Certification of bounds on expressions involving rounded operators}. 
-ACM Transactions on Mathematical Software (2010), pp. 1-20. 
+Marc Daumas and Guillaume Melquiond. 2010.
+Certification of bounds on expressions involving rounded operators.
+ACM Trans. Math. Softw. (2010), 1-20.
 
 \bibitem{Z3}
-Leonardo De Moura and Nikolaj Bjørner: 
-{\em Z3: an efficient SMT solver}. 
-In Proceedings of the 14th international conference on Tools and algorithms for the construction and analysis of systems {\em (TACAS 2008)}.
-Springer-Verlag, pp. 337–340.
+Leonardo De Moura and Nikolaj Bjørner. 2008.
+Z3: An efficient SMT solver. 
+{\em In Proceedings of the 14th International Conference on Tools and Algorithms for the Construction and Analysis of Systems (TACAS 2008)}.
+March 29 - April 6, 2008, Budapest, Hungary, Springer-Verlag, 337-340.
 
 \bibitem{fluctuat}
-David Delmas, Eric Goubault, Sylvie Putot, Jean Souyris, Karim Tekkal, Franck Védrine: 
-{\em Towards an Industrial Use of FLUCTUAT on Safety-Critical Avionics Software}. 
-In Proceedings of the 14th International Conference of Formal Methods for Industrial Critical Systems {\em (FMICS 2009)}. 
-Lecture Notes in Computer Science, pp. 14-55, Springer.
+David Delmas, Eric Goubault, Sylvie Putot, Jean Souyris, Karim Tekkal, Franck Védrine. 2009.
+Towards an industrial use of FLUCTUAT on safety-critical avionics software.
+{\em In Proceedings of the 14th International Conference of Formal Methods for Industrial Critical Systems (FMICS 2009)}. 
+November 2-3, 2009, Eindhoven, The Netherlands, Lecture Notes in Computer Science, 14-55.
 
 \bibitem{lutnet}
-Erwei Wang, James J. Davis, Peter Y. K. Cheung, and George A. Constantinides:
-{\em LUTNet: Learning FPGA Configurations for Highly Efficient Neural Network Inference}. 
-IEEE Transactions on Computers (2020), pp. 1795-1808.
+Erwei Wang, James J. Davis, Peter Y. K. Cheung, and George A. Constantinides. 2020.
+LUTNet: Learning FPGA configurations for highly efficient neural network inference.
+IEEE Transactions on Computers (2020), 1795-1808.
 
 \bibitem{patriot}
-{\em The Patriot Missile Failure}, \\
+The patriot missile failure. \\
 \url{https://www.users.cse.umn.edu/\string~Earnold/disasters/patriot.html}.
 
 \bibitem{glasserman2013monte}
-Paul Glasserman: 
-{\em Monte Carlo Methods in Financial Engineering}. 
-Springer (2013).
+Paul Glasserman. 2003.
+Monte Carlo methods in financial engineering. 
+Springer (2003).
 
 \bibitem{higham2002accuracy}
-Nicholas J. Higham: 
-{\em Accuracy and Stability of Numerical Algorithms}. 
+Nicholas J. Higham. 2002.
+Accuracy and stability of numerical algorithms. 
 SIAM (2002).
 
 \bibitem{higham2019new}
-Nicholas J. Higham and Theo Mary: 
-{\em A new approach to probabilistic rounding error analysis}. 
-SIAM Journal on Scientific Computing (2019), pp. 677-699.
+Nicholas J. Higham and Theo Mary. 2019.
+A new approach to probabilistic rounding error analysis.
+SIAM J. Sci. Comput. (2019), 677-699.
 
 \bibitem{ipsen2019probabilistic}
-Ilse C. F. Ipsen and Hua Zhou:
-{\em Probabilistic Error Analysis for Inner Products}.
-SIAM Journal on Matrix Analysis and Applications (2019), pp. 1726-1741.
+Ilse C. F. Ipsen and Hua Zhou. 2019.
+Probabilistic error analysis for inner products.
+SIAM J. Matrix Anal. Appl. (2019), 1726-1741.
 
 \bibitem{kahan1996improbability}
-William Kahan:
-{\em The improbability of probabilistic error analyses for numerical computations}. 
+William Kahan. 1996.
+The improbability of probabilistic error analyses for numerical computations. 
 Statistics Colloquium Lecture (1996).
 
 \bibitem{landau2014guide}
-David P. Landau and Kurt Binder: 
-{\em A Guide to Monte Carlo Simulations in Statistical Physics (4th ed.)}. 
+David P. Landau and Kurt Binder. 2014.
+A guide to Monte Carlo Simulations in Statistical Physics. 
 Cambridge University Press (2014).
 
 \bibitem{probdaisy}
-Debasmita Lohar, Milos Prokop, and Eva Darulova:
-{\em Sound Probabilistic Numerical Error Analysis}. 
-In Proceedings of the 15th International Conference on integrated Formal Methods {\em (IFM 2019)}.
-Lecture Notes in Computer Science, pp. 322-340, Springer.
+Debasmita Lohar, Milos Prokop, and Eva Darulova. 2019.
+Sound probabilistic numerical error analysis. 
+{\em In Proceedings of the 15th International Conference on Integrated Formal Methods (IFM 2019)}.
+December 2-6, 2019, Bergen, Norway, Lecture Notes in Computer Science, 322-340.
 
 \bibitem{ieee754}
-Microprocessor Standards Committee of the IEEE Computer Society: 
-{\em IEEE Standard for Floating-Point Arithmetic}. 
+Microprocessor Standards Committee of the IEEE Computer Society. 2019. 
+IEEE standard for floating-point arithmetic. 
 In IEEE Standard 754-2019 (Revision of IEEE 754-2008).
 
 \bibitem{every}
-David Goldberg:
-{\em What every computer scientist should know about floating-point arithmetic}. 
-ACM Computing Survey (1991), pp. 5-48.
+David Goldberg. 1991.
+What every computer scientist should know about floating-point arithmetic. 
+ACM Comput. Surv. (1991), 5-48.
 
 \bibitem{parker2000monte}
-Scott Parker, Brad Pierce, and Paul R. Eggert:
-{\em Monte Carlo arithmetic: how to gamble with floating point and win}.
-Computing in Science and Engineering (2000), pp. 58-68.
+Scott Parker, Brad Pierce, and Paul R. Eggert. 2000.
+Monte Carlo arithmetic: how to gamble with floating point and win.
+Comput. Sci. Eng. (2000), 58-68.
 
 \bibitem{solovyev2018rigorous}
-Alexey Solovyev, Marek S. Baranowski, Ian Briggs, Charles Jacobsen, Zvonimir Rakamarić, and Ganesh Gopalakrishnan:
-{\em Rigorous Estimation of Floating-Point Round-Off Errors with Symbolic Taylor Expansions}. 
-ACM Transactions on Programming Languages and Systems {\em (TOPLAS 2018)}, pp. 1-39.
+Alexey Solovyev, Marek S. Baranowski, Ian Briggs, Charles Jacobsen, Zvonimir Rakamarić, and Ganesh Gopalakrishnan. 2018.
+Rigorous estimation of floating-point round-off errors with symbolic taylor expansions.
+ACM Trans. Program. Lang. Syst (2018), 1-39.
 
 \bibitem{2015_fm_sjrg}
-Alexey Solovyev, Charles Jacobsen, Zvonimir Rakamarić, and Ganesh Gopalakrishnan:
-{\em Rigorous Estimation of Floating-Point Round-off Errors with Symbolic Taylor Expansions}. 
-In Proceedings of the 20th International Symposium on Formal Methods {\em (FM 2015)}.
-Lecture Notes in Computer Science, pp. 532-550, Springer.
+Alexey Solovyev, Charles Jacobsen, Zvonimir Rakamarić, and Ganesh Gopalakrishnan. 2015.
+Rigorous estimation of floating-point round-off errors with symbolic taylor expansions.
+{\em In Proceedings of the 20th International Symposium on Formal Methods (FM 2015)}.
+June 24-26, 2015, Oslo, Norway, Lecture Notes in Computer Science, 532-550.
 
 \bibitem{precisa}
-Laura Titolo, Marco Feli{\'u}, Mariano Moscato, and Cesar Mu{\~{n}}oz: 
-{\em An abstract interpretation framework for the round-off error analysis of floating-point programs}. 
-In Proceedings of the 19th International Conference on Verification, Model Checking, and Abstract Interpretation {\em (VMCAI 2018)}.
-Lecture Notes in Computer Science, pp. 516-539, Springer.
+Laura Titolo, Marco Feli{\'u}, Mariano Moscato, and Cesar Mu{\~{n}}oz. 2018. 
+An abstract interpretation framework for the round-off error analysis of floating-point programs. 
+{\em In Proceedings of the 19th International Conference on Verification, Model Checking, and Abstract Interpretation (VMCAI 2018)}.
+January 7-9, 2018, Los Angeles, CA, United States, Lecture Notes in Computer Science, 516-539.
 
 \end{thebibliography}

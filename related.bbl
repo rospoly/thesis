@@ -4,31 +4,31 @@
 \providecommand{\doi}[1]{https://doi.org/#1}
 
 \bibitem{precisa}
-Laura Titolo, Marco Feli{\'u}, Mariano Moscato, Cesar Mu{\~{n}}oz: 
-{\em An abstract interpretation framework for the round-off error analysis of floating-point programs}. 
-In Proceedings of the 19th International Conference on Verification, Model Checking, and Abstract Interpretation {\em (VMCAI 2018)}.
-Lecture Notes in Computer Science, pp. 516-539, Springer.
+Laura Titolo, Marco Feli{\'u}, Mariano Moscato, and Cesar Mu{\~{n}}oz. 2018. 
+An abstract interpretation framework for the round-off error analysis of floating-point programs. 
+{\em In Proceedings of the 19th International Conference on Verification, Model Checking, and Abstract Interpretation (VMCAI 2018)}.
+January 7-9, 2018, Los Angeles, CA, United States, Lecture Notes in Computer Science, 516-539.
 
 \bibitem{seesaw}
-Arnab Das, Tanmay Tirpankar, Ganesh Gopalakrishnan, and Sriram Krishnamoorthy: 
-{\em Robustness Analysis of Loop-Free Floating-Point Programs via Symbolic Automatic Differentiation}. 
-In Proceedings to the 23rd International Conference on Cluster Computing {\em (CLUSTER 2021)}.
-IEEE, pp. 481-491.
+Arnab Das, Tanmay Tirpankar, Ganesh Gopalakrishnan, and Sriram Krishnamoorthy. 2021.
+Robustness analysis of loop-free floating-point programs via symbolic automatic differentiation. 
+{\em In Proceedings to the 23rd International Conference on Cluster Computing (CLUSTER 2021)}.
+September 7-10, 2021, virtual, IEEE, 481-491.
 
 \bibitem{gelpia}
-{\em Gelpia},
+{\em Gelpia}.
 \url{https://github.com/soarlab/gelpia}.
 
 \bibitem{darulova2018daisy}
-Darulova Eva, Izycheva Anastasiia, Nasir Fariha, Ritter Fabian, Becker Heiko, and Bastian Robert: 
-{\em Daisy - Framework for Analysis and Optimization of Numerical Programs (Tool Paper)}. 
-In Proceedings of the 24th International Conference on Tools and Algorithms for the Construction and Analysis of Systems {\em (TACAS 2018)}.
-Lecture Notes in Computer Science(2018), pp. 270-287, Springer International Publishing.
+Darulova Eva, Izycheva Anastasiia, Nasir Fariha, Ritter Fabian, Becker Heiko, and Bastian Robert. 2018.
+Daisy - framework for analysis and optimization of numerical programs (tool paper). 
+{\em In Proceedings of the 24th International Conference on Tools and Algorithms for the Construction and Analysis of Systems (TACAS 2018)}.
+April 14-20, 2018, Thessaloniki, Greece, Lecture Notes in Computer Science, 270-287.
 
 \bibitem{fluctuat}
-David Delmas, Eric Goubault, Sylvie Putot, Jean Souyris, Karim Tekkal, Franck Védrine: 
-{\em Towards an Industrial Use of FLUCTUAT on Safety-Critical Avionics Software}. 
-In Proceedings of the 14th International Conference of Formal Methods for Industrial Critical Systems {\em (FMICS 2009)}. 
-Lecture Notes in Computer Science, pp. 14-55, Springer.
+David Delmas, Eric Goubault, Sylvie Putot, Jean Souyris, Karim Tekkal, Franck Védrine. 2009.
+Towards an industrial use of FLUCTUAT on safety-critical avionics software.
+{\em In Proceedings of the 14th International Conference of Formal Methods for Industrial Critical Systems (FMICS 2009)}. 
+November 2-3, 2009, Eindhoven, The Netherlands, Lecture Notes in Computer Science, 14-55.
 
 \end{thebibliography}

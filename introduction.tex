@@ -155,6 +155,7 @@ Investigating the roundoff error in a neighborhood of zero is of special importa
 	\newcommand{\mydashline}{\hdashline[1pt/1pt]}
 	\scriptsize
 	\renewcommand{\arraystretch}{1.5}
+	\caption{IEEE-754 floating-point formats. We report the name of the format (Format) and the bit-width for the mantissa (Mantissa) and the exponent (Exp) representations. The column $\epsilon$ reports the value of machine epsilon.}
 	%\setlength{\tabcolsep}{0.3em} % for the horizontal padding
 	%		Benchmark & \Tool & Sampling & Golden & PrAn& \Tool & Sampling & Golden & FpTaylor\\
 	\begin{tabular}{@{\extracolsep{2.3pt}}p{1.5cm}L{1.2cm}L{1.2cm}L{1.3cm}@{}}
@@ -172,7 +173,6 @@ Investigating the roundoff error in a neighborhood of zero is of special importa
 		quad (128) & 112 & 15 & 9.63e-35 \\
 		\bottomrule
 	\end{tabular}
-	\caption{IEEE-754 floating-point formats. We report the name of the format (Format) and the bit-width for the mantissa (Mantissa) and the exponent (Exp) representations. The column $\epsilon$ reports the value of machine epsilon.}
 	\label{fpformat}
 \end{table}
 %
@@ -202,7 +202,7 @@ From the point of view of numerical analysis it is important to understand that 
 Indeed, they are evenly spaced only within two consecutive powers of two, as Figure~\ref{fig:line} illustrates.
 
 %
-\begin{figure}[b!]
+\begin{figure}[t!]
 	\centering
 	\begin{tabular}{l}
 		\includegraphics[width=1.0\textwidth]{pic/fpnumbers.png}
