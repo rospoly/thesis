@@ -8,27 +8,30 @@ Laura Titolo, Marco Feli{\'u}, Mariano Moscato, and Cesar Mu{\~{n}}oz. 2018.
 An abstract interpretation framework for the round-off error analysis of floating-point programs. 
 {\em In Proceedings of the 19th International Conference on Verification, Model Checking, and Abstract Interpretation (VMCAI 2018)}.
 January 7-9, 2018, Los Angeles, CA, United States, Lecture Notes in Computer Science, 516-539.
+DOI: https://doi.org/10.1007/978-3-319-73721-8\_24
 
 \bibitem{seesaw}
 Arnab Das, Tanmay Tirpankar, Ganesh Gopalakrishnan, and Sriram Krishnamoorthy. 2021.
 Robustness analysis of loop-free floating-point programs via symbolic automatic differentiation. 
 {\em In Proceedings to the 23rd International Conference on Cluster Computing (CLUSTER 2021)}.
 September 7-10, 2021, virtual, IEEE, 481-491.
+DOI: https://doi.org/10.1109/Cluster48925.2021.00055
 
 \bibitem{gelpia}
-{\em Gelpia}.
-\url{https://github.com/soarlab/gelpia}.
+Gelpia. \url{https://github.com/soarlab/gelpia}.
 
 \bibitem{darulova2018daisy}
 Darulova Eva, Izycheva Anastasiia, Nasir Fariha, Ritter Fabian, Becker Heiko, and Bastian Robert. 2018.
 Daisy - framework for analysis and optimization of numerical programs (tool paper). 
 {\em In Proceedings of the 24th International Conference on Tools and Algorithms for the Construction and Analysis of Systems (TACAS 2018)}.
 April 14-20, 2018, Thessaloniki, Greece, Lecture Notes in Computer Science, 270-287.
+DOI: https://doi.org/10.1007/978-3-319-89960-2\_15
 
 \bibitem{fluctuat}
 David Delmas, Eric Goubault, Sylvie Putot, Jean Souyris, Karim Tekkal, Franck Védrine. 2009.
 Towards an industrial use of FLUCTUAT on safety-critical avionics software.
 {\em In Proceedings of the 14th International Conference of Formal Methods for Industrial Critical Systems (FMICS 2009)}. 
 November 2-3, 2009, Eindhoven, The Netherlands, Lecture Notes in Computer Science, 14-55.
+DOI: https://doi.org/10.1007/978-3-642-04570-7\_6
 
 \end{thebibliography}
